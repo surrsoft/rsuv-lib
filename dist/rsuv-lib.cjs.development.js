@@ -24,18 +24,28 @@ function RsuvValueAnd(value, isValueExist) {
 /**
  * Представляет какую-либо ошибку
  */
-var RsuvErr = function RsuvErr(code, message) {
-  if (code === void 0) {
-    code = '';
+var RsuvErr = /*#__PURE__*/function () {
+  function RsuvErr(code, message) {
+    if (code === void 0) {
+      code = '';
+    }
+
+    if (message === void 0) {
+      message = '';
+    }
+
+    this.code = code;
+    this.message = message;
   }
 
-  if (message === void 0) {
-    message = '';
-  }
+  var _proto = RsuvErr.prototype;
 
-  this.code = code;
-  this.message = message;
-};
+  _proto.asString = function asString() {
+    return "code [" + this.code + "] message [" + this.message + "]";
+  };
+
+  return RsuvErr;
+}();
 
 exports.RsuvErr = RsuvErr;
 exports.RsuvValueAnd = RsuvValueAnd;
