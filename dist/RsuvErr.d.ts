@@ -6,4 +6,5 @@ export declare class RsuvErr {
     readonly message: string;
     constructor(code?: string, message?: string);
     asString(): string;
+    static asStringB(oj: RsuvErr): string;
 }

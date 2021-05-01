@@ -40,6 +40,10 @@ var RsuvErr = /*#__PURE__*/function () {
     return "code [" + this.code + "] message [" + this.message + "]";
   };
 
+  RsuvErr.asStringB = function asStringB(oj) {
+    return "code [" + oj.code + "] message [" + oj.message + "]";
+  };
+
   return RsuvErr;
 }();
 

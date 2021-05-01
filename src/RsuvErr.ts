@@ -8,4 +8,8 @@ export class RsuvErr {
   asString(): string {
     return `code [${this.code}] message [${this.message}]`
   }
+
+  static asStringB(oj: RsuvErr): string {
+    return `code [${oj.code}] message [${oj.message}]`
+  }
 }
