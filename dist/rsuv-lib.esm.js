@@ -119,5 +119,26 @@ var RsuvPaginationGyth = /*#__PURE__*/function () {
   return RsuvPaginationGyth;
 }();
 
-export { RsuvErr, RsuvPaginationGyth, RsuvValueAnd };
+/**
+ * [[pknz]]
+ */
+var RsuvResultBoolPknz = function RsuvResultBoolPknz(success, errCode, errMessage) {
+  if (success === void 0) {
+    success = true;
+  }
+
+  if (errCode === void 0) {
+    errCode = '';
+  }
+
+  if (errMessage === void 0) {
+    errMessage = '';
+  }
+
+  this.success = success;
+  this.errCode = errCode;
+  this.errMessage = errMessage;
+};
+
+export { RsuvErr, RsuvPaginationGyth, RsuvResultBoolPknz, RsuvValueAnd };
 //# sourceMappingURL=rsuv-lib.esm.js.map

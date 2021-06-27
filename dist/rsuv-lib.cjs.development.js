@@ -123,7 +123,29 @@ var RsuvPaginationGyth = /*#__PURE__*/function () {
   return RsuvPaginationGyth;
 }();
 
+/**
+ * [[pknz]]
+ */
+var RsuvResultBoolPknz = function RsuvResultBoolPknz(success, errCode, errMessage) {
+  if (success === void 0) {
+    success = true;
+  }
+
+  if (errCode === void 0) {
+    errCode = '';
+  }
+
+  if (errMessage === void 0) {
+    errMessage = '';
+  }
+
+  this.success = success;
+  this.errCode = errCode;
+  this.errMessage = errMessage;
+};
+
 exports.RsuvErr = RsuvErr;
 exports.RsuvPaginationGyth = RsuvPaginationGyth;
+exports.RsuvResultBoolPknz = RsuvResultBoolPknz;
 exports.RsuvValueAnd = RsuvValueAnd;
 //# sourceMappingURL=rsuv-lib.cjs.development.js.map
