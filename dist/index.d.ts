@@ -2,5 +2,5 @@ export { RsuvValueAnd } from './RsuvValueAnd';
 export { RsuvErr } from './RsuvErr';
 export { RsuvPaginationGyth } from './RsuvPaginationGyth';
 export { RsuvResultBoolPknz } from './RsuvResultBoolPknz';
-export { RsuvPairYmuz } from './RsuvPairYmuz';
-export { RsuvPairAndOjRrzh } from './RsuvPairAndOjRrzh';
+export type { RsuvPairYmuz } from './RsuvPairYmuz';
+export type { RsuvPairAndOjRrzh } from './RsuvPairAndOjRrzh';
