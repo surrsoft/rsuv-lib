@@ -1,5 +1,5 @@
 {
-  "version": "1.7.1",
+  "version": "1.7.2",
   "name": "rsuv-lib",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -27,7 +27,7 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "module": "dist/rsuv-lib-tsdx.esm.js",
+  "module": "dist/rsuv-lib.esm.js",
   "size-limit": [
     {
       "path": "dist/rsuv-lib-tsdx.cjs.production.min.js",
