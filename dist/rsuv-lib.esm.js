@@ -141,5 +141,16 @@ var RsuvResultBoolPknz = function RsuvResultBoolPknz(success, errCode, errMessag
   this.errMessage = errMessage;
 };
 
-export { RsuvErr, RsuvPaginationGyth, RsuvResultBoolPknz, RsuvValueAnd };
+/*
+[[tibo]]
+ */
+var RsuvResultTibo = function RsuvResultTibo() {
+  this.success = true;
+  this.successCode = '';
+  this.value = undefined;
+  this.errCode = '';
+  this.errMessage = '';
+};
+
+export { RsuvErr, RsuvPaginationGyth, RsuvResultBoolPknz, RsuvResultTibo, RsuvValueAnd };
 //# sourceMappingURL=rsuv-lib.esm.js.map

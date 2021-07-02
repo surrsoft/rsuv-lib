@@ -145,8 +145,20 @@ var RsuvResultBoolPknz = function RsuvResultBoolPknz(success, errCode, errMessag
   this.errMessage = errMessage;
 };
 
+/*
+[[tibo]]
+ */
+var RsuvResultTibo = function RsuvResultTibo() {
+  this.success = true;
+  this.successCode = '';
+  this.value = undefined;
+  this.errCode = '';
+  this.errMessage = '';
+};
+
 exports.RsuvErr = RsuvErr;
 exports.RsuvPaginationGyth = RsuvPaginationGyth;
 exports.RsuvResultBoolPknz = RsuvResultBoolPknz;
+exports.RsuvResultTibo = RsuvResultTibo;
 exports.RsuvValueAnd = RsuvValueAnd;
 //# sourceMappingURL=rsuv-lib.cjs.development.js.map
