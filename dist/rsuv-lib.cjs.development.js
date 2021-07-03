@@ -156,6 +156,16 @@ var RsuvResultTibo = function RsuvResultTibo() {
   this.errMessage = '';
 };
 
+/*
+константы разные
+ */
+
+/**
+ * Когда что-то уже существует
+ */
+var RSUV_AL_ALREADY_EXIST = 'RSUV_AL_ALREADY_EXIST';
+
+exports.RSUV_AL_ALREADY_EXIST = RSUV_AL_ALREADY_EXIST;
 exports.RsuvErr = RsuvErr;
 exports.RsuvPaginationGyth = RsuvPaginationGyth;
 exports.RsuvResultBoolPknz = RsuvResultBoolPknz;

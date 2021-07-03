@@ -152,5 +152,14 @@ var RsuvResultTibo = function RsuvResultTibo() {
   this.errMessage = '';
 };
 
-export { RsuvErr, RsuvPaginationGyth, RsuvResultBoolPknz, RsuvResultTibo, RsuvValueAnd };
+/*
+константы разные
+ */
+
+/**
+ * Когда что-то уже существует
+ */
+var RSUV_AL_ALREADY_EXIST = 'RSUV_AL_ALREADY_EXIST';
+
+export { RSUV_AL_ALREADY_EXIST, RsuvErr, RsuvPaginationGyth, RsuvResultBoolPknz, RsuvResultTibo, RsuvValueAnd };
 //# sourceMappingURL=rsuv-lib.esm.js.map
