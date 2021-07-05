@@ -4,4 +4,5 @@ export declare class RsuvResultTibo {
     value: any;
     errCode: string;
     errMessage: string;
+    constructor(tibo?: RsuvResultTibo);
 }

@@ -148,12 +148,20 @@ var RsuvResultBoolPknz = function RsuvResultBoolPknz(success, errCode, errMessag
 /*
 [[tibo]]
  */
-var RsuvResultTibo = function RsuvResultTibo() {
+var RsuvResultTibo = function RsuvResultTibo(tibo) {
   this.success = true;
   this.successCode = '';
   this.value = undefined;
   this.errCode = '';
   this.errMessage = '';
+
+  if (tibo) {
+    this.success = tibo.success;
+    this.successCode = tibo.successCode;
+    this.value = tibo.value;
+    this.errCode = tibo.errCode;
+    this.errMessage = tibo.errMessage;
+  }
 };
 
 /*
