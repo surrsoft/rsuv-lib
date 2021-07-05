@@ -146,10 +146,6 @@ var RsuvResultBoolPknz = function RsuvResultBoolPknz(success, errCode, errMessag
  */
 var RsuvResultTibo = function RsuvResultTibo(tibo) {
   this.success = true;
-  this.successCode = '';
-  this.value = undefined;
-  this.errCode = '';
-  this.errMessage = '';
 
   if (tibo) {
     this.success = tibo.success;
