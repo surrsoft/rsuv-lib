@@ -52,6 +52,7 @@
   "peerDependencies": {},
   "dependencies": {
     "@types/lodash": "^4.14.170",
+    "email-validator": "^2.0.4",
     "isomorphic-fetch": "^3.0.0",
     "lodash": "^4.17.21"
   },

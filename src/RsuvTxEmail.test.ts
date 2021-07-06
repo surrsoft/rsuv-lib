@@ -21,13 +21,15 @@ describe('RsuvTxEmail', () => {
     res: true
   });
   testData0.push({id: 1009, val: 'ma.il@mail.ruru', desc: 'ma.il@mail.ruru - точка в 1-части', res: true});
-  testData0.push({id: 1010, val: 'ma..il@mail.ruru', desc: 'ma..il@mail.ruru - две точки подряд', res: true});
+  testData0.push({id: 1010, val: 'ma..il@mail.ruru', desc: 'ma..il@mail.ruru - две точки подряд', res: false});
+  testData0.push({id: 1011, val: '.mail@mail.ruru', desc: '.mail@mail.ruru - начинается с точки', res: false});
+  testData0.push({id: 1012, val: 'mail@mail.r', desc: 'mail@mail.r - один символ в расширении', res: false});
   // --- https://en.wikipedia.org/wiki/Email_address
   const plus = [{id: 2000, val: 'simple@example.com', desc: '', res: true},
-    {id: 2001, val: 'very.common@example.com', desc: '', res: true},
-    {id: 2002, val: 'disposable.style.email.with+symbol@example.com', desc: '', res: true},
-    {id: 2003, val: 'other.email-with-hyphen@example.com', desc: '', res: true},
-    {id: 2004, val: 'fully-qualified-domain@example.com', desc: '', res: true},
+    {id: 2001, val: 'very.common@example.com', desc: 'very.common@example.com', res: true},
+    {id: 2002, val: 'disposable.style.email.with+symbol@example.com', desc: 'disposable.style.email.with+symbol@example.com', res: true},
+    {id: 2003, val: 'other.email-with-hyphen@example.com', desc: 'other.email-with-hyphen@example.com', res: true},
+    {id: 2004, val: 'fully-qualified-domain@example.com', desc: 'fully-qualified-domain@example.com', res: true},
     {
       id: 2005,
       val: 'user.name+tag+sorting@example.com',
@@ -35,7 +37,7 @@ describe('RsuvTxEmail', () => {
       res: true
     },
     {id: 2006, val: 'x@example.com', desc: 'one-letter local-part', res: true},
-    {id: 2007, val: 'example-indeed@strange-example.com', desc: '', res: true},
+    {id: 2007, val: 'example-indeed@strange-example.com', desc: 'example-indeed@strange-example.com', res: true},
     {id: 2008, val: 'test/test@test.com', desc: 'slashes are a printable character, and allowed', res: true},
     // {
     //   id: 2009,
