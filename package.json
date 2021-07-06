@@ -51,7 +51,9 @@
   "description": "universal components, standard library, TS, JS",
   "peerDependencies": {},
   "dependencies": {
-    "isomorphic-fetch": "^3.0.0"
+    "@types/lodash": "^4.14.170",
+    "isomorphic-fetch": "^3.0.0",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@size-limit/preset-small-lib": "^4.10.2",
