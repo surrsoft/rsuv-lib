@@ -6,6 +6,7 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var _ = _interopDefault(require('lodash'));
 var EmailValidator = _interopDefault(require('email-validator'));
+var toInteger = _interopDefault(require('lodash/toInteger'));
 
 var RsuvValueAnd =
 /**
@@ -257,6 +258,48 @@ function _setPrototypeOf(o, p) {
   };
 
   return _setPrototypeOf(o, p);
+}
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+}
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+  return arr2;
+}
+
+function _createForOfIteratorHelperLoose(o, allowArrayLike) {
+  var it;
+
+  if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) {
+    if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
+      if (it) o = it;
+      var i = 0;
+      return function () {
+        if (i >= o.length) return {
+          done: true
+        };
+        return {
+          done: false,
+          value: o[i++]
+        };
+      };
+    }
+
+    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+
+  it = o[Symbol.iterator]();
+  return it.next.bind(it);
 }
 
 var RsuvTxStringAA = /*#__PURE__*/function (_RsuvTxString) {
@@ -1307,6 +1350,410 @@ var RsuvAdapterZrnx = /*#__PURE__*/function () {
   return RsuvAdapterZrnx;
 }();
 
+/*
+-- [[ntxe]] - фильтр, например 'id=1&id=2' или 'json-server&author=typicode'.
+          Тут & работает как ИЛИ, т.е. для 'id=1&id=2' вернутся две записи (если они существуют с такими id)
+
+ */
+
+/**
+ * [[ktvg]]
+ *
+ * Утилита для запросав к json-server (https://github.com/typicode/json-server)
+ */
+
+var TJsonServer = /*#__PURE__*/function () {
+  /**
+   *
+   * @param basePath (1) -- expample 'http://localhost:21884/'
+   * @param collectionName (2) -- example 'products'
+   */
+  function TJsonServer(basePath, collectionName) {
+    this.basePath = basePath;
+    this.collectionName = collectionName;
+    this.path = "" + this.basePath + this.collectionName;
+  }
+
+  var _proto = TJsonServer.prototype;
+
+  _proto.elemsCountGetAll = /*#__PURE__*/function () {
+    var _elemsCountGetAll = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee() {
+      var resp, countSt;
+      return runtime_1.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return fetch(this.path + "?_limit=1");
+
+            case 2:
+              resp = _context.sent;
+              countSt = resp.headers.get('x-total-count');
+              return _context.abrupt("return", toInteger(countSt));
+
+            case 5:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, this);
+    }));
+
+    function elemsCountGetAll() {
+      return _elemsCountGetAll.apply(this, arguments);
+    }
+
+    return elemsCountGetAll;
+  }();
+
+  _proto.elemsGetAll = /*#__PURE__*/function () {
+    var _elemsGetAll = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee2() {
+      var resp;
+      return runtime_1.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.next = 2;
+              return fetch(this.path);
+
+            case 2:
+              resp = _context2.sent;
+              return _context2.abrupt("return", resp.json());
+
+            case 4:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2, this);
+    }));
+
+    function elemsGetAll() {
+      return _elemsGetAll.apply(this, arguments);
+    }
+
+    return elemsGetAll;
+  }();
+
+  _proto.elemsGetPage = /*#__PURE__*/function () {
+    var _elemsGetPage = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee3(pageNum, perPage) {
+      var resp;
+      return runtime_1.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              _context3.next = 2;
+              return fetch(this.path + "?_page=" + pageNum + "&_limit=" + perPage);
+
+            case 2:
+              resp = _context3.sent;
+              return _context3.abrupt("return", resp.json());
+
+            case 4:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3, this);
+    }));
+
+    function elemsGetPage(_x, _x2) {
+      return _elemsGetPage.apply(this, arguments);
+    }
+
+    return elemsGetPage;
+  }();
+
+  _proto.elemsGet = /*#__PURE__*/function () {
+    var _elemsGet = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee4(offset, limit) {
+      var resp;
+      return runtime_1.wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              _context4.next = 2;
+              return fetch(this.path + "?_start=" + offset + "&_limit=" + limit);
+
+            case 2:
+              resp = _context4.sent;
+              return _context4.abrupt("return", resp.json());
+
+            case 4:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, _callee4, this);
+    }));
+
+    function elemsGet(_x3, _x4) {
+      return _elemsGet.apply(this, arguments);
+    }
+
+    return elemsGet;
+  }()
+  /**
+   *
+   * @param filter (1) -- см. [ntxe]
+   */
+  ;
+
+  _proto.elemsGetByFilter =
+  /*#__PURE__*/
+  function () {
+    var _elemsGetByFilter = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee5(filter) {
+      var resp;
+      return runtime_1.wrap(function _callee5$(_context5) {
+        while (1) {
+          switch (_context5.prev = _context5.next) {
+            case 0:
+              _context5.next = 2;
+              return fetch(this.path + "?" + filter);
+
+            case 2:
+              resp = _context5.sent;
+              return _context5.abrupt("return", resp.json());
+
+            case 4:
+            case "end":
+              return _context5.stop();
+          }
+        }
+      }, _callee5, this);
+    }));
+
+    function elemsGetByFilter(_x5) {
+      return _elemsGetByFilter.apply(this, arguments);
+    }
+
+    return elemsGetByFilter;
+  }();
+
+  _proto.elemDelete = /*#__PURE__*/function () {
+    var _elemDelete = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee6(id) {
+      var ret;
+      return runtime_1.wrap(function _callee6$(_context6) {
+        while (1) {
+          switch (_context6.prev = _context6.next) {
+            case 0:
+              _context6.next = 2;
+              return fetch(this.path + "/" + id, {
+                method: 'DELETE'
+              });
+
+            case 2:
+              ret = _context6.sent;
+
+              if (!(ret.status !== 200)) {
+                _context6.next = 5;
+                break;
+              }
+
+              return _context6.abrupt("return", new RsuvResultBoolPknz(false, '210315153800', "err*: id not found; id [" + id + "]; ret.status [" + ret.status + "]"));
+
+            case 5:
+              return _context6.abrupt("return", new RsuvResultBoolPknz());
+
+            case 6:
+            case "end":
+              return _context6.stop();
+          }
+        }
+      }, _callee6, this);
+    }));
+
+    function elemDelete(_x6) {
+      return _elemDelete.apply(this, arguments);
+    }
+
+    return elemDelete;
+  }();
+
+  _proto.elemsDelete = /*#__PURE__*/function () {
+    var _elemsDelete = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee7(ids) {
+      var ret, _iterator, _step, id, res;
+
+      return runtime_1.wrap(function _callee7$(_context7) {
+        while (1) {
+          switch (_context7.prev = _context7.next) {
+            case 0:
+              ret = [];
+              _iterator = _createForOfIteratorHelperLoose(ids);
+
+            case 2:
+              if ((_step = _iterator()).done) {
+                _context7.next = 10;
+                break;
+              }
+
+              id = _step.value;
+              _context7.next = 6;
+              return this.elemDelete(id);
+
+            case 6:
+              res = _context7.sent;
+              ret.push(res);
+
+            case 8:
+              _context7.next = 2;
+              break;
+
+            case 10:
+              return _context7.abrupt("return", ret);
+
+            case 11:
+            case "end":
+              return _context7.stop();
+          }
+        }
+      }, _callee7, this);
+    }));
+
+    function elemsDelete(_x7) {
+      return _elemsDelete.apply(this, arguments);
+    }
+
+    return elemsDelete;
+  }()
+  /**
+   *
+   * @param filter (1) -- см. [ntxe]
+   */
+  ;
+
+  _proto.elemsDeleteByFilter =
+  /*#__PURE__*/
+  function () {
+    var _elemsDeleteByFilter = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee8(filter) {
+      var elems;
+      return runtime_1.wrap(function _callee8$(_context8) {
+        while (1) {
+          switch (_context8.prev = _context8.next) {
+            case 0:
+              _context8.next = 2;
+              return this.elemsGetByFilter(filter);
+
+            case 2:
+              elems = _context8.sent;
+              _context8.next = 5;
+              return this.elemsDelete(elems.map(function (el) {
+                return el.id;
+              }));
+
+            case 5:
+              return _context8.abrupt("return", _context8.sent);
+
+            case 6:
+            case "end":
+              return _context8.stop();
+          }
+        }
+      }, _callee8, this);
+    }));
+
+    function elemsDeleteByFilter(_x8) {
+      return _elemsDeleteByFilter.apply(this, arguments);
+    }
+
+    return elemsDeleteByFilter;
+  }();
+
+  _proto.elemCreate = /*#__PURE__*/function () {
+    var _elemCreate = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee9(data) {
+      var res;
+      return runtime_1.wrap(function _callee9$(_context9) {
+        while (1) {
+          switch (_context9.prev = _context9.next) {
+            case 0:
+              _context9.next = 2;
+              return fetch("" + this.path, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+              });
+
+            case 2:
+              res = _context9.sent;
+
+              if (!(res.status === 201)) {
+                _context9.next = 5;
+                break;
+              }
+
+              return _context9.abrupt("return", new RsuvResultBoolPknz());
+
+            case 5:
+              return _context9.abrupt("return", new RsuvResultBoolPknz(false, '210316120200', "err*: not created; status [" + res.status + "] url [" + res.url + "]"));
+
+            case 6:
+            case "end":
+              return _context9.stop();
+          }
+        }
+      }, _callee9, this);
+    }));
+
+    function elemCreate(_x9) {
+      return _elemCreate.apply(this, arguments);
+    }
+
+    return elemCreate;
+  }();
+
+  _proto.elemUpdate = /*#__PURE__*/function () {
+    var _elemUpdate = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee10(data) {
+      var res;
+      return runtime_1.wrap(function _callee10$(_context10) {
+        while (1) {
+          switch (_context10.prev = _context10.next) {
+            case 0:
+              _context10.next = 2;
+              return fetch(this.path + "/" + data.id, {
+                method: 'PUT',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+              });
+
+            case 2:
+              res = _context10.sent;
+
+              if (!(res.status === 200)) {
+                _context10.next = 5;
+                break;
+              }
+
+              return _context10.abrupt("return", new RsuvResultBoolPknz());
+
+            case 5:
+              return _context10.abrupt("return", new RsuvResultBoolPknz(false, '210318111500', "err*: not updated; status [" + res.status + "] url [" + res.url + "]"));
+
+            case 6:
+            case "end":
+              return _context10.stop();
+          }
+        }
+      }, _callee10, this);
+    }));
+
+    function elemUpdate(_x10) {
+      return _elemUpdate.apply(this, arguments);
+    }
+
+    return elemUpdate;
+  }();
+
+  return TJsonServer;
+}();
+
+var RsuvTxJsonServer = {
+  __proto__: null,
+  'default': TJsonServer
+};
+
 exports.RSUV_AL_ALREADY_EXIST = RSUV_AL_ALREADY_EXIST;
 exports.RsuvAdapterZrnx = RsuvAdapterZrnx;
 exports.RsuvErr = RsuvErr;
@@ -1315,6 +1762,7 @@ exports.RsuvResultBoolPknz = RsuvResultBoolPknz;
 exports.RsuvResultTibo = RsuvResultTibo;
 exports.RsuvTuString = RsuvTuString;
 exports.RsuvTxEmail = RsuvTxEmail;
+exports.RsuvTxJsonServer = RsuvTxJsonServer;
 exports.RsuvTxString = RsuvTxString;
 exports.RsuvTxStringAA = RsuvTxStringAA;
 exports.RsuvTxStringB = RsuvTxStringB;
