@@ -15,5 +15,5 @@ export { RsuvTxStringC } from './RsuvTxStringC';
 export * as RsuvTuString from './RsuvTuString'
 export { RsuvTxEmail } from './RsuvTxEmail';
 export { RsuvAdapterZrnx, RsuvZrnxSubData } from './RsuvAdapterZrnx';
-export * as RsuvTxJsonServer from './RsuvTxJsonServer';
+export { RsuvTxJsonServer } from './RsuvTxJsonServer';
 

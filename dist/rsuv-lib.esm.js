@@ -1356,19 +1356,19 @@ var RsuvAdapterZrnx = /*#__PURE__*/function () {
  * Утилита для запросав к json-server (https://github.com/typicode/json-server)
  */
 
-var TJsonServer = /*#__PURE__*/function () {
+var RsuvTxJsonServer = /*#__PURE__*/function () {
   /**
    *
    * @param basePath (1) -- expample 'http://localhost:21884/'
    * @param collectionName (2) -- example 'products'
    */
-  function TJsonServer(basePath, collectionName) {
+  function RsuvTxJsonServer(basePath, collectionName) {
     this.basePath = basePath;
     this.collectionName = collectionName;
     this.path = "" + this.basePath + this.collectionName;
   }
 
-  var _proto = TJsonServer.prototype;
+  var _proto = RsuvTxJsonServer.prototype;
 
   _proto.elemsCountGetAll = /*#__PURE__*/function () {
     var _elemsCountGetAll = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee() {
@@ -1740,13 +1740,8 @@ var TJsonServer = /*#__PURE__*/function () {
     return elemUpdate;
   }();
 
-  return TJsonServer;
+  return RsuvTxJsonServer;
 }();
-
-var RsuvTxJsonServer = {
-  __proto__: null,
-  'default': TJsonServer
-};
 
 export { RSUV_AL_ALREADY_EXIST, RsuvAdapterZrnx, RsuvErr, RsuvPaginationGyth, RsuvResultBoolPknz, RsuvResultTibo, RsuvTuString, RsuvTxEmail, RsuvTxJsonServer, RsuvTxString, RsuvTxStringAA, RsuvTxStringB, RsuvTxStringC, RsuvValueAnd, RsuvZrnxSubData };
 //# sourceMappingURL=rsuv-lib.esm.js.map

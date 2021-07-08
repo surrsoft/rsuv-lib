@@ -12,7 +12,7 @@ import { RsuvResultBoolPknz } from './RsuvResultBoolPknz';
  *
  * Утилита для запросав к json-server (https://github.com/typicode/json-server)
  */
-export default class TJsonServer {
+export class RsuvTxJsonServer {
 
   private readonly path: string;
 
