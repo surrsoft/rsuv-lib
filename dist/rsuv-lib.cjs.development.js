@@ -1809,9 +1809,109 @@ var RsuvTxBoolean = /*#__PURE__*/function () {
 }();
 
 /*
-[[gnpw]] - объект вида {id: string, checked: boolean}
 [[ecxm]] - массив из [gnpw]-объектов или пустой массив
+[[gnpw]] - объект вида {id: string, checked: boolean}
  */
+var RsuvEcxm = /*#__PURE__*/function () {
+  function RsuvEcxm() {}
+
+  RsuvEcxm.find = function find(models, id) {
+    return models.find(function (model) {
+      return model.id === id;
+    });
+  }
+  /**
+   * Добавляет новый элемент (2) в конец (1)
+   * @param modelsBack (1) --
+   * @param model
+   */
+  ;
+
+  RsuvEcxm.append = function append(modelsBack, model) {
+    var fModel = RsuvEcxm.find(modelsBack, model.id);
+
+    if (fModel) {
+      return new RsuvResultBoolPknz(false, '[[210712155908]]', 'already exist');
+    }
+
+    modelsBack.push(model);
+    return new RsuvResultBoolPknz(true);
+  };
+
+  RsuvEcxm.appendMulti = function appendMulti(modelsBack, models) {
+    var ret = [];
+    models.forEach(function (model) {
+      var res = RsuvEcxm.append(modelsBack, model);
+
+      if (!res.success) {
+        ret.push(res);
+      }
+    });
+    return ret;
+  };
+
+  RsuvEcxm.update = function update(modelsBack, model) {
+    var elem = RsuvEcxm.find(modelsBack, model.id);
+
+    if (elem) {
+      elem.checked = model.checked;
+      return new RsuvResultBoolPknz(true);
+    }
+
+    return new RsuvResultBoolPknz(false, '[[210712160222]]', 'not finded');
+  };
+
+  RsuvEcxm.updateMulti = function updateMulti(modelsBack, models) {
+    var ret = [];
+    models.forEach(function (model) {
+      var res = RsuvEcxm.update(modelsBack, model);
+
+      if (!res.success) {
+        ret.push(res);
+      }
+    });
+    return ret;
+  };
+
+  RsuvEcxm["delete"] = function _delete(modelsBack, model) {
+    var index = modelsBack.findIndex(function (elModel) {
+      return elModel.id === model.id;
+    });
+
+    if (index !== -1) {
+      modelsBack.splice(index, 1);
+      return new RsuvResultBoolPknz(true);
+    }
+
+    return new RsuvResultBoolPknz(false, '[[210712160441]]', 'not finded');
+  };
+
+  RsuvEcxm.deleteMulti = function deleteMulti(modelsBack, models) {
+    var ret = [];
+    models.forEach(function (model) {
+      var res = RsuvEcxm["delete"](modelsBack, model);
+
+      if (!res.success) {
+        ret.push(res);
+      }
+    });
+    return ret;
+  };
+
+  RsuvEcxm.filter = function filter(models, checked) {
+    return models.filter(function (elModel) {
+      return elModel.checked === checked;
+    });
+  };
+
+  RsuvEcxm.inverse = function inverse(modelsBack) {
+    modelsBack.forEach(function (elModel) {
+      return elModel.checked = !elModel.checked;
+    });
+  };
+
+  return RsuvEcxm;
+}();
 /**
  * Представление [gnpw]
  */
@@ -1844,83 +1944,11 @@ var RsuvCheckModelGnpw = /*#__PURE__*/function () {
 
   return RsuvCheckModelGnpw;
 }();
-/**
- * Представление [ecxm]
- */
-
-var RsuvCheckModelsEcxm = /*#__PURE__*/function () {
-  function RsuvCheckModelsEcxm() {
-    this.models = [];
-  }
-
-  var _proto2 = RsuvCheckModelsEcxm.prototype;
-
-  _proto2.appendMulti = function appendMulti(modelsAppending) {
-    var nx = bnuwUtilsVerifyMulti(modelsAppending);
-
-    if (nx.length > 0) {
-      return nx[0];
-    }
-
-    this.models = [].concat(this.models, modelsAppending);
-    return new RsuvResultBoolPknz(true);
-  };
-
-  _proto2.remove = function remove(id) {
-    var elIndex = this.models.findIndex(function (el) {
-      return el.id === id;
-    });
-
-    if (elIndex === -1) {
-      return new RsuvResultBoolPknz(false, '[[210712084138]]', "not finded elem with id [" + id + "]");
-    }
-
-    this.models.splice(elIndex, 1);
-    return new RsuvResultBoolPknz(true);
-  };
-
-  _proto2.update = function update(id, checked) {
-    var el = this.find(id);
-
-    if (!el) {
-      return new RsuvResultBoolPknz(false, '[[210712083247]]', "not finded elem with id [" + id + "]");
-    }
-
-    el.checked = checked;
-    return new RsuvResultBoolPknz(true);
-  }
-  /**
-   *
-   * @param id
-   * @return undefined если не находит
-   */
-  ;
-
-  _proto2.find = function find(id) {
-    return this.models.find(function (el) {
-      return el.id === id;
-    });
-  };
-
-  _proto2.bnuwIsValid = function bnuwIsValid() {
-    var nx = bnuwUtilsVerifyMulti(this.models);
-
-    if (nx.length > 0) {
-      return nx[0];
-    }
-
-    return new RsuvResultBoolPknz(true);
-  };
-
-  return RsuvCheckModelsEcxm;
-}();
-var RsuvCheckModelsEcxmB = function RsuvCheckModelsEcxmB() {};
 
 exports.RSUV_AL_ALREADY_EXIST = RSUV_AL_ALREADY_EXIST;
 exports.RsuvAdapterZrnx = RsuvAdapterZrnx;
 exports.RsuvCheckModelGnpw = RsuvCheckModelGnpw;
-exports.RsuvCheckModelsEcxm = RsuvCheckModelsEcxm;
-exports.RsuvCheckModelsEcxmB = RsuvCheckModelsEcxmB;
+exports.RsuvEcxm = RsuvEcxm;
 exports.RsuvErr = RsuvErr;
 exports.RsuvPaginationGyth = RsuvPaginationGyth;
 exports.RsuvResultBoolPknz = RsuvResultBoolPknz;
