@@ -1803,28 +1803,61 @@ var RsuvTxBoolean = /*#__PURE__*/function () {
 }();
 
 /*
-[[gnpw]]
+[[gnpw]] - объект вида {id: string, checked: boolean}
+[[ecxm]] - массив из [gnpw]-объектов или пустой массив
  */
-var RsuvListCheckingGnpw = /*#__PURE__*/function () {
-  function RsuvListCheckingGnpw() {
-    this.models = [];
+/**
+ * Представление [gnpw]
+ */
+
+var RsuvCheckModelGnpw = /*#__PURE__*/function () {
+  function RsuvCheckModelGnpw(id, checked) {
+    if (id === void 0) {
+      id = '';
+    }
+
+    if (checked === void 0) {
+      checked = false;
+    }
+
+    this.id = id;
+    this.checked = checked;
   }
 
-  var _proto = RsuvListCheckingGnpw.prototype;
+  var _proto = RsuvCheckModelGnpw.prototype;
 
-  _proto.appendMulti = function appendMulti(modelsAppending) {
+  _proto.bnuwIsValid = function bnuwIsValid() {
+    var res = bnuwUtilsVerifyMulti([new RsuvTxStringAA(this.id), new RsuvTxBoolean(this.checked)]);
+
+    if (res.length > 0) {
+      return res[0];
+    }
+
+    return new RsuvResultBoolPknz(true);
+  };
+
+  return RsuvCheckModelGnpw;
+}();
+var RsuvCheckModelEcxmUtils = /*#__PURE__*/function () {
+  function RsuvCheckModelEcxmUtils() {
+    this.modelsEcxm = [];
+  }
+
+  var _proto2 = RsuvCheckModelEcxmUtils.prototype;
+
+  _proto2.appendMulti = function appendMulti(modelsAppending) {
     var nx = bnuwUtilsVerifyMulti(modelsAppending);
 
     if (nx.length > 0) {
       return nx[0];
     }
 
-    this.models = [].concat(this.models, modelsAppending);
+    this.modelsEcxm = [].concat(this.modelsEcxm, modelsAppending);
     return new RsuvResultBoolPknz(true);
   };
 
-  _proto.remove = function remove(id) {
-    var elIndex = this.models.findIndex(function (el) {
+  _proto2.remove = function remove(id) {
+    var elIndex = this.modelsEcxm.findIndex(function (el) {
       return el.id === id;
     });
 
@@ -1832,11 +1865,11 @@ var RsuvListCheckingGnpw = /*#__PURE__*/function () {
       return new RsuvResultBoolPknz(false, '[[210712084138]]', "not finded elem with id [" + id + "]");
     }
 
-    this.models.splice(elIndex, 1);
+    this.modelsEcxm.splice(elIndex, 1);
     return new RsuvResultBoolPknz(true);
   };
 
-  _proto.update = function update(id, checked) {
+  _proto2.update = function update(id, checked) {
     var el = this.find(id);
 
     if (!el) {
@@ -1853,14 +1886,14 @@ var RsuvListCheckingGnpw = /*#__PURE__*/function () {
    */
   ;
 
-  _proto.find = function find(id) {
-    return this.models.find(function (el) {
+  _proto2.find = function find(id) {
+    return this.modelsEcxm.find(function (el) {
       return el.id === id;
     });
   };
 
-  _proto.bnuwIsValid = function bnuwIsValid() {
-    var nx = bnuwUtilsVerifyMulti(this.models);
+  _proto2.bnuwIsValid = function bnuwIsValid() {
+    var nx = bnuwUtilsVerifyMulti(this.modelsEcxm);
 
     if (nx.length > 0) {
       return nx[0];
@@ -1869,28 +1902,8 @@ var RsuvListCheckingGnpw = /*#__PURE__*/function () {
     return new RsuvResultBoolPknz(true);
   };
 
-  return RsuvListCheckingGnpw;
-}();
-var RsuvCheckModel001 = /*#__PURE__*/function () {
-  function RsuvCheckModel001() {
-    this.id = '';
-    this.checked = false;
-  }
-
-  var _proto2 = RsuvCheckModel001.prototype;
-
-  _proto2.bnuwIsValid = function bnuwIsValid() {
-    var res = bnuwUtilsVerifyMulti([new RsuvTxStringAA(this.id), new RsuvTxBoolean(this.checked)]);
-
-    if (res.length > 0) {
-      return res[0];
-    }
-
-    return new RsuvResultBoolPknz(true);
-  };
-
-  return RsuvCheckModel001;
+  return RsuvCheckModelEcxmUtils;
 }();
 
-export { RSUV_AL_ALREADY_EXIST, RsuvAdapterZrnx, RsuvCheckModel001, RsuvErr, RsuvListCheckingGnpw, RsuvPaginationGyth, RsuvResultBoolPknz, RsuvResultTibo, RsuvTuString, RsuvTxEmail, RsuvTxJsonServer, RsuvTxString, RsuvTxStringAA, RsuvTxStringB, RsuvTxStringC, RsuvValueAnd, RsuvZrnxSubData };
+export { RSUV_AL_ALREADY_EXIST, RsuvAdapterZrnx, RsuvCheckModelEcxmUtils, RsuvCheckModelGnpw, RsuvErr, RsuvPaginationGyth, RsuvResultBoolPknz, RsuvResultTibo, RsuvTuString, RsuvTxEmail, RsuvTxJsonServer, RsuvTxString, RsuvTxStringAA, RsuvTxStringB, RsuvTxStringC, RsuvValueAnd, RsuvZrnxSubData };
 //# sourceMappingURL=rsuv-lib.esm.js.map
