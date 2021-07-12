@@ -26,25 +26,27 @@ export class RsuvCheckModelGnpw implements RsuvBnuwNT {
   }
 }
 
-
-export class RsuvCheckModelEcxmUtils implements RsuvBnuwNT {
-  modelsEcxm: RsuvCheckModelGnpw[] = []
+/**
+ * Представление [ecxm]
+ */
+export class RsuvCheckModelsEcxm implements RsuvBnuwNT {
+  models: RsuvCheckModelGnpw[] = []
 
   appendMulti(modelsAppending: RsuvCheckModelGnpw[]): RsuvResultBoolPknz {
     const nx = bnuwUtilsVerifyMulti(modelsAppending)
     if (nx.length > 0) {
       return nx[0]
     }
-    this.modelsEcxm = [...this.modelsEcxm, ...modelsAppending]
+    this.models = [...this.models, ...modelsAppending]
     return new RsuvResultBoolPknz(true)
   }
 
   remove(id: string): RsuvResultBoolPknz {
-    const elIndex = this.modelsEcxm.findIndex(el => el.id === id)
+    const elIndex = this.models.findIndex(el => el.id === id)
     if (elIndex === -1) {
       return new RsuvResultBoolPknz(false, '[[210712084138]]', `not finded elem with id [${id}]`)
     }
-    this.modelsEcxm.splice(elIndex, 1);
+    this.models.splice(elIndex, 1);
     return new RsuvResultBoolPknz(true)
   }
 
@@ -63,15 +65,19 @@ export class RsuvCheckModelEcxmUtils implements RsuvBnuwNT {
    * @return undefined если не находит
    */
   find(id: string) {
-    return this.modelsEcxm.find(el => el.id === id)
+    return this.models.find(el => el.id === id)
   }
 
   bnuwIsValid(): RsuvResultBoolPknz {
-    const nx = bnuwUtilsVerifyMulti(this.modelsEcxm)
+    const nx = bnuwUtilsVerifyMulti(this.models)
     if (nx.length > 0) {
       return nx[0]
     }
     return new RsuvResultBoolPknz(true)
   }
+}
+
+export class RsuvCheckModelsEcxmB {
+
 }
 

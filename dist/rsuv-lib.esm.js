@@ -1838,12 +1838,16 @@ var RsuvCheckModelGnpw = /*#__PURE__*/function () {
 
   return RsuvCheckModelGnpw;
 }();
-var RsuvCheckModelEcxmUtils = /*#__PURE__*/function () {
-  function RsuvCheckModelEcxmUtils() {
-    this.modelsEcxm = [];
+/**
+ * Представление [ecxm]
+ */
+
+var RsuvCheckModelsEcxm = /*#__PURE__*/function () {
+  function RsuvCheckModelsEcxm() {
+    this.models = [];
   }
 
-  var _proto2 = RsuvCheckModelEcxmUtils.prototype;
+  var _proto2 = RsuvCheckModelsEcxm.prototype;
 
   _proto2.appendMulti = function appendMulti(modelsAppending) {
     var nx = bnuwUtilsVerifyMulti(modelsAppending);
@@ -1852,12 +1856,12 @@ var RsuvCheckModelEcxmUtils = /*#__PURE__*/function () {
       return nx[0];
     }
 
-    this.modelsEcxm = [].concat(this.modelsEcxm, modelsAppending);
+    this.models = [].concat(this.models, modelsAppending);
     return new RsuvResultBoolPknz(true);
   };
 
   _proto2.remove = function remove(id) {
-    var elIndex = this.modelsEcxm.findIndex(function (el) {
+    var elIndex = this.models.findIndex(function (el) {
       return el.id === id;
     });
 
@@ -1865,7 +1869,7 @@ var RsuvCheckModelEcxmUtils = /*#__PURE__*/function () {
       return new RsuvResultBoolPknz(false, '[[210712084138]]', "not finded elem with id [" + id + "]");
     }
 
-    this.modelsEcxm.splice(elIndex, 1);
+    this.models.splice(elIndex, 1);
     return new RsuvResultBoolPknz(true);
   };
 
@@ -1887,13 +1891,13 @@ var RsuvCheckModelEcxmUtils = /*#__PURE__*/function () {
   ;
 
   _proto2.find = function find(id) {
-    return this.modelsEcxm.find(function (el) {
+    return this.models.find(function (el) {
       return el.id === id;
     });
   };
 
   _proto2.bnuwIsValid = function bnuwIsValid() {
-    var nx = bnuwUtilsVerifyMulti(this.modelsEcxm);
+    var nx = bnuwUtilsVerifyMulti(this.models);
 
     if (nx.length > 0) {
       return nx[0];
@@ -1902,8 +1906,9 @@ var RsuvCheckModelEcxmUtils = /*#__PURE__*/function () {
     return new RsuvResultBoolPknz(true);
   };
 
-  return RsuvCheckModelEcxmUtils;
+  return RsuvCheckModelsEcxm;
 }();
+var RsuvCheckModelsEcxmB = function RsuvCheckModelsEcxmB() {};
 
-export { RSUV_AL_ALREADY_EXIST, RsuvAdapterZrnx, RsuvCheckModelEcxmUtils, RsuvCheckModelGnpw, RsuvErr, RsuvPaginationGyth, RsuvResultBoolPknz, RsuvResultTibo, RsuvTuString, RsuvTxEmail, RsuvTxJsonServer, RsuvTxString, RsuvTxStringAA, RsuvTxStringB, RsuvTxStringC, RsuvValueAnd, RsuvZrnxSubData };
+export { RSUV_AL_ALREADY_EXIST, RsuvAdapterZrnx, RsuvCheckModelGnpw, RsuvCheckModelsEcxm, RsuvCheckModelsEcxmB, RsuvErr, RsuvPaginationGyth, RsuvResultBoolPknz, RsuvResultTibo, RsuvTuString, RsuvTxEmail, RsuvTxJsonServer, RsuvTxString, RsuvTxStringAA, RsuvTxStringB, RsuvTxStringC, RsuvValueAnd, RsuvZrnxSubData };
 //# sourceMappingURL=rsuv-lib.esm.js.map
