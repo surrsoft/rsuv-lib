@@ -16,3 +16,4 @@ export * as RsuvTuString from './RsuvTuString';
 export { RsuvTxEmail } from './RsuvTxEmail';
 export { RsuvAdapterZrnx, RsuvZrnxSubData } from './RsuvAdapterZrnx';
 export { RsuvTxJsonServer } from './RsuvTxJsonServer';
+export { RsuvListCheckingGnpw, RsuvCheckModel001 } from './RsuvListCheckingGnpw';

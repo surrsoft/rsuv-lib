@@ -1743,5 +1743,154 @@ var RsuvTxJsonServer = /*#__PURE__*/function () {
   return RsuvTxJsonServer;
 }();
 
-export { RSUV_AL_ALREADY_EXIST, RsuvAdapterZrnx, RsuvErr, RsuvPaginationGyth, RsuvResultBoolPknz, RsuvResultTibo, RsuvTuString, RsuvTxEmail, RsuvTxJsonServer, RsuvTxString, RsuvTxStringAA, RsuvTxStringB, RsuvTxStringC, RsuvValueAnd, RsuvZrnxSubData };
+var bnuwUtilsVerify = function bnuwUtilsVerify(value) {
+  if (!value) {
+    return new RsuvResultBoolPknz(false, '[[210711215605]]', 'value is falsy');
+  }
+
+  var res = value.bnuwIsValid();
+
+  if (!res) {
+    return new RsuvResultBoolPknz(false, '[[210711215805]]', 'invalid value');
+  }
+
+  return res;
+};
+/**
+ * Если возвращает пустой массив, значит все элементы (1) валидные, иначе в массиве результы неудачных проверок
+ * @param values (1) -- элементы для проверки; пустой массив не валиден
+ */
+
+var bnuwUtilsVerifyMulti = function bnuwUtilsVerifyMulti(values) {
+  if (Array.isArray(values) && values.length > 0) {
+    var ret = [];
+    values.forEach(function (el) {
+      var verif = bnuwUtilsVerify(el);
+
+      if (!verif.success) {
+        ret.push(verif);
+      }
+    });
+    return ret;
+  }
+
+  return [new RsuvResultBoolPknz(false, '[[210711221552]]')];
+};
+
+/*
+ * Представляет строку не нулевой длины
+ */
+var RsuvTxBoolean = /*#__PURE__*/function () {
+  function RsuvTxBoolean(val) {
+    this.val = val;
+  }
+
+  var _proto = RsuvTxBoolean.prototype;
+
+  _proto.bnuwIsValid = function bnuwIsValid() {
+    try {
+      if (!_.isBoolean(this.val)) {
+        return new RsuvResultBoolPknz(false, '[[210711220826]]', 'is not boolean');
+      }
+    } catch (err) {
+      return new RsuvResultBoolPknz(false, '[[210705185560]]', err.message);
+    }
+
+    return new RsuvResultBoolPknz(true);
+  };
+
+  return RsuvTxBoolean;
+}();
+
+/*
+[[gnpw]]
+ */
+var RsuvListCheckingGnpw = /*#__PURE__*/function () {
+  function RsuvListCheckingGnpw() {
+    this.models = [];
+  }
+
+  var _proto = RsuvListCheckingGnpw.prototype;
+
+  _proto.appendMulti = function appendMulti(modelsAppending) {
+    var nx = bnuwUtilsVerifyMulti(modelsAppending);
+
+    if (nx.length > 0) {
+      return nx[0];
+    }
+
+    this.models = [].concat(this.models, modelsAppending);
+    return new RsuvResultBoolPknz(true);
+  };
+
+  _proto.remove = function remove(id) {
+    var elIndex = this.models.findIndex(function (el) {
+      return el.id === id;
+    });
+
+    if (elIndex === -1) {
+      return new RsuvResultBoolPknz(false, '[[210712084138]]', "not finded elem with id [" + id + "]");
+    }
+
+    this.models.splice(elIndex, 1);
+    return new RsuvResultBoolPknz(true);
+  };
+
+  _proto.update = function update(id, checked) {
+    var el = this.find(id);
+
+    if (!el) {
+      return new RsuvResultBoolPknz(false, '[[210712083247]]', "not finded elem with id [" + id + "]");
+    }
+
+    el.checked = checked;
+    return new RsuvResultBoolPknz(true);
+  }
+  /**
+   *
+   * @param id
+   * @return undefined если не находит
+   */
+  ;
+
+  _proto.find = function find(id) {
+    return this.models.find(function (el) {
+      return el.id === id;
+    });
+  };
+
+  _proto.bnuwIsValid = function bnuwIsValid() {
+    var nx = bnuwUtilsVerifyMulti(this.models);
+
+    if (nx.length > 0) {
+      return nx[0];
+    }
+
+    return new RsuvResultBoolPknz(true);
+  };
+
+  return RsuvListCheckingGnpw;
+}();
+var RsuvCheckModel001 = /*#__PURE__*/function () {
+  function RsuvCheckModel001() {
+    this.id = '';
+    this.checked = false;
+  }
+
+  var _proto2 = RsuvCheckModel001.prototype;
+
+  _proto2.bnuwIsValid = function bnuwIsValid() {
+    var res = bnuwUtilsVerifyMulti([new RsuvTxStringAA(this.id), new RsuvTxBoolean(this.checked)]);
+
+    if (res.length > 0) {
+      return res[0];
+    }
+
+    return new RsuvResultBoolPknz(true);
+  };
+
+  return RsuvCheckModel001;
+}();
+
+export { RSUV_AL_ALREADY_EXIST, RsuvAdapterZrnx, RsuvCheckModel001, RsuvErr, RsuvListCheckingGnpw, RsuvPaginationGyth, RsuvResultBoolPknz, RsuvResultTibo, RsuvTuString, RsuvTxEmail, RsuvTxJsonServer, RsuvTxString, RsuvTxStringAA, RsuvTxStringB, RsuvTxStringC, RsuvValueAnd, RsuvZrnxSubData };
 //# sourceMappingURL=rsuv-lib.esm.js.map
