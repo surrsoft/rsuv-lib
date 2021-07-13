@@ -1910,6 +1910,22 @@ var RsuvEcxm = /*#__PURE__*/function () {
     });
   };
 
+  RsuvEcxm.selectAll = function selectAll(modelsBack) {
+    modelsBack.forEach(function (elModel) {
+      if (!elModel.checked) {
+        elModel.checked = true;
+      }
+    });
+  };
+
+  RsuvEcxm.deselectAll = function deselectAll(modelsBack) {
+    modelsBack.forEach(function (elModel) {
+      if (elModel.checked) {
+        elModel.checked = false;
+      }
+    });
+  };
+
   return RsuvEcxm;
 }();
 /**

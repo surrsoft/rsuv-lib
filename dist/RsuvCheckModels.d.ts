@@ -22,6 +22,8 @@ export declare class RsuvEcxm {
     static deleteMulti(modelsBack: RsuvT1, models: RsuvCheckModelGnpw[]): RsuvResultBoolPknz[];
     static filter(models: RsuvT1, checked: boolean): any[];
     static inverse(modelsBack: RsuvT1): void;
+    static selectAll(modelsBack: RsuvT1): void;
+    static deselectAll(modelsBack: RsuvT1): void;
 }
 /**
  * Представление [gnpw]
