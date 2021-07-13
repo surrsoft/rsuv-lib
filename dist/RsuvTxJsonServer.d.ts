@@ -23,6 +23,12 @@ export declare class RsuvTxJsonServer {
      * @param filter (1) -- см. [ntxe]
      */
     elemsGetByFilter(filter: string): Promise<any>;
+    /**
+     * Отбор записей у которых в поле (1) значение содержит подстроку (2) (без учета регистра символов)
+     * @param fieldName (1) --
+     * @param substring (2) --
+     */
+    elemsGetByFilterB(fieldName: string, substring: string): Promise<any>;
     elemDelete(id: string | number): Promise<RsuvResultBoolPknz>;
     elemsDelete(ids: string[] | number[]): Promise<RsuvResultBoolPknz[]>;
     /**

@@ -1,5 +1,6 @@
 import toInteger from 'lodash/toInteger';
 import { RsuvResultBoolPknz } from './RsuvResultBoolPknz';
+import { substrCountB } from './RsuvTuString';
 
 /*
 -- [[ntxe]] - фильтр, например 'id=1&id=2' или 'json-server&author=typicode'.
@@ -53,6 +54,18 @@ export class RsuvTxJsonServer {
   async elemsGetByFilter(filter: string) {
     const resp = await fetch(`${this.path}?${filter}`);
     return resp.json();
+  }
+
+  /**
+   * Отбор записей у которых в поле (1) значение содержит подстроку (2) (без учета регистра символов)
+   * @param fieldName (1) --
+   * @param substring (2) --
+   */
+  async elemsGetByFilterB(fieldName: string, substring: string) {
+    const elems = await this.elemsGetAll()
+    return elems.filter((elem: any) => {
+      return substrCountB(elem[fieldName], substring) > 0
+    })
   }
 
   async elemDelete(id: string | number): Promise<RsuvResultBoolPknz> {
