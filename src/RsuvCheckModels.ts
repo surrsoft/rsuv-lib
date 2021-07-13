@@ -95,6 +95,21 @@ export class RsuvEcxm {
     modelsBack.forEach((elModel: RsuvCheckModelGnpw) => elModel.checked = !elModel.checked);
   }
 
+  static selectAll(modelsBack: RsuvT1) {
+    modelsBack.forEach((elModel: RsuvCheckModelGnpw) => {
+      if (!elModel.checked) {
+        elModel.checked = true;
+      }
+    })
+  }
+
+  static deselectAll(modelsBack: RsuvT1) {
+    modelsBack.forEach((elModel: RsuvCheckModelGnpw) => {
+      if (elModel.checked) {
+        elModel.checked = false;
+      }
+    })
+  }
 }
 
 
