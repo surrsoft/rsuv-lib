@@ -1,4 +1,5 @@
 import { RsuvResultBoolPknz } from './RsuvResultBoolPknz';
+import { RsuvResultCountAndData } from './RsuvResultCountAndData';
 /**
  * [[ktvg]]
  *
@@ -44,6 +45,8 @@ export declare class RsuvTxJsonServer {
      * @param limit (4) --
      */
     elemsGetByFilterBB(fieldName: string, substring: string, pageNumber: number, limit: number): Promise<void>;
+    elemsGetByFilterC<T>(fieldName: string, substring: string, offset: number, limit: number): Promise<RsuvResultCountAndData<T>>;
+    elemsGetByFilterCB<T>(fieldName: string, substring: string, pageNumber: number, limit: number): Promise<RsuvResultCountAndData<T>>;
     elemDelete(id: string | number): Promise<RsuvResultBoolPknz>;
     elemsDelete(ids: string[] | number[]): Promise<RsuvResultBoolPknz[]>;
     /**

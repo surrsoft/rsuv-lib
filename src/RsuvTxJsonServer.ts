@@ -1,6 +1,7 @@
 import toInteger from 'lodash/toInteger';
 import { RsuvResultBoolPknz } from './RsuvResultBoolPknz';
 import { substrCountB } from './RsuvTuString';
+import { RsuvResultCountAndData } from './RsuvResultCountAndData';
 
 /*
 -- [[ntxe]] - фильтр, например 'id=1&id=2' или 'json-server&author=typicode'.
@@ -85,6 +86,19 @@ export class RsuvTxJsonServer {
    */
   async elemsGetByFilterBB(fieldName: string, substring: string, pageNumber: number, limit: number) {
     this.elemsGetByFilterB(fieldName, substring, (pageNumber - 1) * limit, limit)
+  }
+
+  async elemsGetByFilterC<T>(fieldName: string, substring: string, offset: number, limit: number): Promise<RsuvResultCountAndData<T>> {
+    const elems = await this.elemsGetAll();
+    const elemsFiltered = elems.filter((elem: any) => {
+      return substrCountB(elem[fieldName], substring) > 0;
+    })
+    const elemsFilteredSliced = elemsFiltered.slice(offset, offset + limit);
+    return {countAll: elems.length, data: elemsFilteredSliced} as RsuvResultCountAndData<T>
+  }
+
+  async elemsGetByFilterCB<T>(fieldName: string, substring: string, pageNumber: number, limit: number): Promise<RsuvResultCountAndData<T>> {
+    return this.elemsGetByFilterC(fieldName, substring, (pageNumber - 1) * limit, limit);
   }
 
   async elemDelete(id: string | number): Promise<RsuvResultBoolPknz> {
