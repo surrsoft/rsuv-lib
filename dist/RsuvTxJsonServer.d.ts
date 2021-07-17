@@ -45,7 +45,22 @@ export declare class RsuvTxJsonServer {
      * @param limit (4) --
      */
     elemsGetByFilterBB(fieldName: string, substring: string, pageNumber: number, limit: number): Promise<void>;
+    /**
+     *
+     * @param fieldName (1) --
+     * @param substring (2) --
+     * @param offset (3) --
+     * @param limit (4) --
+     * @return countAll - количество элементов удовлетворяющих фильтру (1)(2) без учета (3)(4), data - элементы удовлетворяющие (1)-(4)
+     */
     elemsGetByFilterC<T>(fieldName: string, substring: string, offset: number, limit: number): Promise<RsuvResultCountAndData<T>>;
+    /**
+     * Отличается от CA только параметром (3)
+     * @param fieldName (1) --
+     * @param substring (2) --
+     * @param pageNumber (3) -- 1+
+     * @param limit (4) --
+     */
     elemsGetByFilterCB<T>(fieldName: string, substring: string, pageNumber: number, limit: number): Promise<RsuvResultCountAndData<T>>;
     elemDelete(id: string | number): Promise<RsuvResultBoolPknz>;
     elemsDelete(ids: string[] | number[]): Promise<RsuvResultBoolPknz[]>;

@@ -1645,9 +1645,20 @@ var RsuvTxJsonServer = /*#__PURE__*/function () {
     }
 
     return elemsGetByFilterBB;
-  }();
+  }()
+  /**
+   *
+   * @param fieldName (1) --
+   * @param substring (2) --
+   * @param offset (3) --
+   * @param limit (4) --
+   * @return countAll - количество элементов удовлетворяющих фильтру (1)(2) без учета (3)(4), data - элементы удовлетворяющие (1)-(4)
+   */
+  ;
 
-  _proto.elemsGetByFilterC = /*#__PURE__*/function () {
+  _proto.elemsGetByFilterC =
+  /*#__PURE__*/
+  function () {
     var _elemsGetByFilterC = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee8(fieldName, substring, offset, limit) {
       var elems, elemsFiltered, elemsFilteredSliced;
       return runtime_1.wrap(function _callee8$(_context8) {
@@ -1664,7 +1675,7 @@ var RsuvTxJsonServer = /*#__PURE__*/function () {
               });
               elemsFilteredSliced = elemsFiltered.slice(offset, offset + limit);
               return _context8.abrupt("return", {
-                countAll: elems.length,
+                countAll: elemsFiltered.length,
                 data: elemsFilteredSliced
               });
 
@@ -1681,9 +1692,19 @@ var RsuvTxJsonServer = /*#__PURE__*/function () {
     }
 
     return elemsGetByFilterC;
-  }();
+  }()
+  /**
+   * Отличается от CA только параметром (3)
+   * @param fieldName (1) --
+   * @param substring (2) --
+   * @param pageNumber (3) -- 1+
+   * @param limit (4) --
+   */
+  ;
 
-  _proto.elemsGetByFilterCB = /*#__PURE__*/function () {
+  _proto.elemsGetByFilterCB =
+  /*#__PURE__*/
+  function () {
     var _elemsGetByFilterCB = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee9(fieldName, substring, pageNumber, limit) {
       return runtime_1.wrap(function _callee9$(_context9) {
         while (1) {

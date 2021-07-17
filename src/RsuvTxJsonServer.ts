@@ -88,15 +88,30 @@ export class RsuvTxJsonServer {
     this.elemsGetByFilterB(fieldName, substring, (pageNumber - 1) * limit, limit)
   }
 
+  /**
+   *
+   * @param fieldName (1) --
+   * @param substring (2) --
+   * @param offset (3) --
+   * @param limit (4) --
+   * @return countAll - количество элементов удовлетворяющих фильтру (1)(2) без учета (3)(4), data - элементы удовлетворяющие (1)-(4)
+   */
   async elemsGetByFilterC<T>(fieldName: string, substring: string, offset: number, limit: number): Promise<RsuvResultCountAndData<T>> {
     const elems = await this.elemsGetAll();
     const elemsFiltered = elems.filter((elem: any) => {
       return substrCountB(elem[fieldName], substring) > 0;
     })
     const elemsFilteredSliced = elemsFiltered.slice(offset, offset + limit);
-    return {countAll: elems.length, data: elemsFilteredSliced} as RsuvResultCountAndData<T>
+    return {countAll: elemsFiltered.length, data: elemsFilteredSliced} as RsuvResultCountAndData<T>
   }
 
+  /**
+   * Отличается от CA только параметром (3)
+   * @param fieldName (1) --
+   * @param substring (2) --
+   * @param pageNumber (3) -- 1+
+   * @param limit (4) --
+   */
   async elemsGetByFilterCB<T>(fieldName: string, substring: string, pageNumber: number, limit: number): Promise<RsuvResultCountAndData<T>> {
     return this.elemsGetByFilterC(fieldName, substring, (pageNumber - 1) * limit, limit);
   }
