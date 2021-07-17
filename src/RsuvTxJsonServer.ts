@@ -102,7 +102,11 @@ export class RsuvTxJsonServer {
       return substrCountB(elem[fieldName], substring) > 0;
     })
     const elemsFilteredSliced = elemsFiltered.slice(offset, offset + limit);
-    return {countAll: elemsFiltered.length, data: elemsFilteredSliced} as RsuvResultCountAndData<T>
+    return {
+      countAll: elemsFiltered.length,
+      data: elemsFilteredSliced,
+      hasNext: offset + limit >= elemsFiltered.length
+    } as RsuvResultCountAndData<T>
   }
 
   /**
