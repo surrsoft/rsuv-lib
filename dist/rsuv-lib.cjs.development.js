@@ -1573,17 +1573,20 @@ var RsuvTxJsonServer = /*#__PURE__*/function () {
     return elemsGetByFilter;
   }()
   /**
-   * Отбор записей у которых в поле (1) значение содержит подстроку (2) (без учета регистра символов)
+   * Отбор записей у которых в поле (1) значение содержит подстроку (2) (без учета регистра символов).
+   * Из всех возможных результатов, отбрасываются первые (3) и из оставшихся берутся первые (4)
    * @param fieldName (1) --
    * @param substring (2) --
+   * @param offset (3) --
+   * @param limit (4) --
    */
   ;
 
   _proto.elemsGetByFilterB =
   /*#__PURE__*/
   function () {
-    var _elemsGetByFilterB = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee6(fieldName, substring) {
-      var elems;
+    var _elemsGetByFilterB = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee6(fieldName, substring, offset, limit) {
+      var elems, elemsFiltered;
       return runtime_1.wrap(function _callee6$(_context6) {
         while (1) {
           switch (_context6.prev = _context6.next) {
@@ -1593,11 +1596,12 @@ var RsuvTxJsonServer = /*#__PURE__*/function () {
 
             case 2:
               elems = _context6.sent;
-              return _context6.abrupt("return", elems.filter(function (elem) {
+              elemsFiltered = elems.filter(function (elem) {
                 return substrCountB(elem[fieldName], substring) > 0;
-              }));
+              });
+              return _context6.abrupt("return", elemsFiltered.slice(offset, offset + limit));
 
-            case 4:
+            case 5:
             case "end":
               return _context6.stop();
           }
@@ -1605,7 +1609,7 @@ var RsuvTxJsonServer = /*#__PURE__*/function () {
       }, _callee6, this);
     }));
 
-    function elemsGetByFilterB(_x6, _x7) {
+    function elemsGetByFilterB(_x6, _x7, _x8, _x9) {
       return _elemsGetByFilterB.apply(this, arguments);
     }
 
@@ -1645,7 +1649,7 @@ var RsuvTxJsonServer = /*#__PURE__*/function () {
       }, _callee7, this);
     }));
 
-    function elemDelete(_x8) {
+    function elemDelete(_x10) {
       return _elemDelete.apply(this, arguments);
     }
 
@@ -1692,7 +1696,7 @@ var RsuvTxJsonServer = /*#__PURE__*/function () {
       }, _callee8, this);
     }));
 
-    function elemsDelete(_x9) {
+    function elemsDelete(_x11) {
       return _elemsDelete.apply(this, arguments);
     }
 
@@ -1734,7 +1738,7 @@ var RsuvTxJsonServer = /*#__PURE__*/function () {
       }, _callee9, this);
     }));
 
-    function elemsDeleteByFilter(_x10) {
+    function elemsDeleteByFilter(_x12) {
       return _elemsDeleteByFilter.apply(this, arguments);
     }
 
@@ -1778,7 +1782,7 @@ var RsuvTxJsonServer = /*#__PURE__*/function () {
       }, _callee10, this);
     }));
 
-    function elemCreate(_x11) {
+    function elemCreate(_x13) {
       return _elemCreate.apply(this, arguments);
     }
 
@@ -1822,7 +1826,7 @@ var RsuvTxJsonServer = /*#__PURE__*/function () {
       }, _callee11, this);
     }));
 
-    function elemUpdate(_x12) {
+    function elemUpdate(_x14) {
       return _elemUpdate.apply(this, arguments);
     }
 

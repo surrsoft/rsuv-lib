@@ -57,15 +57,19 @@ export class RsuvTxJsonServer {
   }
 
   /**
-   * Отбор записей у которых в поле (1) значение содержит подстроку (2) (без учета регистра символов)
+   * Отбор записей у которых в поле (1) значение содержит подстроку (2) (без учета регистра символов).
+   * Из всех возможных результатов, отбрасываются первые (3) и из оставшихся берутся первые (4)
    * @param fieldName (1) --
    * @param substring (2) --
+   * @param offset (3) --
+   * @param limit (4) --
    */
-  async elemsGetByFilterB(fieldName: string, substring: string) {
+  async elemsGetByFilterB(fieldName: string, substring: string, offset: number, limit: number) {
     const elems = await this.elemsGetAll()
-    return elems.filter((elem: any) => {
+    const elemsFiltered = elems.filter((elem: any) => {
       return substrCountB(elem[fieldName], substring) > 0
     })
+    return elemsFiltered.slice(offset, offset + limit)
   }
 
   async elemDelete(id: string | number): Promise<RsuvResultBoolPknz> {

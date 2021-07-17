@@ -13,7 +13,7 @@ export { RsuvTxString } from './RsuvTxString';
 export { RsuvTxStringAA } from './RsuvTxStringAA';
 export { RsuvTxStringB } from './RsuvTxStringB';
 export { RsuvTxStringC } from './RsuvTxStringC';
-export * as RsuvTuString from './RsuvTuString'
+export * as RsuvTuString from './RsuvTuString';
 export { RsuvTxEmail } from './RsuvTxEmail';
 export { RsuvAdapterZrnx, RsuvZrnxSubData } from './RsuvAdapterZrnx';
 export { RsuvTxJsonServer } from './RsuvTxJsonServer';

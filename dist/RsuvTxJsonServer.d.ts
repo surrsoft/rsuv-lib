@@ -24,11 +24,14 @@ export declare class RsuvTxJsonServer {
      */
     elemsGetByFilter(filter: string): Promise<any>;
     /**
-     * Отбор записей у которых в поле (1) значение содержит подстроку (2) (без учета регистра символов)
+     * Отбор записей у которых в поле (1) значение содержит подстроку (2) (без учета регистра символов).
+     * Из всех возможных результатов, отбрасываются первые (3) и из оставшихся берутся первые (4)
      * @param fieldName (1) --
      * @param substring (2) --
+     * @param offset (3) --
+     * @param limit (4) --
      */
-    elemsGetByFilterB(fieldName: string, substring: string): Promise<any>;
+    elemsGetByFilterB(fieldName: string, substring: string, offset: number, limit: number): Promise<any>;
     elemDelete(id: string | number): Promise<RsuvResultBoolPknz>;
     elemsDelete(ids: string[] | number[]): Promise<RsuvResultBoolPknz[]>;
     /**
