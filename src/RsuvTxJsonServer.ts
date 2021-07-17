@@ -105,7 +105,7 @@ export class RsuvTxJsonServer {
     return {
       countAll: elemsFiltered.length,
       data: elemsFilteredSliced,
-      hasNext: offset + limit >= elemsFiltered.length
+      hasNext: offset + limit < elemsFiltered.length
     } as RsuvResultCountAndData<T>
   }
 

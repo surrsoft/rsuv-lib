@@ -1677,7 +1677,7 @@ var RsuvTxJsonServer = /*#__PURE__*/function () {
               return _context8.abrupt("return", {
                 countAll: elemsFiltered.length,
                 data: elemsFilteredSliced,
-                hasNext: offset + limit >= elemsFiltered.length
+                hasNext: offset + limit < elemsFiltered.length
               });
 
             case 6:
