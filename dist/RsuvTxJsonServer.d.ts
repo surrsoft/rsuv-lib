@@ -32,6 +32,18 @@ export declare class RsuvTxJsonServer {
      * @param limit (4) --
      */
     elemsGetByFilterB(fieldName: string, substring: string, offset: number, limit: number): Promise<any>;
+    /**
+     * Отличается от BA только тем что (3) это не offset а pageNumber
+     *
+     * Отбор записей у которых в поле (1) значение содержит подстроку (2) (без учета регистра символов).
+     * Из всех возможных результатов, берётся страница (3), (4) определяет число элементов на странице
+     *
+     * @param fieldName (1) --
+     * @param substring (2) --
+     * @param pageNumber (3) -- 1+
+     * @param limit (4) --
+     */
+    elemsGetByFilterBB(fieldName: string, substring: string, pageNumber: number, limit: number): Promise<void>;
     elemDelete(id: string | number): Promise<RsuvResultBoolPknz>;
     elemsDelete(ids: string[] | number[]): Promise<RsuvResultBoolPknz[]>;
     /**

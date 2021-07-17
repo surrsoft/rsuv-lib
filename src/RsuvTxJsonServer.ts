@@ -72,6 +72,21 @@ export class RsuvTxJsonServer {
     return elemsFiltered.slice(offset, offset + limit)
   }
 
+  /**
+   * Отличается от BA только тем что (3) это не offset а pageNumber
+   *
+   * Отбор записей у которых в поле (1) значение содержит подстроку (2) (без учета регистра символов).
+   * Из всех возможных результатов, берётся страница (3), (4) определяет число элементов на странице
+   *
+   * @param fieldName (1) --
+   * @param substring (2) --
+   * @param pageNumber (3) -- 1+
+   * @param limit (4) --
+   */
+  async elemsGetByFilterBB(fieldName: string, substring: string, pageNumber: number, limit: number) {
+    this.elemsGetByFilterB(fieldName, substring, (pageNumber - 1) * limit, limit)
+  }
+
   async elemDelete(id: string | number): Promise<RsuvResultBoolPknz> {
     const ret = await fetch(`${this.path}/${id}`, {
       method: 'DELETE'

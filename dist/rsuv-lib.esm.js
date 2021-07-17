@@ -1608,34 +1608,31 @@ var RsuvTxJsonServer = /*#__PURE__*/function () {
     }
 
     return elemsGetByFilterB;
-  }();
+  }()
+  /**
+   * Отличается от BA только тем что (3) это не offset а pageNumber
+   *
+   * Отбор записей у которых в поле (1) значение содержит подстроку (2) (без учета регистра символов).
+   * Из всех возможных результатов, берётся страница (3), (4) определяет число элементов на странице
+   *
+   * @param fieldName (1) --
+   * @param substring (2) --
+   * @param pageNumber (3) -- 1+
+   * @param limit (4) --
+   */
+  ;
 
-  _proto.elemDelete = /*#__PURE__*/function () {
-    var _elemDelete = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee7(id) {
-      var ret;
+  _proto.elemsGetByFilterBB =
+  /*#__PURE__*/
+  function () {
+    var _elemsGetByFilterBB = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee7(fieldName, substring, pageNumber, limit) {
       return runtime_1.wrap(function _callee7$(_context7) {
         while (1) {
           switch (_context7.prev = _context7.next) {
             case 0:
-              _context7.next = 2;
-              return fetch(this.path + "/" + id, {
-                method: 'DELETE'
-              });
+              this.elemsGetByFilterB(fieldName, substring, (pageNumber - 1) * limit, limit);
 
-            case 2:
-              ret = _context7.sent;
-
-              if (!(ret.status !== 200)) {
-                _context7.next = 5;
-                break;
-              }
-
-              return _context7.abrupt("return", new RsuvResultBoolPknz(false, '210315153800', "err*: id not found; id [" + id + "]; ret.status [" + ret.status + "]"));
-
-            case 5:
-              return _context7.abrupt("return", new RsuvResultBoolPknz());
-
-            case 6:
+            case 1:
             case "end":
               return _context7.stop();
           }
@@ -1643,46 +1640,39 @@ var RsuvTxJsonServer = /*#__PURE__*/function () {
       }, _callee7, this);
     }));
 
-    function elemDelete(_x10) {
-      return _elemDelete.apply(this, arguments);
+    function elemsGetByFilterBB(_x10, _x11, _x12, _x13) {
+      return _elemsGetByFilterBB.apply(this, arguments);
     }
 
-    return elemDelete;
+    return elemsGetByFilterBB;
   }();
 
-  _proto.elemsDelete = /*#__PURE__*/function () {
-    var _elemsDelete = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee8(ids) {
-      var ret, _iterator, _step, id, res;
-
+  _proto.elemDelete = /*#__PURE__*/function () {
+    var _elemDelete = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee8(id) {
+      var ret;
       return runtime_1.wrap(function _callee8$(_context8) {
         while (1) {
           switch (_context8.prev = _context8.next) {
             case 0:
-              ret = [];
-              _iterator = _createForOfIteratorHelperLoose(ids);
+              _context8.next = 2;
+              return fetch(this.path + "/" + id, {
+                method: 'DELETE'
+              });
 
             case 2:
-              if ((_step = _iterator()).done) {
-                _context8.next = 10;
+              ret = _context8.sent;
+
+              if (!(ret.status !== 200)) {
+                _context8.next = 5;
                 break;
               }
 
-              id = _step.value;
-              _context8.next = 6;
-              return this.elemDelete(id);
+              return _context8.abrupt("return", new RsuvResultBoolPknz(false, '210315153800', "err*: id not found; id [" + id + "]; ret.status [" + ret.status + "]"));
+
+            case 5:
+              return _context8.abrupt("return", new RsuvResultBoolPknz());
 
             case 6:
-              res = _context8.sent;
-              ret.push(res);
-
-            case 8:
-              _context8.next = 2;
-              break;
-
-            case 10:
-              return _context8.abrupt("return", ret);
-
-            case 11:
             case "end":
               return _context8.stop();
           }
@@ -1690,7 +1680,54 @@ var RsuvTxJsonServer = /*#__PURE__*/function () {
       }, _callee8, this);
     }));
 
-    function elemsDelete(_x11) {
+    function elemDelete(_x14) {
+      return _elemDelete.apply(this, arguments);
+    }
+
+    return elemDelete;
+  }();
+
+  _proto.elemsDelete = /*#__PURE__*/function () {
+    var _elemsDelete = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee9(ids) {
+      var ret, _iterator, _step, id, res;
+
+      return runtime_1.wrap(function _callee9$(_context9) {
+        while (1) {
+          switch (_context9.prev = _context9.next) {
+            case 0:
+              ret = [];
+              _iterator = _createForOfIteratorHelperLoose(ids);
+
+            case 2:
+              if ((_step = _iterator()).done) {
+                _context9.next = 10;
+                break;
+              }
+
+              id = _step.value;
+              _context9.next = 6;
+              return this.elemDelete(id);
+
+            case 6:
+              res = _context9.sent;
+              ret.push(res);
+
+            case 8:
+              _context9.next = 2;
+              break;
+
+            case 10:
+              return _context9.abrupt("return", ret);
+
+            case 11:
+            case "end":
+              return _context9.stop();
+          }
+        }
+      }, _callee9, this);
+    }));
+
+    function elemsDelete(_x15) {
       return _elemsDelete.apply(this, arguments);
     }
 
@@ -1705,68 +1742,24 @@ var RsuvTxJsonServer = /*#__PURE__*/function () {
   _proto.elemsDeleteByFilter =
   /*#__PURE__*/
   function () {
-    var _elemsDeleteByFilter = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee9(filter) {
+    var _elemsDeleteByFilter = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee10(filter) {
       var elems;
-      return runtime_1.wrap(function _callee9$(_context9) {
-        while (1) {
-          switch (_context9.prev = _context9.next) {
-            case 0:
-              _context9.next = 2;
-              return this.elemsGetByFilter(filter);
-
-            case 2:
-              elems = _context9.sent;
-              _context9.next = 5;
-              return this.elemsDelete(elems.map(function (el) {
-                return el.id;
-              }));
-
-            case 5:
-              return _context9.abrupt("return", _context9.sent);
-
-            case 6:
-            case "end":
-              return _context9.stop();
-          }
-        }
-      }, _callee9, this);
-    }));
-
-    function elemsDeleteByFilter(_x12) {
-      return _elemsDeleteByFilter.apply(this, arguments);
-    }
-
-    return elemsDeleteByFilter;
-  }();
-
-  _proto.elemCreate = /*#__PURE__*/function () {
-    var _elemCreate = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee10(data) {
-      var res;
       return runtime_1.wrap(function _callee10$(_context10) {
         while (1) {
           switch (_context10.prev = _context10.next) {
             case 0:
               _context10.next = 2;
-              return fetch("" + this.path, {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-              });
+              return this.elemsGetByFilter(filter);
 
             case 2:
-              res = _context10.sent;
-
-              if (!(res.status === 201)) {
-                _context10.next = 5;
-                break;
-              }
-
-              return _context10.abrupt("return", new RsuvResultBoolPknz());
+              elems = _context10.sent;
+              _context10.next = 5;
+              return this.elemsDelete(elems.map(function (el) {
+                return el.id;
+              }));
 
             case 5:
-              return _context10.abrupt("return", new RsuvResultBoolPknz(false, '210316120200', "err*: not created; status [" + res.status + "] url [" + res.url + "]"));
+              return _context10.abrupt("return", _context10.sent);
 
             case 6:
             case "end":
@@ -1776,23 +1769,23 @@ var RsuvTxJsonServer = /*#__PURE__*/function () {
       }, _callee10, this);
     }));
 
-    function elemCreate(_x13) {
-      return _elemCreate.apply(this, arguments);
+    function elemsDeleteByFilter(_x16) {
+      return _elemsDeleteByFilter.apply(this, arguments);
     }
 
-    return elemCreate;
+    return elemsDeleteByFilter;
   }();
 
-  _proto.elemUpdate = /*#__PURE__*/function () {
-    var _elemUpdate = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee11(data) {
+  _proto.elemCreate = /*#__PURE__*/function () {
+    var _elemCreate = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee11(data) {
       var res;
       return runtime_1.wrap(function _callee11$(_context11) {
         while (1) {
           switch (_context11.prev = _context11.next) {
             case 0:
               _context11.next = 2;
-              return fetch(this.path + "/" + data.id, {
-                method: 'PUT',
+              return fetch("" + this.path, {
+                method: 'POST',
                 headers: {
                   'Content-Type': 'application/json'
                 },
@@ -1802,7 +1795,7 @@ var RsuvTxJsonServer = /*#__PURE__*/function () {
             case 2:
               res = _context11.sent;
 
-              if (!(res.status === 200)) {
+              if (!(res.status === 201)) {
                 _context11.next = 5;
                 break;
               }
@@ -1810,7 +1803,7 @@ var RsuvTxJsonServer = /*#__PURE__*/function () {
               return _context11.abrupt("return", new RsuvResultBoolPknz());
 
             case 5:
-              return _context11.abrupt("return", new RsuvResultBoolPknz(false, '210318111500', "err*: not updated; status [" + res.status + "] url [" + res.url + "]"));
+              return _context11.abrupt("return", new RsuvResultBoolPknz(false, '210316120200', "err*: not created; status [" + res.status + "] url [" + res.url + "]"));
 
             case 6:
             case "end":
@@ -1820,7 +1813,51 @@ var RsuvTxJsonServer = /*#__PURE__*/function () {
       }, _callee11, this);
     }));
 
-    function elemUpdate(_x14) {
+    function elemCreate(_x17) {
+      return _elemCreate.apply(this, arguments);
+    }
+
+    return elemCreate;
+  }();
+
+  _proto.elemUpdate = /*#__PURE__*/function () {
+    var _elemUpdate = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee12(data) {
+      var res;
+      return runtime_1.wrap(function _callee12$(_context12) {
+        while (1) {
+          switch (_context12.prev = _context12.next) {
+            case 0:
+              _context12.next = 2;
+              return fetch(this.path + "/" + data.id, {
+                method: 'PUT',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+              });
+
+            case 2:
+              res = _context12.sent;
+
+              if (!(res.status === 200)) {
+                _context12.next = 5;
+                break;
+              }
+
+              return _context12.abrupt("return", new RsuvResultBoolPknz());
+
+            case 5:
+              return _context12.abrupt("return", new RsuvResultBoolPknz(false, '210318111500', "err*: not updated; status [" + res.status + "] url [" + res.url + "]"));
+
+            case 6:
+            case "end":
+              return _context12.stop();
+          }
+        }
+      }, _callee12, this);
+    }));
+
+    function elemUpdate(_x18) {
       return _elemUpdate.apply(this, arguments);
     }
 
