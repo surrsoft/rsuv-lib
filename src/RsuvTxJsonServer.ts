@@ -38,18 +38,28 @@ export class RsuvTxJsonServer {
     return resp.json();
   }
 
-  async elemsGetPage(pageNum: number, perPage: number) {
-    const resp = await fetch(`${this.path}?_page=${pageNum}&_limit=${perPage}`);
-    return resp.json();
-  }
-
+  /**
+   * см. также функцию elemsGetPage()
+   * @param offset (1) -- сколько элементов пропустить, с начала
+   * @param limit (2) -- сколько элементов взять после пропуска
+   */
   async elemsGet(offset: number, limit: number) {
     const resp = await fetch(`${this.path}?_start=${offset}&_limit=${limit}`);
     return resp.json();
   }
 
   /**
-   *
+   * Другой вариант функции elemsGet()
+   * @param pageNum (1) -- номер страницы, 1+
+   * @param limit (2) -- количество элементов на странице
+   */
+  async elemsGetPage(pageNum: number, limit: number) {
+    const resp = await fetch(`${this.path}?_page=${pageNum}&_limit=${limit}`);
+    return resp.json();
+  }
+
+  /**
+   * Возвращает все записи удовлетворяющие [ntxe]-фильтру (1)
    * @param filter (1) -- см. [ntxe]
    */
   async elemsGetByFilter(filter: string) {
@@ -60,6 +70,7 @@ export class RsuvTxJsonServer {
   /**
    * Отбор записей у которых в поле (1) значение содержит подстроку (2) (без учета регистра символов).
    * Из всех возможных результатов, отбрасываются первые (3) и из оставшихся берутся первые (4)
+   *
    * @param fieldName (1) --
    * @param substring (2) --
    * @param offset (3) --
@@ -89,12 +100,16 @@ export class RsuvTxJsonServer {
   }
 
   /**
+   * Отличается от B тем что возвращает более развёрнутый ответ
    *
    * @param fieldName (1) --
    * @param substring (2) --
    * @param offset (3) --
    * @param limit (4) --
-   * @return countAll - количество элементов удовлетворяющих фильтру (1)(2) без учета (3)(4), data - элементы удовлетворяющие (1)-(4)
+   * @return RsuvResultCountAndData где
+   * countAll - количество элементов удовлетворяющих фильтру (1)(2) без учета (3)(4),
+   * data - сами элементы удовлетворяющие (1)-(4),
+   * hasNext - TRUE если возвращены НЕ все данные удовлетворяющие фильтру (1)(2)
    */
   async elemsGetByFilterC<T>(fieldName: string, substring: string, offset: number, limit: number): Promise<RsuvResultCountAndData<T>> {
     const elems = await this.elemsGetAll();
@@ -111,6 +126,7 @@ export class RsuvTxJsonServer {
 
   /**
    * Отличается от CA только параметром (3)
+   *
    * @param fieldName (1) --
    * @param substring (2) --
    * @param pageNumber (3) -- 1+

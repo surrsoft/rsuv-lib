@@ -1537,7 +1537,7 @@ var RsuvTxJsonServer = /*#__PURE__*/function () {
     return elemsGet;
   }()
   /**
-   *
+   * Возвращает все записи удовлетворяющие [ntxe]-фильтру (1)
    * @param filter (1) -- см. [ntxe]
    */
   ;
@@ -1575,6 +1575,7 @@ var RsuvTxJsonServer = /*#__PURE__*/function () {
   /**
    * Отбор записей у которых в поле (1) значение содержит подстроку (2) (без учета регистра символов).
    * Из всех возможных результатов, отбрасываются первые (3) и из оставшихся берутся первые (4)
+   *
    * @param fieldName (1) --
    * @param substring (2) --
    * @param offset (3) --
@@ -1653,12 +1654,16 @@ var RsuvTxJsonServer = /*#__PURE__*/function () {
     return elemsGetByFilterBB;
   }()
   /**
+   * Отличается от B тем что возвращает более развёрнутый ответ
    *
    * @param fieldName (1) --
    * @param substring (2) --
    * @param offset (3) --
    * @param limit (4) --
-   * @return countAll - количество элементов удовлетворяющих фильтру (1)(2) без учета (3)(4), data - элементы удовлетворяющие (1)-(4)
+   * @return RsuvResultCountAndData где
+   * countAll - количество элементов удовлетворяющих фильтру (1)(2) без учета (3)(4),
+   * data - сами элементы удовлетворяющие (1)-(4),
+   * hasNext - TRUE если возвращены НЕ все данные удовлетворяющие фильтру (1)(2)
    */
   ;
 
@@ -1702,6 +1707,7 @@ var RsuvTxJsonServer = /*#__PURE__*/function () {
   }()
   /**
    * Отличается от CA только параметром (3)
+   *
    * @param fieldName (1) --
    * @param substring (2) --
    * @param pageNumber (3) -- 1+
