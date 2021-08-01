@@ -5,6 +5,7 @@
 import { RsuvTxString } from './RsuvTxString';
 import { RsuvResultBoolPknz } from './RsuvResultBoolPknz';
 import { RsuvResultTibo } from './RsuvResultTibo';
+import _ from 'lodash';
 
 /**
  * Возвращает TRUE если строка str это NULL, строка нулевой длины, или строка из одних пробелов
@@ -56,6 +57,35 @@ export function substrCountB(target: string, substr: string): number {
 }
 
 /**
+ * Возвращает информацию о том в каких местах строки (1) встречается строка (2).
+ * Допускает содержание (2) символы считающихся специальными для регулярных выражений - экранирует их.
+ * ID [[210801094836]] rev 1 1.0.0 2021-08-01
+ * @param target (1) --
+ * @param substr (2) --
+ * @param ignoreCase (3) -- TRUE если нужно игнорировать регистр символов
+ * @return RsuvT7[] - пустой массив если вхождений не найдено и при нештатах
+ */
+export function substrIndexes(target: string, substr: string, ignoreCase: boolean): RsuvT7[] {
+  const ret: RsuvT7[] = []
+  if (!target || !substr
+    || !_.isString(target) || !_.isString(substr)
+    || target.length < 1 || substr.length < 1
+    || target.length < substr.length) {
+    return ret
+  }
+  const substrEscape = _.escapeRegExp(substr);
+  const rg = new RegExp(substrEscape, 'g' + (ignoreCase ? 'i' : ''))
+  let res: any = true;
+  while (res) {
+    res = rg.exec(target)
+    if (res) {
+      ret.push(new RsuvT7(res.index, res.index + substr.length))
+    }
+  }
+  return ret
+}
+
+/**
  * Предоставляет полную информацию о том как строка (2) соотносится со строкой (1), например содержит ли (1) подстроку
  * (2), начинается ли с неё, заканчивается ли ней, имеет ли с ней полное соответствие. Вся эта информация проверяется для
  * двух варинатов - с учетом регистра и без учета регистра символов
@@ -71,63 +101,70 @@ export function stringsTwoInfo(strTarget: RsuvTxString, strSub: RsuvTxString): R
     return RsuvResultTibo.fromPknz(verif)
   }
   // ---
-  const strTarget0 = strTarget.val
-  const strSub0 = strSub.val
+  const strTargetRaw = strTarget.val
+  const strSubRaw = strSub.val
   // ---
   const t5 = new RsuvT5()
   // ---
-  if (strSub0.length > strTarget0.length) {
+  if (strSubRaw.length > strTargetRaw.length) {
     return new RsuvResultTibo({success: true, value: t5}); // <=== RETURN
   }
   // --- --- без учета регистра
-  const t4Case = new RsuvT4()
+  const t4NoSens = new RsuvT4()
   // --- full match
-  if (strTarget0.length === strSub0.length && strTarget0.toLowerCase() === strSub0.toLowerCase()) {
-    t4Case.rsuvT3.push(RSUV_T3.COMPLETE_MATCH)
-    t4Case.rsuvT3.push(RSUV_T3.STARTED)
-    t4Case.rsuvT3.push(RSUV_T3.ENDED)
-    t4Case.rsuvT3.push(RSUV_T3.CONTAINS)
-    t4Case.containsCount = 1
+  if (strTargetRaw.length === strSubRaw.length && strTargetRaw.toLowerCase() === strSubRaw.toLowerCase()) {
+    t4NoSens.rsuvT3.push(RSUV_T3.COMPLETE_MATCH)
+    t4NoSens.rsuvT3.push(RSUV_T3.STARTED)
+    t4NoSens.rsuvT3.push(RSUV_T3.ENDED)
+    t4NoSens.rsuvT3.push(RSUV_T3.CONTAINS)
+    t4NoSens.containsCount = 1
+    // ---
+    t4NoSens.containsIndexes.push(new RsuvT7(0, strSubRaw.length))
   } else {
+    const indexes = substrIndexes(strTargetRaw, strSubRaw, true)
+    t4NoSens.containsIndexes = indexes
     // -- contains
-    t4Case.containsCount = substrCountB(strTarget0, strSub0)
-    if (t4Case.containsCount > 0) {
-      t4Case.rsuvT3.push(RSUV_T3.CONTAINS)
+    t4NoSens.containsCount = indexes.length
+    if (t4NoSens.containsCount > 0) {
+      t4NoSens.rsuvT3.push(RSUV_T3.CONTAINS)
     }
     // -- started
-    if (strTarget0.substring(0, strSub0.length).toLowerCase() === strSub0.toLowerCase()) {
-      t4Case.rsuvT3.push(RSUV_T3.STARTED)
+    if (strTargetRaw.substring(0, strSubRaw.length).toLowerCase() === strSubRaw.toLowerCase()) {
+      t4NoSens.rsuvT3.push(RSUV_T3.STARTED)
     }
     // -- ended
-    if (strTarget0.substring(strTarget0.length - strSub0.length, strTarget0.length).toLowerCase() === strSub0.toLowerCase()) {
-      t4Case.rsuvT3.push(RSUV_T3.ENDED)
+    if (strTargetRaw.substring(strTargetRaw.length - strSubRaw.length, strTargetRaw.length).toLowerCase() === strSubRaw.toLowerCase()) {
+      t4NoSens.rsuvT3.push(RSUV_T3.ENDED)
     }
   }
   // --- --- с учетом регистра
-  const t4NoCase = new RsuvT4()
-  if (strTarget0.length === strSub0.length && strTarget0 === strSub0) {
-    t4NoCase.rsuvT3.push(RSUV_T3.COMPLETE_MATCH)
-    t4NoCase.rsuvT3.push(RSUV_T3.STARTED)
-    t4NoCase.rsuvT3.push(RSUV_T3.ENDED)
-    t4NoCase.rsuvT3.push(RSUV_T3.CONTAINS)
-    t4NoCase.containsCount = 1
+  const t4Sens = new RsuvT4()
+  if (strTargetRaw.length === strSubRaw.length && strTargetRaw === strSubRaw) {
+    t4Sens.rsuvT3.push(RSUV_T3.COMPLETE_MATCH)
+    t4Sens.rsuvT3.push(RSUV_T3.STARTED)
+    t4Sens.rsuvT3.push(RSUV_T3.ENDED)
+    t4Sens.rsuvT3.push(RSUV_T3.CONTAINS)
+    t4Sens.containsCount = 1
+    t4Sens.containsIndexes.push(new RsuvT7(0, strSubRaw.length))
   } else {
-    t4NoCase.containsCount = substrCount(strTarget0, strSub0)
-    if (t4NoCase.containsCount > 0) {
-      t4NoCase.rsuvT3.push(RSUV_T3.CONTAINS)
+    const indexes2 = substrIndexes(strTargetRaw, strSubRaw, false)
+    t4Sens.containsIndexes = indexes2
+    t4Sens.containsCount = indexes2.length
+    if (t4Sens.containsCount > 0) {
+      t4Sens.rsuvT3.push(RSUV_T3.CONTAINS)
     }
     // -- started
-    if (strTarget0.substring(0, strSub0.length) === strSub0) {
-      t4NoCase.rsuvT3.push(RSUV_T3.STARTED)
+    if (strTargetRaw.substring(0, strSubRaw.length) === strSubRaw) {
+      t4Sens.rsuvT3.push(RSUV_T3.STARTED)
     }
     // -- ended
-    if (strTarget0.substring(strTarget0.length - strSub0.length, strTarget0.length).toLowerCase() === strSub0.toLowerCase()) {
-      t4NoCase.rsuvT3.push(RSUV_T3.ENDED)
+    if (strTargetRaw.substring(strTargetRaw.length - strSubRaw.length, strTargetRaw.length) === strSubRaw) {
+      t4Sens.rsuvT3.push(RSUV_T3.ENDED)
     }
   }
   // --- ---
-  t5.sensitive = t4NoCase
-  t5.notSensitive = t4Case
+  t5.sensitive = t4Sens
+  t5.notSensitive = t4NoSens
   // ---
   return new RsuvResultTibo({success: true, value: t5})
 }
@@ -155,6 +192,7 @@ export enum RSUV_T6_CASE {
 class RsuvT4 {
   // сколько раз sub встречается в target
   containsCount: number = 0
+  containsIndexes: RsuvT7[] = []
   rsuvT3: RSUV_T3[] = []
 }
 
@@ -163,4 +201,9 @@ export class RsuvT5 {
   sensitive: RsuvT4 = new RsuvT4()
   // информация для варианта "НЕ чувствительно к регистру"
   notSensitive: RsuvT4 = new RsuvT4()
+}
+
+export class RsuvT7 {
+  constructor(public startIndex: number = 0, public endIndex: number = 0) {
+  }
 }
