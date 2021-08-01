@@ -1,12 +1,11 @@
-import { RSUV_T3, RsuvT5, RsuvT7, stringsTwoInfo, substrIndexes } from './RsuvTuString';
+import { RSUV_T3, RsuvT4, RsuvT5, RsuvT7, stringsTwoInfo, stringsTwoInfoB, substrIndexes } from './RsuvTuString';
 import { RsuvTxString } from './RsuvTxString';
 import { RsuvResultTibo } from './RsuvResultTibo';
 
 describe('RsuvTuString', () => {
-  describe('stringsTwoInfo()', () => {
-
+  describe('stringsTwoInfoB()', () => {
     it('01', () => {
-      const info: RsuvResultTibo<RsuvT5> = stringsTwoInfo(new RsuvTxString('AabbaaAaccdd'), new RsuvTxString('aa'))
+      const info: RsuvResultTibo<RsuvT5> = stringsTwoInfoB(new RsuvTxString('AabbaaAaccdd'), new RsuvTxString('aa'))
       expect(info.success).toEqual(true)
       const val: RsuvT5 | undefined = info.value
       // ---
@@ -28,7 +27,7 @@ describe('RsuvTuString', () => {
     })
 
     it('полное совпадение', () => {
-      const info: RsuvResultTibo<RsuvT5> = stringsTwoInfo(new RsuvTxString('Aa'), new RsuvTxString('aa'))
+      const info: RsuvResultTibo<RsuvT5> = stringsTwoInfoB(new RsuvTxString('Aa'), new RsuvTxString('aa'))
       expect(info.success).toEqual(true)
       const val: RsuvT5 | undefined = info.value
       // ---
@@ -50,7 +49,7 @@ describe('RsuvTuString', () => {
     })
 
     it('длина sub строки больше чем target строки', () => {
-      const info: RsuvResultTibo<RsuvT5> = stringsTwoInfo(new RsuvTxString('aaa'), new RsuvTxString('aaaaaa'))
+      const info: RsuvResultTibo<RsuvT5> = stringsTwoInfoB(new RsuvTxString('aaa'), new RsuvTxString('aaaaaa'))
       expect(info.success).toEqual(true)
       const val: RsuvT5 | undefined = info.value
       // ---
@@ -70,12 +69,109 @@ describe('RsuvTuString', () => {
     })
 
     it('невалидный второй аргумент', () => {
-      const info: RsuvResultTibo<RsuvT5> = stringsTwoInfo(new RsuvTxString('AabbaaAaccdd'), new RsuvTxString(''))
+      const info: RsuvResultTibo<RsuvT5> = stringsTwoInfoB(new RsuvTxString('AabbaaAaccdd'), new RsuvTxString(''))
       expect(info.success).toEqual(false)
       const val: RsuvT5 | undefined = info.value
       expect(val).toBeUndefined()
     })
   })
+
+  describe('stringsTwoInfo()', () => {
+    it('01, ignoreCase = true', () => {
+      const info: RsuvResultTibo<RsuvT4> = stringsTwoInfo(new RsuvTxString('AabbaaAaccdd'), new RsuvTxString('aa'), true)
+      expect(info.success).toEqual(true)
+      const val: RsuvT4 | undefined = info.value
+      expect(val?.containsCount).toEqual(3);
+      expect(val?.rsuvT3.length).toEqual(2);
+      expect(val?.rsuvT3.includes(RSUV_T3.CONTAINS)).toEqual(true);
+      expect(val?.rsuvT3.includes(RSUV_T3.ENDED)).toEqual(false);
+      expect(val?.rsuvT3.includes(RSUV_T3.STARTED)).toEqual(true);
+      expect(val?.rsuvT3.includes(RSUV_T3.COMPLETE_MATCH)).toEqual(false);
+      expect(val?.containsIndexes).toEqual([new RsuvT7(0, 2), new RsuvT7(4, 6), new RsuvT7(6, 8),])
+    })
+    it('01, ignoreCase = false', () => {
+      const info: RsuvResultTibo<RsuvT4> = stringsTwoInfo(new RsuvTxString('AabbaaAaccdd'), new RsuvTxString('aa'), false)
+      expect(info.success).toEqual(true)
+      const val: RsuvT4 | undefined = info.value
+      // ---
+      expect(val?.containsCount).toEqual(1);
+      expect(val?.rsuvT3.length).toEqual(1);
+      expect(val?.rsuvT3.includes(RSUV_T3.CONTAINS)).toEqual(true);
+      expect(val?.rsuvT3.includes(RSUV_T3.STARTED)).toEqual(false);
+      expect(val?.rsuvT3.includes(RSUV_T3.ENDED)).toEqual(false);
+      expect(val?.rsuvT3.includes(RSUV_T3.COMPLETE_MATCH)).toEqual(false);
+      expect(val?.containsIndexes).toEqual([new RsuvT7(4, 6)])
+    })
+
+    it('полное совпадение, ignoreCase = true', () => {
+      const info: RsuvResultTibo<RsuvT4> = stringsTwoInfo(new RsuvTxString('Aa'), new RsuvTxString('aa'), true)
+      expect(info.success).toEqual(true)
+      const val: RsuvT4 | undefined = info.value
+      // ---
+      expect(val?.containsCount).toEqual(1);
+      expect(val?.rsuvT3.length).toEqual(4);
+      expect(val?.rsuvT3.includes(RSUV_T3.CONTAINS)).toEqual(true);
+      expect(val?.rsuvT3.includes(RSUV_T3.ENDED)).toEqual(true);
+      expect(val?.rsuvT3.includes(RSUV_T3.STARTED)).toEqual(true);
+      expect(val?.rsuvT3.includes(RSUV_T3.COMPLETE_MATCH)).toEqual(true);
+      expect(val?.containsIndexes).toEqual([new RsuvT7(0, 2)])
+    })
+
+    it('полное совпадение, ignoreCase = false', () => {
+      const info: RsuvResultTibo<RsuvT4> = stringsTwoInfo(new RsuvTxString('Aa'), new RsuvTxString('aa'), false)
+      expect(info.success).toEqual(true)
+      const val: RsuvT4 | undefined = info.value
+      // ---
+      expect(val?.containsCount).toEqual(0);
+      expect(val?.rsuvT3.length).toEqual(0);
+      expect(val?.rsuvT3.includes(RSUV_T3.CONTAINS)).toEqual(false);
+      expect(val?.rsuvT3.includes(RSUV_T3.STARTED)).toEqual(false);
+      expect(val?.rsuvT3.includes(RSUV_T3.ENDED)).toEqual(false);
+      expect(val?.rsuvT3.includes(RSUV_T3.COMPLETE_MATCH)).toEqual(false);
+      expect(val?.containsIndexes).toEqual([])
+    })
+
+    it('длина sub строки больше чем target строки, ignoreCase = true', () => {
+      const info: RsuvResultTibo<RsuvT4> = stringsTwoInfo(new RsuvTxString('aaa'), new RsuvTxString('aaaaaa'), true)
+      expect(info.success).toEqual(true)
+      const val: RsuvT4 | undefined = info.value
+      // ---
+      expect(val?.containsCount).toEqual(0);
+      expect(val?.rsuvT3.length).toEqual(0);
+      expect(val?.rsuvT3.includes(RSUV_T3.CONTAINS)).toEqual(false);
+      expect(val?.rsuvT3.includes(RSUV_T3.ENDED)).toEqual(false);
+      expect(val?.rsuvT3.includes(RSUV_T3.STARTED)).toEqual(false);
+      expect(val?.rsuvT3.includes(RSUV_T3.COMPLETE_MATCH)).toEqual(false);
+    })
+
+    it('длина sub строки больше чем target строки, ignoreCase = false', () => {
+      const info: RsuvResultTibo<RsuvT4> = stringsTwoInfo(new RsuvTxString('aaa'), new RsuvTxString('aaaaaa'), false)
+      expect(info.success).toEqual(true)
+      const val: RsuvT4 | undefined = info.value
+      // ---
+      expect(val?.containsCount).toEqual(0);
+      expect(val?.rsuvT3.length).toEqual(0);
+      expect(val?.rsuvT3.includes(RSUV_T3.CONTAINS)).toEqual(false);
+      expect(val?.rsuvT3.includes(RSUV_T3.STARTED)).toEqual(false);
+      expect(val?.rsuvT3.includes(RSUV_T3.ENDED)).toEqual(false);
+      expect(val?.rsuvT3.includes(RSUV_T3.COMPLETE_MATCH)).toEqual(false);
+    })
+
+    it('невалидный второй аргумент, ignoreCase = true', () => {
+      const info: RsuvResultTibo<RsuvT4> = stringsTwoInfo(new RsuvTxString('AabbaaAaccdd'), new RsuvTxString(''), true)
+      expect(info.success).toEqual(false)
+      const val: RsuvT4 | undefined = info.value
+      expect(val).toBeUndefined()
+    })
+
+    it('невалидный второй аргумент, ignoreCase = false', () => {
+      const info: RsuvResultTibo<RsuvT4> = stringsTwoInfo(new RsuvTxString('AabbaaAaccdd'), new RsuvTxString(''), false)
+      expect(info.success).toEqual(false)
+      const val: RsuvT4 | undefined = info.value
+      expect(val).toBeUndefined()
+    })
+  })
+
 
   describe('substrIndexes()', () => {
     it('01 - без учета регистра', () => {

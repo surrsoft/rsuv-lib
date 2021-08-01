@@ -94,7 +94,7 @@ export function substrIndexes(target: string, substr: string, ignoreCase: boolea
  * @param strSub (2) --
  * @return RsuvResultTibo<RsuvT5>
  */
-export function stringsTwoInfo(strTarget: RsuvTxString, strSub: RsuvTxString): RsuvResultTibo<RsuvT5> {
+export function stringsTwoInfoB(strTarget: RsuvTxString, strSub: RsuvTxString): RsuvResultTibo<RsuvT5> {
   // --- verify
   const verif: RsuvResultBoolPknz = RsuvResultBoolPknz.successAllIsSugar([strTarget.bnuwIsValid(), strSub.bnuwIsValid()])
   if (!verif.success) {
@@ -169,6 +169,89 @@ export function stringsTwoInfo(strTarget: RsuvTxString, strSub: RsuvTxString): R
   return new RsuvResultTibo({success: true, value: t5})
 }
 
+/**
+ * Предоставляет полную информацию о том как строка (2) соотносится со строкой (1), например содержит ли (1) подстроку
+ * (2), начинается ли с неё, заканчивается ли ей, имеет ли с ней полное соответствие, на каких индексах начинается и
+ * заканчивается подстрока (2) в строке (1). Вся эта информация проверяется для
+ * двух варинатов - с учетом регистра и без учета регистра символов (3)
+ * ID [[210801103621]] rev 1 1.0.0 2021-08-01
+ * @param strTarget (1) --
+ * @param strSub (2) --
+ * @param ignoreCase (3) -- TRUE если нужно игнорировать регистр символов
+ * @return RsuvResultTibo<RsuvT4>
+ */
+export function stringsTwoInfo(strTarget: RsuvTxString, strSub: RsuvTxString, ignoreCase: boolean = true): RsuvResultTibo<RsuvT4> {
+  // --- verify
+  const verif: RsuvResultBoolPknz = RsuvResultBoolPknz.successAllIsSugar([strTarget.bnuwIsValid(), strSub.bnuwIsValid()])
+  if (!verif.success) {
+    return RsuvResultTibo.fromPknz(verif)
+  }
+  // ---
+  const strTargetRaw = strTarget.val
+  const strSubRaw = strSub.val
+  // ---
+  let t4 = new RsuvT4();
+  if (strSubRaw.length > strTargetRaw.length) {
+    return new RsuvResultTibo({success: true, value: t4}); // <=== RETURN
+  }
+  // --- --- без учета регистра
+  if (ignoreCase) {
+    // --- full match
+    if (strTargetRaw.length === strSubRaw.length && strTargetRaw.toLowerCase() === strSubRaw.toLowerCase()) {
+      t4.rsuvT3.push(RSUV_T3.COMPLETE_MATCH)
+      t4.rsuvT3.push(RSUV_T3.STARTED)
+      t4.rsuvT3.push(RSUV_T3.ENDED)
+      t4.rsuvT3.push(RSUV_T3.CONTAINS)
+      t4.containsCount = 1
+      // ---
+      t4.containsIndexes.push(new RsuvT7(0, strSubRaw.length))
+    } else {
+      const indexes = substrIndexes(strTargetRaw, strSubRaw, true)
+      t4.containsIndexes = indexes
+      // -- contains
+      t4.containsCount = indexes.length
+      if (t4.containsCount > 0) {
+        t4.rsuvT3.push(RSUV_T3.CONTAINS)
+      }
+      // -- started
+      if (strTargetRaw.substring(0, strSubRaw.length).toLowerCase() === strSubRaw.toLowerCase()) {
+        t4.rsuvT3.push(RSUV_T3.STARTED)
+      }
+      // -- ended
+      if (strTargetRaw.substring(strTargetRaw.length - strSubRaw.length, strTargetRaw.length).toLowerCase() === strSubRaw.toLowerCase()) {
+        t4.rsuvT3.push(RSUV_T3.ENDED)
+      }
+    }
+  } else {
+    // --- --- с учетом регистра
+    if (strTargetRaw.length === strSubRaw.length && strTargetRaw === strSubRaw) {
+      t4.rsuvT3.push(RSUV_T3.COMPLETE_MATCH)
+      t4.rsuvT3.push(RSUV_T3.STARTED)
+      t4.rsuvT3.push(RSUV_T3.ENDED)
+      t4.rsuvT3.push(RSUV_T3.CONTAINS)
+      t4.containsCount = 1
+      t4.containsIndexes.push(new RsuvT7(0, strSubRaw.length))
+    } else {
+      const indexes2 = substrIndexes(strTargetRaw, strSubRaw, false)
+      t4.containsIndexes = indexes2
+      t4.containsCount = indexes2.length
+      if (t4.containsCount > 0) {
+        t4.rsuvT3.push(RSUV_T3.CONTAINS)
+      }
+      // -- started
+      if (strTargetRaw.substring(0, strSubRaw.length) === strSubRaw) {
+        t4.rsuvT3.push(RSUV_T3.STARTED)
+      }
+      // -- ended
+      if (strTargetRaw.substring(strTargetRaw.length - strSubRaw.length, strTargetRaw.length) === strSubRaw) {
+        t4.rsuvT3.push(RSUV_T3.ENDED)
+      }
+    }
+  }
+  // ---
+  return new RsuvResultTibo({success: true, value: t4})
+}
+
 
 export enum RSUV_T3 {
   // target начинается с sub
@@ -189,7 +272,7 @@ export enum RSUV_T6_CASE {
   NOT_SENSITIVE = 'rsuv_t6_not_case_sensitive'
 }
 
-class RsuvT4 {
+export class RsuvT4 {
   // сколько раз sub встречается в target
   containsCount: number = 0
   containsIndexes: RsuvT7[] = []
