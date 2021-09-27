@@ -88,8 +88,9 @@ export declare class RsuvTxJsonServer {
     elemsDeleteByFilter(filter: string): Promise<RsuvResultBoolPknz[]>;
     elemCreate(data: object): Promise<RsuvResultBoolPknz>;
     /**
-     * Отличается от А тем что возвращает также информацию об ID созданного элемента
-     * @param data
+     * Отличается от А тем что возвращает также информацию об ID созданного элемента (в поле 'value' в виде строки)
+     * @param data (1) -- объект без поля 'id'
+     * @return
      */
     elemCreateB(data: object): Promise<RsuvResultTibo<string>>;
     elemUpdate(data: any): Promise<RsuvResultBoolPknz>;

@@ -181,8 +181,9 @@ export class RsuvTxJsonServer {
   }
 
   /**
-   * Отличается от А тем что возвращает также информацию об ID созданного элемента
-   * @param data
+   * Отличается от А тем что возвращает также информацию об ID созданного элемента (в поле 'value' в виде строки)
+   * @param data (1) -- объект без поля 'id'
+   * @return
    */
   async elemCreateB(data: object): Promise<RsuvResultTibo<string>> {
     const res = await fetch(`${this.path}`, {
