@@ -2,6 +2,7 @@ import toInteger from 'lodash/toInteger';
 import { RsuvResultBoolPknz } from './RsuvResultBoolPknz';
 import { substrCountB } from './RsuvTuString';
 import { RsuvResultCountAndData } from './RsuvResultCountAndData';
+import { RsuvResultTibo } from './RsuvResultTibo';
 
 /*
 -- [[ntxe]] - фильтр, например 'id=1&id=2' или 'json-server&author=typicode'.
@@ -177,6 +178,26 @@ export class RsuvTxJsonServer {
       return new RsuvResultBoolPknz()
     }
     return new RsuvResultBoolPknz(false, '210316120200', `err*: not created; status [${res.status}] url [${res.url}]`)
+  }
+
+  /**
+   * Отличается от А тем что возвращает также информацию об ID созданного элемента
+   * @param data
+   */
+  async elemCreateB(data: object): Promise<RsuvResultTibo<string>> {
+    const res = await fetch(`${this.path}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    // ---
+    if (res.status === 201) {
+      const createdElem = await res.json()
+      return new RsuvResultTibo({success: true, value: createdElem.id + ''})
+    }
+    return new RsuvResultTibo({success: false, errCode: res.status + '', errMessage: res.url})
   }
 
   async elemUpdate(data: any): Promise<RsuvResultBoolPknz> {

@@ -127,38 +127,103 @@ var RsuvPaginationGyth = /*#__PURE__*/function () {
 /**
  * [[pknz]]
  */
-var RsuvResultBoolPknz = function RsuvResultBoolPknz(success, errCode, errMessage) {
-  if (success === void 0) {
-    success = true;
-  }
+var RsuvResultBoolPknz = /*#__PURE__*/function () {
+  function RsuvResultBoolPknz(success, errCode, errMessage) {
+    if (success === void 0) {
+      success = true;
+    }
 
-  if (errCode === void 0) {
-    errCode = '';
-  }
+    if (errCode === void 0) {
+      errCode = '';
+    }
 
-  if (errMessage === void 0) {
-    errMessage = '';
-  }
+    if (errMessage === void 0) {
+      errMessage = '';
+    }
 
-  this.success = success;
-  this.errCode = errCode;
-  this.errMessage = errMessage;
-};
+    this.success = success;
+    this.errCode = errCode;
+    this.errMessage = errMessage;
+  }
+  /**
+   * Возвращает информацию о том какие элементы из (1) являются {success: true, ...} а какие {success: false, ...}
+   * @param elems (1) --
+   */
+
+
+  RsuvResultBoolPknz.infoMulti = function infoMulti(elems) {
+    var ret = {
+      success: [],
+      notSuccess: []
+    };
+    elems.forEach(function (el) {
+      if (el.success) {
+        ret.success.push(el);
+      } else {
+        ret.notSuccess.push(el);
+      }
+    });
+    return ret;
+  }
+  /**
+   * Возвращает TRUE если ВСЕ элементы (1) являются {success: true, ...}.
+   * Если elems это пустой массив, то возвращает FALSE
+   * @param elems (1) --
+   */
+  ;
+
+  RsuvResultBoolPknz.successAllIsSugar = function successAllIsSugar(elems) {
+    var info = RsuvResultBoolPknz.infoMulti(elems);
+    var b1 = info.notSuccess.length === 0 && info.success.length > 0;
+
+    if (b1) {
+      return new RsuvResultBoolPknz(true);
+    }
+
+    if (info.notSuccess.length > 0) {
+      return info.notSuccess[0];
+    }
+
+    return new RsuvResultBoolPknz(false, '[[210725095419]]', '');
+  };
+
+  return RsuvResultBoolPknz;
+}();
 
 /*
 [[tibo]]
  */
-var RsuvResultTibo = function RsuvResultTibo(tibo) {
-  this.success = true;
+var RsuvResultTibo = /*#__PURE__*/function () {
+  function RsuvResultTibo(tibo) {
+    this.success = true;
 
-  if (tibo) {
-    this.success = tibo.success;
-    this.successCode = tibo.successCode;
-    this.value = tibo.value;
-    this.errCode = tibo.errCode;
-    this.errMessage = tibo.errMessage;
+    if (tibo) {
+      this.success = tibo.success;
+      this.successCode = tibo.successCode;
+      this.value = tibo.value;
+      this.errCode = tibo.errCode;
+      this.errMessage = tibo.errMessage;
+    }
   }
-};
+
+  RsuvResultTibo.fromPknz = function fromPknz(pknz) {
+    if (pknz) {
+      return new RsuvResultTibo({
+        success: pknz.success,
+        errCode: pknz.errCode,
+        errMessage: pknz.errMessage
+      });
+    }
+
+    return new RsuvResultTibo({
+      success: false,
+      errCode: '[[210725095953]]',
+      errMessage: ''
+    });
+  };
+
+  return RsuvResultTibo;
+}();
 
 /*
 константы разные
@@ -330,12 +395,12 @@ var RsuvTxStringAA = /*#__PURE__*/function (_RsuvTxString) {
 /*
 утилиты для String
  */
-
 /**
  * Возвращает TRUE если строка str это NULL, строка нулевой длины, или строка из одних пробелов
  *
  * source [210217114100]
  */
+
 function isEmptyOrWhitespaces(str) {
   return !str || str.length === 0 || /^\s*$/.test(str);
 }
@@ -381,12 +446,306 @@ function substrCountB(target, substr) {
 
   return 0;
 }
+/**
+ * Возвращает информацию о том в каких местах строки (1) встречается строка (2).
+ * Допускает содержание (2) символы считающихся специальными для регулярных выражений - экранирует их.
+ * ID [[210801094836]] rev 1 1.0.0 2021-08-01
+ * @param target (1) --
+ * @param substr (2) --
+ * @param ignoreCase (3) -- TRUE если нужно игнорировать регистр символов
+ * @return RsuvT7[] - пустой массив если вхождений не найдено и при нештатах
+ */
+
+function substrIndexes(target, substr, ignoreCase) {
+  var ret = [];
+
+  if (!target || !substr || !_.isString(target) || !_.isString(substr) || target.length < 1 || substr.length < 1 || target.length < substr.length) {
+    return ret;
+  }
+
+  var substrEscape = _.escapeRegExp(substr);
+
+  var rg = new RegExp(substrEscape, 'g' + (ignoreCase ? 'i' : ''));
+  var res = true;
+
+  while (res) {
+    res = rg.exec(target);
+
+    if (res) {
+      ret.push(new RsuvT7(res.index, res.index + substr.length));
+    }
+  }
+
+  return ret;
+}
+/**
+ * Предоставляет полную информацию о том как строка (2) соотносится со строкой (1), например содержит ли (1) подстроку
+ * (2), начинается ли с неё, заканчивается ли ней, имеет ли с ней полное соответствие. Вся эта информация проверяется для
+ * двух варинатов - с учетом регистра и без учета регистра символов
+ *
+ * @param strTarget (1) --
+ * @param strSub (2) --
+ * @return RsuvResultTibo<RsuvT5>
+ */
+
+function stringsTwoInfoB(strTarget, strSub) {
+  // --- verify
+  var verif = RsuvResultBoolPknz.successAllIsSugar([strTarget.bnuwIsValid(), strSub.bnuwIsValid()]);
+
+  if (!verif.success) {
+    return RsuvResultTibo.fromPknz(verif);
+  } // ---
+
+
+  var strTargetRaw = strTarget.val;
+  var strSubRaw = strSub.val; // ---
+
+  var t5 = new RsuvT5(); // ---
+
+  if (strSubRaw.length > strTargetRaw.length) {
+    return new RsuvResultTibo({
+      success: true,
+      value: t5
+    }); // <=== RETURN
+  } // --- --- без учета регистра
+
+
+  var t4NoSens = new RsuvT4(); // --- full match
+
+  if (strTargetRaw.length === strSubRaw.length && strTargetRaw.toLowerCase() === strSubRaw.toLowerCase()) {
+    t4NoSens.rsuvT3.push(RSUV_T3.COMPLETE_MATCH);
+    t4NoSens.rsuvT3.push(RSUV_T3.STARTED);
+    t4NoSens.rsuvT3.push(RSUV_T3.ENDED);
+    t4NoSens.rsuvT3.push(RSUV_T3.CONTAINS);
+    t4NoSens.containsCount = 1; // ---
+
+    t4NoSens.containsIndexes.push(new RsuvT7(0, strSubRaw.length));
+  } else {
+    var indexes = substrIndexes(strTargetRaw, strSubRaw, true);
+    t4NoSens.containsIndexes = indexes; // -- contains
+
+    t4NoSens.containsCount = indexes.length;
+
+    if (t4NoSens.containsCount > 0) {
+      t4NoSens.rsuvT3.push(RSUV_T3.CONTAINS);
+    } // -- started
+
+
+    if (strTargetRaw.substring(0, strSubRaw.length).toLowerCase() === strSubRaw.toLowerCase()) {
+      t4NoSens.rsuvT3.push(RSUV_T3.STARTED);
+    } // -- ended
+
+
+    if (strTargetRaw.substring(strTargetRaw.length - strSubRaw.length, strTargetRaw.length).toLowerCase() === strSubRaw.toLowerCase()) {
+      t4NoSens.rsuvT3.push(RSUV_T3.ENDED);
+    }
+  } // --- --- с учетом регистра
+
+
+  var t4Sens = new RsuvT4();
+
+  if (strTargetRaw.length === strSubRaw.length && strTargetRaw === strSubRaw) {
+    t4Sens.rsuvT3.push(RSUV_T3.COMPLETE_MATCH);
+    t4Sens.rsuvT3.push(RSUV_T3.STARTED);
+    t4Sens.rsuvT3.push(RSUV_T3.ENDED);
+    t4Sens.rsuvT3.push(RSUV_T3.CONTAINS);
+    t4Sens.containsCount = 1;
+    t4Sens.containsIndexes.push(new RsuvT7(0, strSubRaw.length));
+  } else {
+    var indexes2 = substrIndexes(strTargetRaw, strSubRaw, false);
+    t4Sens.containsIndexes = indexes2;
+    t4Sens.containsCount = indexes2.length;
+
+    if (t4Sens.containsCount > 0) {
+      t4Sens.rsuvT3.push(RSUV_T3.CONTAINS);
+    } // -- started
+
+
+    if (strTargetRaw.substring(0, strSubRaw.length) === strSubRaw) {
+      t4Sens.rsuvT3.push(RSUV_T3.STARTED);
+    } // -- ended
+
+
+    if (strTargetRaw.substring(strTargetRaw.length - strSubRaw.length, strTargetRaw.length) === strSubRaw) {
+      t4Sens.rsuvT3.push(RSUV_T3.ENDED);
+    }
+  } // --- ---
+
+
+  t5.sensitive = t4Sens;
+  t5.notSensitive = t4NoSens; // ---
+
+  return new RsuvResultTibo({
+    success: true,
+    value: t5
+  });
+}
+/**
+ * Предоставляет полную информацию о том как строка (2) соотносится со строкой (1), например содержит ли (1) подстроку
+ * (2), начинается ли с неё, заканчивается ли ей, имеет ли с ней полное соответствие, на каких индексах начинается и
+ * заканчивается подстрока (2) в строке (1). Вся эта информация проверяется для
+ * двух варинатов - с учетом регистра и без учета регистра символов (3)
+ * ID [[210801103621]] rev 1 1.0.0 2021-08-01
+ * @param strTarget (1) --
+ * @param strSub (2) --
+ * @param ignoreCase (3) -- TRUE если нужно игнорировать регистр символов
+ * @return RsuvResultTibo<RsuvT4>
+ */
+
+function stringsTwoInfo(strTarget, strSub, ignoreCase) {
+  if (ignoreCase === void 0) {
+    ignoreCase = true;
+  }
+
+  // --- verify
+  var verif = RsuvResultBoolPknz.successAllIsSugar([strTarget.bnuwIsValid(), strSub.bnuwIsValid()]);
+
+  if (!verif.success) {
+    return RsuvResultTibo.fromPknz(verif);
+  } // ---
+
+
+  var strTargetRaw = strTarget.val;
+  var strSubRaw = strSub.val; // ---
+
+  var t4 = new RsuvT4();
+
+  if (strSubRaw.length > strTargetRaw.length) {
+    return new RsuvResultTibo({
+      success: true,
+      value: t4
+    }); // <=== RETURN
+  } // --- --- без учета регистра
+
+
+  if (ignoreCase) {
+    // --- full match
+    if (strTargetRaw.length === strSubRaw.length && strTargetRaw.toLowerCase() === strSubRaw.toLowerCase()) {
+      t4.rsuvT3.push(RSUV_T3.COMPLETE_MATCH);
+      t4.rsuvT3.push(RSUV_T3.STARTED);
+      t4.rsuvT3.push(RSUV_T3.ENDED);
+      t4.rsuvT3.push(RSUV_T3.CONTAINS);
+      t4.containsCount = 1; // ---
+
+      t4.containsIndexes.push(new RsuvT7(0, strSubRaw.length));
+    } else {
+      var indexes = substrIndexes(strTargetRaw, strSubRaw, true);
+      t4.containsIndexes = indexes; // -- contains
+
+      t4.containsCount = indexes.length;
+
+      if (t4.containsCount > 0) {
+        t4.rsuvT3.push(RSUV_T3.CONTAINS);
+      } // -- started
+
+
+      if (strTargetRaw.substring(0, strSubRaw.length).toLowerCase() === strSubRaw.toLowerCase()) {
+        t4.rsuvT3.push(RSUV_T3.STARTED);
+      } // -- ended
+
+
+      if (strTargetRaw.substring(strTargetRaw.length - strSubRaw.length, strTargetRaw.length).toLowerCase() === strSubRaw.toLowerCase()) {
+        t4.rsuvT3.push(RSUV_T3.ENDED);
+      }
+    }
+  } else {
+    // --- --- с учетом регистра
+    if (strTargetRaw.length === strSubRaw.length && strTargetRaw === strSubRaw) {
+      t4.rsuvT3.push(RSUV_T3.COMPLETE_MATCH);
+      t4.rsuvT3.push(RSUV_T3.STARTED);
+      t4.rsuvT3.push(RSUV_T3.ENDED);
+      t4.rsuvT3.push(RSUV_T3.CONTAINS);
+      t4.containsCount = 1;
+      t4.containsIndexes.push(new RsuvT7(0, strSubRaw.length));
+    } else {
+      var indexes2 = substrIndexes(strTargetRaw, strSubRaw, false);
+      t4.containsIndexes = indexes2;
+      t4.containsCount = indexes2.length;
+
+      if (t4.containsCount > 0) {
+        t4.rsuvT3.push(RSUV_T3.CONTAINS);
+      } // -- started
+
+
+      if (strTargetRaw.substring(0, strSubRaw.length) === strSubRaw) {
+        t4.rsuvT3.push(RSUV_T3.STARTED);
+      } // -- ended
+
+
+      if (strTargetRaw.substring(strTargetRaw.length - strSubRaw.length, strTargetRaw.length) === strSubRaw) {
+        t4.rsuvT3.push(RSUV_T3.ENDED);
+      }
+    }
+  } // ---
+
+
+  return new RsuvResultTibo({
+    success: true,
+    value: t4
+  });
+}
+var RSUV_T3;
+
+(function (RSUV_T3) {
+  // target начинается с sub
+  RSUV_T3["STARTED"] = "rsuv_t3_started"; // target заканчивается на sub
+
+  RSUV_T3["ENDED"] = "rsuv_t3_ended"; // target содержит sub
+
+  RSUV_T3["CONTAINS"] = "rsuv_t3_contains"; // target полностью совпадает с sub
+
+  RSUV_T3["COMPLETE_MATCH"] = "rsuv_t3_complete_match";
+})(RSUV_T3 || (RSUV_T3 = {}));
+/**
+ * Учёт регистра символов
+ */
+
+
+var RSUV_T6_CASE;
+
+(function (RSUV_T6_CASE) {
+  RSUV_T6_CASE["SENSITIVE"] = "rsuv_t6_case_sensitive";
+  RSUV_T6_CASE["NOT_SENSITIVE"] = "rsuv_t6_not_case_sensitive";
+})(RSUV_T6_CASE || (RSUV_T6_CASE = {}));
+
+var RsuvT4 = function RsuvT4() {
+  // сколько раз sub встречается в target
+  this.containsCount = 0;
+  this.containsIndexes = [];
+  this.rsuvT3 = [];
+};
+var RsuvT5 = function RsuvT5() {
+  // информация для варианта "чувствительно к регистру"
+  this.sensitive = new RsuvT4(); // информация для варианта "НЕ чувствительно к регистру"
+
+  this.notSensitive = new RsuvT4();
+};
+var RsuvT7 = function RsuvT7(startIndex, endIndex) {
+  if (startIndex === void 0) {
+    startIndex = 0;
+  }
+
+  if (endIndex === void 0) {
+    endIndex = 0;
+  }
+
+  this.startIndex = startIndex;
+  this.endIndex = endIndex;
+};
 
 var RsuvTuString = {
   __proto__: null,
   isEmptyOrWhitespaces: isEmptyOrWhitespaces,
   substrCount: substrCount,
-  substrCountB: substrCountB
+  substrCountB: substrCountB,
+  substrIndexes: substrIndexes,
+  stringsTwoInfoB: stringsTwoInfoB,
+  stringsTwoInfo: stringsTwoInfo,
+  get RSUV_T3 () { return RSUV_T3; },
+  get RSUV_T6_CASE () { return RSUV_T6_CASE; },
+  RsuvT4: RsuvT4,
+  RsuvT5: RsuvT5,
+  RsuvT7: RsuvT7
 };
 
 var RsuvTxStringB = /*#__PURE__*/function (_RsuvTxString) {
@@ -1471,17 +1830,25 @@ var RsuvTxJsonServer = /*#__PURE__*/function () {
     }
 
     return elemsGetAll;
-  }();
+  }()
+  /**
+   * см. также функцию elemsGetPage()
+   * @param offset (1) -- сколько элементов пропустить, с начала
+   * @param limit (2) -- сколько элементов взять после пропуска
+   */
+  ;
 
-  _proto.elemsGetPage = /*#__PURE__*/function () {
-    var _elemsGetPage = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee3(pageNum, perPage) {
+  _proto.elemsGet =
+  /*#__PURE__*/
+  function () {
+    var _elemsGet = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee3(offset, limit) {
       var resp;
       return runtime_1.wrap(function _callee3$(_context3) {
         while (1) {
           switch (_context3.prev = _context3.next) {
             case 0:
               _context3.next = 2;
-              return fetch(this.path + "?_page=" + pageNum + "&_limit=" + perPage);
+              return fetch(this.path + "?_start=" + offset + "&_limit=" + limit);
 
             case 2:
               resp = _context3.sent;
@@ -1495,22 +1862,30 @@ var RsuvTxJsonServer = /*#__PURE__*/function () {
       }, _callee3, this);
     }));
 
-    function elemsGetPage(_x, _x2) {
-      return _elemsGetPage.apply(this, arguments);
+    function elemsGet(_x, _x2) {
+      return _elemsGet.apply(this, arguments);
     }
 
-    return elemsGetPage;
-  }();
+    return elemsGet;
+  }()
+  /**
+   * Другой вариант функции elemsGet()
+   * @param pageNum (1) -- номер страницы, 1+
+   * @param limit (2) -- количество элементов на странице
+   */
+  ;
 
-  _proto.elemsGet = /*#__PURE__*/function () {
-    var _elemsGet = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee4(offset, limit) {
+  _proto.elemsGetPage =
+  /*#__PURE__*/
+  function () {
+    var _elemsGetPage = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee4(pageNum, limit) {
       var resp;
       return runtime_1.wrap(function _callee4$(_context4) {
         while (1) {
           switch (_context4.prev = _context4.next) {
             case 0:
               _context4.next = 2;
-              return fetch(this.path + "?_start=" + offset + "&_limit=" + limit);
+              return fetch(this.path + "?_page=" + pageNum + "&_limit=" + limit);
 
             case 2:
               resp = _context4.sent;
@@ -1524,11 +1899,11 @@ var RsuvTxJsonServer = /*#__PURE__*/function () {
       }, _callee4, this);
     }));
 
-    function elemsGet(_x3, _x4) {
-      return _elemsGet.apply(this, arguments);
+    function elemsGetPage(_x3, _x4) {
+      return _elemsGetPage.apply(this, arguments);
     }
 
-    return elemsGet;
+    return elemsGetPage;
   }()
   /**
    * Возвращает все записи удовлетворяющие [ntxe]-фильтру (1)
@@ -1905,18 +2280,25 @@ var RsuvTxJsonServer = /*#__PURE__*/function () {
     }
 
     return elemCreate;
-  }();
+  }()
+  /**
+   * Отличается от А тем что возвращает также информацию об ID созданного элемента
+   * @param data
+   */
+  ;
 
-  _proto.elemUpdate = /*#__PURE__*/function () {
-    var _elemUpdate = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee14(data) {
-      var res;
+  _proto.elemCreateB =
+  /*#__PURE__*/
+  function () {
+    var _elemCreateB = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee14(data) {
+      var res, createdElem;
       return runtime_1.wrap(function _callee14$(_context14) {
         while (1) {
           switch (_context14.prev = _context14.next) {
             case 0:
               _context14.next = 2;
-              return fetch(this.path + "/" + data.id, {
-                method: 'PUT',
+              return fetch("" + this.path, {
+                method: 'POST',
                 headers: {
                   'Content-Type': 'application/json'
                 },
@@ -1926,17 +2308,29 @@ var RsuvTxJsonServer = /*#__PURE__*/function () {
             case 2:
               res = _context14.sent;
 
-              if (!(res.status === 200)) {
-                _context14.next = 5;
+              if (!(res.status === 201)) {
+                _context14.next = 8;
                 break;
               }
 
-              return _context14.abrupt("return", new RsuvResultBoolPknz());
-
-            case 5:
-              return _context14.abrupt("return", new RsuvResultBoolPknz(false, '210318111500', "err*: not updated; status [" + res.status + "] url [" + res.url + "]"));
+              _context14.next = 6;
+              return res.json();
 
             case 6:
+              createdElem = _context14.sent;
+              return _context14.abrupt("return", new RsuvResultTibo({
+                success: true,
+                value: createdElem.id + ''
+              }));
+
+            case 8:
+              return _context14.abrupt("return", new RsuvResultTibo({
+                success: false,
+                errCode: res.status + '',
+                errMessage: res.url
+              }));
+
+            case 9:
             case "end":
               return _context14.stop();
           }
@@ -1944,7 +2338,51 @@ var RsuvTxJsonServer = /*#__PURE__*/function () {
       }, _callee14, this);
     }));
 
-    function elemUpdate(_x26) {
+    function elemCreateB(_x26) {
+      return _elemCreateB.apply(this, arguments);
+    }
+
+    return elemCreateB;
+  }();
+
+  _proto.elemUpdate = /*#__PURE__*/function () {
+    var _elemUpdate = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee15(data) {
+      var res;
+      return runtime_1.wrap(function _callee15$(_context15) {
+        while (1) {
+          switch (_context15.prev = _context15.next) {
+            case 0:
+              _context15.next = 2;
+              return fetch(this.path + "/" + data.id, {
+                method: 'PUT',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+              });
+
+            case 2:
+              res = _context15.sent;
+
+              if (!(res.status === 200)) {
+                _context15.next = 5;
+                break;
+              }
+
+              return _context15.abrupt("return", new RsuvResultBoolPknz());
+
+            case 5:
+              return _context15.abrupt("return", new RsuvResultBoolPknz(false, '210318111500', "err*: not updated; status [" + res.status + "] url [" + res.url + "]"));
+
+            case 6:
+            case "end":
+              return _context15.stop();
+          }
+        }
+      }, _callee15, this);
+    }));
+
+    function elemUpdate(_x27) {
       return _elemUpdate.apply(this, arguments);
     }
 

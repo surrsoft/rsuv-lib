@@ -1,5 +1,6 @@
 import { RsuvResultBoolPknz } from './RsuvResultBoolPknz';
 import { RsuvResultCountAndData } from './RsuvResultCountAndData';
+import { RsuvResultTibo } from './RsuvResultTibo';
 /**
  * [[ktvg]]
  *
@@ -17,8 +18,18 @@ export declare class RsuvTxJsonServer {
     constructor(basePath: string, collectionName: string);
     elemsCountGetAll(): Promise<number>;
     elemsGetAll(): Promise<any>;
-    elemsGetPage(pageNum: number, perPage: number): Promise<any>;
+    /**
+     * см. также функцию elemsGetPage()
+     * @param offset (1) -- сколько элементов пропустить, с начала
+     * @param limit (2) -- сколько элементов взять после пропуска
+     */
     elemsGet(offset: number, limit: number): Promise<any>;
+    /**
+     * Другой вариант функции elemsGet()
+     * @param pageNum (1) -- номер страницы, 1+
+     * @param limit (2) -- количество элементов на странице
+     */
+    elemsGetPage(pageNum: number, limit: number): Promise<any>;
     /**
      * Возвращает все записи удовлетворяющие [ntxe]-фильтру (1)
      * @param filter (1) -- см. [ntxe]
@@ -76,5 +87,10 @@ export declare class RsuvTxJsonServer {
      */
     elemsDeleteByFilter(filter: string): Promise<RsuvResultBoolPknz[]>;
     elemCreate(data: object): Promise<RsuvResultBoolPknz>;
+    /**
+     * Отличается от А тем что возвращает также информацию об ID созданного элемента
+     * @param data
+     */
+    elemCreateB(data: object): Promise<RsuvResultTibo<string>>;
     elemUpdate(data: any): Promise<RsuvResultBoolPknz>;
 }
