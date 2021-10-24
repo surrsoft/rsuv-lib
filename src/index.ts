@@ -1,4 +1,3 @@
-
 export { RsuvValueAnd } from './RsuvValueAnd';
 export { RsuvErr } from './RsuvErr';
 export { RsuvPaginationGyth } from './RsuvPaginationGyth';
@@ -18,4 +17,5 @@ export { RsuvTxEmail } from './RsuvTxEmail';
 export { RsuvAdapterZrnx, RsuvZrnxSubData } from './RsuvAdapterZrnx';
 export { RsuvTxJsonServer } from './RsuvTxJsonServer';
 export { RsuvCheckModelGnpw, RsuvEcxm, RsuvT1 } from './RsuvCheckModels';
-
+export { RsuvTuArray } from './RsuvTuArray'
+export { RsuvResultAsau11 } from './RsuvResultAsau11'

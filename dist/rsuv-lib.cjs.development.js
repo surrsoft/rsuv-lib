@@ -2611,14 +2611,142 @@ var RsuvCheckModelGnpw = /*#__PURE__*/function () {
   return RsuvCheckModelGnpw;
 }();
 
+/**
+ * -- success - TRUE означает успешный результат
+ * -- codeNum - любое положительное число означает ошибку, -1 означает неопределённый результат, значение
+ * меньшее -1 означает код успешного результата
+ */
+var RsuvResultAsau11 = function RsuvResultAsau11(codeNum, success) {
+  if (codeNum === void 0) {
+    codeNum = -1;
+  }
+
+  if (success === void 0) {
+    success = false;
+  }
+
+  this.success = false;
+  this.codeNum = 0;
+  this.success = success;
+  this.codeNum = codeNum;
+};
+
+/**
+ * Утилитные статические методы для работы с массивами
+ */
+
+var RsuvTuArray = /*#__PURE__*/function () {
+  function RsuvTuArray() {}
+
+  /**
+   * Удаляет элемент по индексу (2)
+   * @param arrBack
+   * @param index
+   * @return RsuvResultAsau11
+   */
+  RsuvTuArray.elemDelete = function elemDelete(arrBack, index) {
+    if (!RsuvTuArray.fnArrValidIs(arrBack)) return new RsuvResultAsau11(1);
+    if (!RsuvTuArray.fnIndexValidIs(arrBack, index)) return new RsuvResultAsau11(2);
+    arrBack.splice(index, 1);
+    return new RsuvResultAsau11(0, true);
+  }
+  /**
+   * Добавляет элемент (3) по индексу (2), существующие элементы сдвигаются. Если нужно добавить в самый конец,
+   * указать индекс (2) равный длине массива (1)
+   * @param arrBack (1) -- массив, мутируется, например [1, 2, 3]
+   * @param index (2) -- например 1
+   * @param elem (3) -- например 's'
+   * @return RsuvResultAsau11 ..., (1) например [1, 's',  2, 3]
+   */
+  ;
+
+  RsuvTuArray.elemAdd = function elemAdd(arrBack, index, elem) {
+    if (!RsuvTuArray.fnArrValidIs(arrBack)) return new RsuvResultAsau11(1);
+    if (!RsuvTuArray.fnIndexValidIsB(arrBack, index)) return new RsuvResultAsau11(2);
+    arrBack.splice(index, 0, elem);
+    return new RsuvResultAsau11(0, true);
+  }
+  /**
+   * В массиве (1) перемещает элемент с индекса (2) на индекс (3)
+   * @param arrBack {any[]} (1) -- массив, мутируется
+   * @param indexFrom {number} (2) --
+   * @param indexTo {number} (3) --
+   * @return RsuvResultAsau11
+   */
+  ;
+
+  RsuvTuArray.elemMove = function elemMove(arrBack, indexFrom, indexTo) {
+    if (!RsuvTuArray.fnArrValidIs(arrBack)) return new RsuvResultAsau11(1);
+    if (!RsuvTuArray.fnIndexValidIs(arrBack, indexFrom)) return new RsuvResultAsau11(2);
+    if (!RsuvTuArray.fnIndexValidIs(arrBack, indexTo)) return new RsuvResultAsau11(3);
+
+    if (indexFrom === indexTo) {
+      return new RsuvResultAsau11(0, true);
+    } // ---
+
+
+    var el = arrBack.splice(indexFrom, 1);
+    arrBack.splice(indexTo, 0, el[0]);
+    return new RsuvResultAsau11(0, true);
+  }
+  /**
+   * Меняет местами элементы (2) и (3)
+   * @param arrBack (1) -- массив, мутируется
+   * @param index1 (2) --
+   * @param index2 (3) --
+   * @return RsuvResultAsau11
+   */
+  ;
+
+  RsuvTuArray.elemsSwap = function elemsSwap(arrBack, index1, index2) {
+    if (!RsuvTuArray.fnArrValidIs(arrBack)) return new RsuvResultAsau11(1);
+    if (!RsuvTuArray.fnIndexValidIs(arrBack, index1)) return new RsuvResultAsau11(2);
+    if (!RsuvTuArray.fnIndexValidIs(arrBack, index2)) return new RsuvResultAsau11(3);
+
+    if (index1 === index2) {
+      return new RsuvResultAsau11(0, true);
+    } // ---
+
+
+    var a = arrBack[index1];
+    arrBack[index1] = arrBack[index2];
+    arrBack[index2] = a;
+    return new RsuvResultAsau11(0, true);
+  };
+
+  RsuvTuArray.fnIndexValidIs = function fnIndexValidIs(arr, index) {
+    if (index < 0) {
+      return false;
+    }
+
+    return index <= arr.length - 1;
+  };
+
+  RsuvTuArray.fnIndexValidIsB = function fnIndexValidIsB(arr, index) {
+    if (index < 0) {
+      return false;
+    }
+
+    return index <= arr.length;
+  };
+
+  RsuvTuArray.fnArrValidIs = function fnArrValidIs(arr) {
+    return !!_.isArray(arr);
+  };
+
+  return RsuvTuArray;
+}();
+
 exports.RSUV_AL_ALREADY_EXIST = RSUV_AL_ALREADY_EXIST;
 exports.RsuvAdapterZrnx = RsuvAdapterZrnx;
 exports.RsuvCheckModelGnpw = RsuvCheckModelGnpw;
 exports.RsuvEcxm = RsuvEcxm;
 exports.RsuvErr = RsuvErr;
 exports.RsuvPaginationGyth = RsuvPaginationGyth;
+exports.RsuvResultAsau11 = RsuvResultAsau11;
 exports.RsuvResultBoolPknz = RsuvResultBoolPknz;
 exports.RsuvResultTibo = RsuvResultTibo;
+exports.RsuvTuArray = RsuvTuArray;
 exports.RsuvTuString = RsuvTuString;
 exports.RsuvTxEmail = RsuvTxEmail;
 exports.RsuvTxJsonServer = RsuvTxJsonServer;
