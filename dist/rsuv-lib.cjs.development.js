@@ -811,7 +811,7 @@ var RsuvTxStringC = /*#__PURE__*/function (_RsuvTxStringB) {
         return new RsuvResultBoolPknz(false, '[[210705191826]]', 'ended with whitespace');
       }
     } catch (err) {
-      return new RsuvResultBoolPknz(false, '[[210705191508]]', err.message);
+      return new RsuvResultBoolPknz(false, '[[210705191508]]', err == null ? void 0 : err.message);
     }
 
     return new RsuvResultBoolPknz(true);
@@ -2434,7 +2434,7 @@ var bnuwUtilsVerifyMulti = function bnuwUtilsVerifyMulti(values) {
 };
 
 /*
- * Представляет строку не нулевой длины
+ * Представляет boolean
  */
 var RsuvTxBoolean = /*#__PURE__*/function () {
   function RsuvTxBoolean(val) {
