@@ -2737,6 +2737,132 @@ var RsuvTuArray = /*#__PURE__*/function () {
   return RsuvTuArray;
 }();
 
+/**
+ * Представляет целое число, положительное, отрицательное, ноль, но не дробное, NaN, Infinity и т.п.
+ */
+var RsuvTxNumInt = /*#__PURE__*/function () {
+  function RsuvTxNumInt(val) {
+    this.val = val;
+  }
+
+  var _proto = RsuvTxNumInt.prototype;
+
+  _proto.bnuwIsValid = function bnuwIsValid() {
+    try {
+      if (!this.val && this.val !== 0) {
+        return new RsuvResultBoolPknz(false, '[[1636272243]]', 'is falsy');
+      }
+
+      if (!_.isFinite(this.val)) {
+        return new RsuvResultBoolPknz(false, '[[1636272327]]', 'is not number');
+      }
+
+      if (!_.isSafeInteger(this.val)) {
+        return new RsuvResultBoolPknz(false, '[[1636272328]]', 'is not integer');
+      }
+    } catch (error) {
+      return new RsuvResultBoolPknz(false, '[[1636279573]]', error.message);
+    }
+
+    return new RsuvResultBoolPknz(true);
+  };
+
+  return RsuvTxNumInt;
+}();
+
+var RsuvTxNumIntAB = /*#__PURE__*/function (_RsuvTxNumInt) {
+  _inheritsLoose(RsuvTxNumIntAB, _RsuvTxNumInt);
+
+  function RsuvTxNumIntAB() {
+    return _RsuvTxNumInt.apply(this, arguments) || this;
+  }
+
+  var _proto = RsuvTxNumIntAB.prototype;
+
+  _proto.bnuwIsValid = function bnuwIsValid() {
+    try {
+      var res = _RsuvTxNumInt.prototype.bnuwIsValid.call(this);
+
+      if (!res.success) {
+        return res;
+      } // ---
+
+
+      if (this.val < 0) {
+        return new RsuvResultBoolPknz(false, '[[1636279844]]', 'number is < 0');
+      }
+    } catch (err) {
+      return new RsuvResultBoolPknz(false, '[[1636279706]]', err.message);
+    }
+
+    return new RsuvResultBoolPknz(true);
+  };
+
+  return RsuvTxNumIntAB;
+}(RsuvTxNumInt);
+
+var RsuvTxNumIntABB = /*#__PURE__*/function (_RsuvTxNumIntAB) {
+  _inheritsLoose(RsuvTxNumIntABB, _RsuvTxNumIntAB);
+
+  function RsuvTxNumIntABB() {
+    return _RsuvTxNumIntAB.apply(this, arguments) || this;
+  }
+
+  var _proto = RsuvTxNumIntABB.prototype;
+
+  _proto.bnuwIsValid = function bnuwIsValid() {
+    try {
+      var res = _RsuvTxNumIntAB.prototype.bnuwIsValid.call(this);
+
+      if (!res.success) {
+        return res;
+      } // ---
+
+
+      if (this.val === 0) {
+        return new RsuvResultBoolPknz(false, '[[1636280020]]', 'number is === 0');
+      }
+    } catch (err) {
+      return new RsuvResultBoolPknz(false, '[[1636280025]]', err.message);
+    }
+
+    return new RsuvResultBoolPknz(true);
+  };
+
+  return RsuvTxNumIntABB;
+}(RsuvTxNumIntAB);
+
+var RsuvTxNumIntAC = /*#__PURE__*/function (_RsuvTxNumInt) {
+  _inheritsLoose(RsuvTxNumIntAC, _RsuvTxNumInt);
+
+  function RsuvTxNumIntAC() {
+    return _RsuvTxNumInt.apply(this, arguments) || this;
+  }
+
+  var _proto = RsuvTxNumIntAC.prototype;
+
+  _proto.bnuwIsValid = function bnuwIsValid() {
+    try {
+      var res = _RsuvTxNumInt.prototype.bnuwIsValid.call(this);
+
+      if (!res.success) {
+        return res;
+      } // ---
+
+
+      if (this.val < -1) {
+        return new RsuvResultBoolPknz(false, '[[1636280874]]', 'number is < -1');
+      }
+    } catch (err) {
+      return new RsuvResultBoolPknz(false, '[[1636280879]]', err.message);
+    }
+
+    return new RsuvResultBoolPknz(true);
+  };
+
+  return RsuvTxNumIntAC;
+}(RsuvTxNumInt);
+
 exports.RSUV_AL_ALREADY_EXIST = RSUV_AL_ALREADY_EXIST;
 exports.RsuvAdapterZrnx = RsuvAdapterZrnx;
 exports.RsuvCheckModelGnpw = RsuvCheckModelGnpw;
@@ -2750,6 +2876,10 @@ exports.RsuvTuArray = RsuvTuArray;
 exports.RsuvTuString = RsuvTuString;
 exports.RsuvTxEmail = RsuvTxEmail;
 exports.RsuvTxJsonServer = RsuvTxJsonServer;
+exports.RsuvTxNumInt = RsuvTxNumInt;
+exports.RsuvTxNumIntAB = RsuvTxNumIntAB;
+exports.RsuvTxNumIntABB = RsuvTxNumIntABB;
+exports.RsuvTxNumIntAC = RsuvTxNumIntAC;
 exports.RsuvTxString = RsuvTxString;
 exports.RsuvTxStringAA = RsuvTxStringAA;
 exports.RsuvTxStringB = RsuvTxStringB;

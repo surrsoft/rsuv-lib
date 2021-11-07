@@ -6,7 +6,7 @@ import _ from 'lodash';
 import { RsuvResultBoolPknz } from './RsuvResultBoolPknz';
 import { RsuvTxNumInt } from './RsuvTxNumInt';
 
-export class RsuvTxNumIntAС extends RsuvTxNumInt {
+export class RsuvTxNumIntAC extends RsuvTxNumInt {
   bnuwIsValid(): RsuvResultBoolPknz {
     try {
       const res = super.bnuwIsValid();

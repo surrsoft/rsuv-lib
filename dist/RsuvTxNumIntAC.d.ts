@@ -3,6 +3,6 @@
  */
 import { RsuvResultBoolPknz } from './RsuvResultBoolPknz';
 import { RsuvTxNumInt } from './RsuvTxNumInt';
-export declare class RsuvTxNumIntAС extends RsuvTxNumInt {
+export declare class RsuvTxNumIntAC extends RsuvTxNumInt {
     bnuwIsValid(): RsuvResultBoolPknz;
 }

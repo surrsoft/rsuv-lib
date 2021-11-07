@@ -19,3 +19,7 @@ export { RsuvTxJsonServer } from './RsuvTxJsonServer';
 export { RsuvCheckModelGnpw, RsuvEcxm, RsuvT1 } from './RsuvCheckModels';
 export { RsuvTuArray } from './RsuvTuArray';
 export { RsuvResultAsau11 } from './RsuvResultAsau11';
+export { RsuvTxNumInt } from './RsuvTxNumInt';
+export { RsuvTxNumIntAB } from './RsuvTxNumIntAB';
+export { RsuvTxNumIntABB } from './RsuvTxNumIntABB';
+export { RsuvTxNumIntAC } from './RsuvTxNumIntAC';
