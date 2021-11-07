@@ -64,6 +64,10 @@ export declare function stringsTwoInfoB(strTarget: RsuvTxString, strSub: RsuvTxS
  * @return RsuvResultTibo<RsuvT4>
  */
 export declare function stringsTwoInfo(strTarget: RsuvTxString, strSub: RsuvTxString, ignoreCase?: boolean): RsuvResultTibo<RsuvT4>;
+/**
+ * [[asau24]]
+ * СМ. ТАКЖЕ: [asau22]
+ */
 export declare enum RSUV_T3 {
     STARTED = "rsuv_t3_started",
     ENDED = "rsuv_t3_ended",

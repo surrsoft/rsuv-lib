@@ -695,6 +695,11 @@ function stringsTwoInfo(strTarget, strSub, ignoreCase) {
     value: t4
   });
 }
+/**
+ * [[asau24]]
+ * СМ. ТАКЖЕ: [asau22]
+ */
+
 var RSUV_T3;
 
 (function (RSUV_T3) {
@@ -2890,6 +2895,47 @@ var RsuvTxNumIntAC = /*#__PURE__*/function (_RsuvTxNumInt) {
   return RsuvTxNumIntAC;
 }(RsuvTxNumInt);
 
+/**
+ * [[asau22]]
+ * КЛЮЧЕВЫЕ СЛОВА: поиск, строка
+ * СМ ТАКЖЕ: [asau24]
+ */
+
+(function (RsuvSearchMode) {
+  /** строгое равенство */
+  RsuvSearchMode["EQUAL_STRICT"] = "equal_strict_asau22";
+  /**содержит */
+
+  RsuvSearchMode["CONTAINS"] = "contains_asau22";
+  /** начинается с */
+
+  RsuvSearchMode["START_WITH"] = "start_with_asau22";
+  /** заканчивается на */
+
+  RsuvSearchMode["END_WITH"] = "end_with_asau22";
+})(exports.RsuvSearchMode || (exports.RsuvSearchMode = {}));
+
+/**
+ * [[asau23]]
+ * Сущность для указания как искать.
+ * КЛЮЧЕВЫЕ СЛОВА: поиск
+ */
+
+var RsuvSearchHow = function RsuvSearchHow(searchMode,
+/** если true то значит нужно учитывать регистр символов при поиске */
+isCaseSensitive) {
+  if (searchMode === void 0) {
+    searchMode = exports.RsuvSearchMode.CONTAINS;
+  }
+
+  if (isCaseSensitive === void 0) {
+    isCaseSensitive = false;
+  }
+
+  this.searchMode = searchMode;
+  this.isCaseSensitive = isCaseSensitive;
+};
+
 exports.RSUV_AL_ALREADY_EXIST = RSUV_AL_ALREADY_EXIST;
 exports.RsuvAdapterZrnx = RsuvAdapterZrnx;
 exports.RsuvCheckModelGnpw = RsuvCheckModelGnpw;
@@ -2899,6 +2945,7 @@ exports.RsuvPaginationGyth = RsuvPaginationGyth;
 exports.RsuvResultAsau11 = RsuvResultAsau11;
 exports.RsuvResultBoolPknz = RsuvResultBoolPknz;
 exports.RsuvResultTibo = RsuvResultTibo;
+exports.RsuvSearchHow = RsuvSearchHow;
 exports.RsuvTuArray = RsuvTuArray;
 exports.RsuvTuString = RsuvTuString;
 exports.RsuvTxEmail = RsuvTxEmail;

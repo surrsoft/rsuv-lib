@@ -252,7 +252,10 @@ export function stringsTwoInfo(strTarget: RsuvTxString, strSub: RsuvTxString, ig
   return new RsuvResultTibo({success: true, value: t4})
 }
 
-
+/** 
+ * [[asau24]]
+ * СМ. ТАКЖЕ: [asau22]
+ */
 export enum RSUV_T3 {
   // target начинается с sub
   STARTED = 'rsuv_t3_started',

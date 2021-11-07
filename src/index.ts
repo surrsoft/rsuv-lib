@@ -23,3 +23,5 @@ export { RsuvTxNumInt } from './RsuvTxNumInt';
 export { RsuvTxNumIntAB } from './RsuvTxNumIntAB';
 export { RsuvTxNumIntABB } from './RsuvTxNumIntABB';
 export { RsuvTxNumIntAC } from './RsuvTxNumIntAC';
+export { RsuvSearchMode } from './RsuvSearchMode';
+export { RsuvSearchHow } from './RsuvSearchHow';
