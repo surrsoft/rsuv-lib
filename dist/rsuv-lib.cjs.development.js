@@ -240,9 +240,10 @@ var RsuvResultTibo = /*#__PURE__*/function () {
  */
 var RSUV_AL_ALREADY_EXIST = 'RSUV_AL_ALREADY_EXIST';
 
-/*
+/**
  * Представляет строку не нулевой длины
  */
+
 var RsuvTxString = /*#__PURE__*/function () {
   function RsuvTxString(val) {
     this.val = val;
@@ -366,6 +367,10 @@ function _createForOfIteratorHelperLoose(o, allowArrayLike) {
   it = o[Symbol.iterator]();
   return it.next.bind(it);
 }
+
+/**
+ * Представляет строку которая: (не нулевой длины) И (не содержит пробелов/переносов)
+ */
 
 var RsuvTxStringAA = /*#__PURE__*/function (_RsuvTxString) {
   _inheritsLoose(RsuvTxStringAA, _RsuvTxString);
@@ -754,6 +759,10 @@ var RsuvTuString = {
   RsuvT7: RsuvT7
 };
 
+/**
+ * Представляет строку которая: (не нулевой длины) И (не состоит из одних пробелов/переносов)
+ */
+
 var RsuvTxStringB = /*#__PURE__*/function (_RsuvTxString) {
   _inheritsLoose(RsuvTxStringB, _RsuvTxString);
 
@@ -784,6 +793,11 @@ var RsuvTxStringB = /*#__PURE__*/function (_RsuvTxString) {
 
   return RsuvTxStringB;
 }(RsuvTxString);
+
+/**
+ * Представляет строку которая: (не нулевой длины) И (не состоит из одних пробелов/переносов) И (не начинается с пробела/переноса)
+ * И (не заканчивается пробелом/переносом)
+ */
 
 var RsuvTxStringC = /*#__PURE__*/function (_RsuvTxStringB) {
   _inheritsLoose(RsuvTxStringC, _RsuvTxStringB);
@@ -2740,6 +2754,7 @@ var RsuvTuArray = /*#__PURE__*/function () {
 /**
  * Представляет целое число, положительное, отрицательное, ноль, но не дробное, NaN, Infinity и т.п.
  */
+
 var RsuvTxNumInt = /*#__PURE__*/function () {
   function RsuvTxNumInt(val) {
     this.val = val;
@@ -2769,6 +2784,10 @@ var RsuvTxNumInt = /*#__PURE__*/function () {
 
   return RsuvTxNumInt;
 }();
+
+/**
+ * Представляет целое число большее нуля или равное нулю
+ */
 
 var RsuvTxNumIntAB = /*#__PURE__*/function (_RsuvTxNumInt) {
   _inheritsLoose(RsuvTxNumIntAB, _RsuvTxNumInt);
@@ -2801,6 +2820,10 @@ var RsuvTxNumIntAB = /*#__PURE__*/function (_RsuvTxNumInt) {
   return RsuvTxNumIntAB;
 }(RsuvTxNumInt);
 
+/**
+ * Представляет целое число большее нуля
+ */
+
 var RsuvTxNumIntABB = /*#__PURE__*/function (_RsuvTxNumIntAB) {
   _inheritsLoose(RsuvTxNumIntABB, _RsuvTxNumIntAB);
 
@@ -2831,6 +2854,10 @@ var RsuvTxNumIntABB = /*#__PURE__*/function (_RsuvTxNumIntAB) {
 
   return RsuvTxNumIntABB;
 }(RsuvTxNumIntAB);
+
+/**
+ * Представляет целое число большее нуля, или равное нулю или равное -1
+ */
 
 var RsuvTxNumIntAC = /*#__PURE__*/function (_RsuvTxNumInt) {
   _inheritsLoose(RsuvTxNumIntAC, _RsuvTxNumInt);

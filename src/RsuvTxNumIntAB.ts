@@ -1,11 +1,10 @@
-/**
- * Представляет целое число большее нуля или равное нулю
- */
-
 import _ from 'lodash';
 import { RsuvResultBoolPknz } from './RsuvResultBoolPknz';
 import { RsuvTxNumInt } from './RsuvTxNumInt';
 
+/**
+ * Представляет целое число большее нуля или равное нулю
+ */
 export class RsuvTxNumIntAB extends RsuvTxNumInt {
   bnuwIsValid(): RsuvResultBoolPknz {
     try {

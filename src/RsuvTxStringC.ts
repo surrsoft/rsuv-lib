@@ -1,11 +1,10 @@
-/*
- * Представляет строку которая: (не нулевой длины) И (не состоит из одних пробелов/переносов) И (не начинается с пробела/переноса)
- * И (не заканчивается пробелом/переносом)
- */
-
 import { RsuvResultBoolPknz } from './RsuvResultBoolPknz';
 import { RsuvTxStringB } from './RsuvTxStringB';
 
+/**
+ * Представляет строку которая: (не нулевой длины) И (не состоит из одних пробелов/переносов) И (не начинается с пробела/переноса)
+ * И (не заканчивается пробелом/переносом)
+ */
 export class RsuvTxStringC extends RsuvTxStringB {
   bnuwIsValid(): RsuvResultBoolPknz {
     try {
@@ -29,7 +28,11 @@ export class RsuvTxStringC extends RsuvTxStringB {
         );
       }
     } catch (err) {
-      return new RsuvResultBoolPknz(false, '[[210705191508]]', (err as Error)?.message);
+      return new RsuvResultBoolPknz(
+        false,
+        '[[210705191508]]',
+        (err as Error)?.message
+      );
     }
     return new RsuvResultBoolPknz(true);
   }

@@ -1,11 +1,10 @@
-/**
- * Представляет целое число, положительное, отрицательное, ноль, но не дробное, NaN, Infinity и т.п.
- */
-
 import _ from 'lodash';
 import { RsuvBnuwNT } from '.';
 import { RsuvResultBoolPknz } from './RsuvResultBoolPknz';
 
+/**
+ * Представляет целое число, положительное, отрицательное, ноль, но не дробное, NaN, Infinity и т.п.
+ */
 export class RsuvTxNumInt implements RsuvBnuwNT {
   constructor(public val: number) {}
   bnuwIsValid(): RsuvResultBoolPknz {
@@ -24,7 +23,11 @@ export class RsuvTxNumInt implements RsuvBnuwNT {
         );
       }
     } catch (error) {
-      return new RsuvResultBoolPknz(false, '[[1636279573]]', (error as Error).message);
+      return new RsuvResultBoolPknz(
+        false,
+        '[[1636279573]]',
+        (error as Error).message
+      );
     }
     return new RsuvResultBoolPknz(true);
   }
