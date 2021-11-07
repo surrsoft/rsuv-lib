@@ -1,5 +1,5 @@
 {
-  "version": "1.17.00",
+  "version": "1.17.01",
   "name": "rsuv-lib",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
