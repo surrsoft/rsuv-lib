@@ -7,19 +7,22 @@ import { RsuvTxString } from './RsuvTxString';
 import { isEmptyOrWhitespaces } from './RsuvTuString';
 
 export class RsuvTxStringB extends RsuvTxString {
-
   bnuwIsValid(): RsuvResultBoolPknz {
     try {
-      const res = super.bnuwIsValid()
+      const res = super.bnuwIsValid();
       if (!res.success) {
-        return res
+        return res;
       }
       // ---
       if (isEmptyOrWhitespaces(this.val)) {
-        return new RsuvResultBoolPknz(false, '[[210705191242]]', 'contains only whitespaces')
+        return new RsuvResultBoolPknz(
+          false,
+          '[[210705191242]]',
+          'contains only whitespaces'
+        );
       }
     } catch (err) {
-      return new RsuvResultBoolPknz(false, '[[210705190613]]', err.message)
+      return new RsuvResultBoolPknz(false, '[[210705190613]]', (err as Error).message);
     }
     return new RsuvResultBoolPknz(true);
   }

@@ -1,5 +1,5 @@
 /*
- * Представляет строку не нулевой длины
+ * Представляет boolean
  */
 
 import { RsuvBnuwNT } from './RsuvBnuwNT';
@@ -16,7 +16,7 @@ export class RsuvTxBoolean implements RsuvBnuwNT {
       if (!_.isBoolean(this.val)) {
         return new RsuvResultBoolPknz(false, '[[210711220826]]', 'is not boolean')
       }
-    } catch (err) {
+    } catch (err: any) {
       return new RsuvResultBoolPknz(false, '[[210705185560]]', err.message)
     }
     return new RsuvResultBoolPknz(true);

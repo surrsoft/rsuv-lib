@@ -23,7 +23,7 @@ export class RsuvTxString implements RsuvBnuwNT {
         return new RsuvResultBoolPknz(false, '[[210705185559]]', 'length < 1')
       }
     } catch (err) {
-      return new RsuvResultBoolPknz(false, '[[210705185560]]', err.message)
+      return new RsuvResultBoolPknz(false, '[[210705185560]]', (err as Error).message)
     }
     return new RsuvResultBoolPknz(true);
   }

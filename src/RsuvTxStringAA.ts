@@ -18,7 +18,7 @@ export class RsuvTxStringAA extends RsuvTxString {
         return new RsuvResultBoolPknz(false, '[[210706092510]]', 'includes whitespace(s)');
       }
     } catch (err) {
-      return new RsuvResultBoolPknz(false, '[[210706092135]]', err.message)
+      return new RsuvResultBoolPknz(false, '[[210706092135]]', (err as Error).message)
     }
     return new RsuvResultBoolPknz(true);
   }

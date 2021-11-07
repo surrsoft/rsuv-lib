@@ -7,7 +7,6 @@ import { RsuvResultBoolPknz } from './RsuvResultBoolPknz';
 import { RsuvTxStringB } from './RsuvTxStringB';
 
 export class RsuvTxStringC extends RsuvTxStringB {
-
   bnuwIsValid(): RsuvResultBoolPknz {
     try {
       const res = super.bnuwIsValid();
@@ -16,13 +15,21 @@ export class RsuvTxStringC extends RsuvTxStringB {
       }
       // ---
       if (/^\s/.test(this.val)) {
-        return new RsuvResultBoolPknz(false, '[[210705191717]]', 'started with whitespace');
+        return new RsuvResultBoolPknz(
+          false,
+          '[[210705191717]]',
+          'started with whitespace'
+        );
       }
       if (/\s$/.test(this.val)) {
-        return new RsuvResultBoolPknz(false, '[[210705191826]]', 'ended with whitespace');
+        return new RsuvResultBoolPknz(
+          false,
+          '[[210705191826]]',
+          'ended with whitespace'
+        );
       }
     } catch (err) {
-      return new RsuvResultBoolPknz(false, '[[210705191508]]', err.message);
+      return new RsuvResultBoolPknz(false, '[[210705191508]]', (err as Error)?.message);
     }
     return new RsuvResultBoolPknz(true);
   }
