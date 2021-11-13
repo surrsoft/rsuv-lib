@@ -1,3 +1,4 @@
+import { RsuvCaseSensitive } from '.';
 import { RsuvSearchMode } from './RsuvSearchMode';
 
 /**
@@ -8,7 +9,7 @@ import { RsuvSearchMode } from './RsuvSearchMode';
 export class RsuvSearchHow {
   constructor(
     public searchMode: RsuvSearchMode = RsuvSearchMode.CONTAINS,
-    /** если true то значит нужно учитывать регистр символов при поиске */
-    public isCaseSensitive: boolean = false
+    /** учитывать ли регистр символов при поиске */
+    public isCaseSensitive: RsuvCaseSensitive
   ) {}
 }

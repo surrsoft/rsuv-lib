@@ -1,6 +1,8 @@
 
 /**
  * [[pknz]]
+ * 
+ * представление результата вида "успех/не-успех"
  */
 export class RsuvResultBoolPknz {
 

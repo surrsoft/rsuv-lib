@@ -1,5 +1,7 @@
 /**
  * [[pknz]]
+ *
+ * представление результата вида "успех/не-успех"
  */
 export declare class RsuvResultBoolPknz {
     readonly success: boolean;

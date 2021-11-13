@@ -126,6 +126,8 @@ var RsuvPaginationGyth = /*#__PURE__*/function () {
 
 /**
  * [[pknz]]
+ *
+ * представление результата вида "успех/не-успех"
  */
 var RsuvResultBoolPknz = /*#__PURE__*/function () {
   function RsuvResultBoolPknz(success, errCode, errMessage) {
@@ -2472,6 +2474,8 @@ var RsuvTxBoolean = /*#__PURE__*/function () {
 }();
 
 /*
+Сущности для работы с checked-списками (списки хранящие информацию о том какой элемент чекнут, какой нет)
+
 [[ecxm]] - массив из [gnpw]-объектов или пустой массив
 [[gnpw]] - объект вида {id: string, checked: boolean}
  */
@@ -2917,19 +2921,25 @@ var RsuvSearchMode;
  */
 
 var RsuvSearchHow = function RsuvSearchHow(searchMode,
-/** если true то значит нужно учитывать регистр символов при поиске */
+/** учитывать ли регистр символов при поиске */
 isCaseSensitive) {
   if (searchMode === void 0) {
     searchMode = RsuvSearchMode.CONTAINS;
-  }
-
-  if (isCaseSensitive === void 0) {
-    isCaseSensitive = false;
   }
 
   this.searchMode = searchMode;
   this.isCaseSensitive = isCaseSensitive;
 };
 
-export { RSUV_AL_ALREADY_EXIST, RsuvAdapterZrnx, RsuvCheckModelGnpw, RsuvEcxm, RsuvErr, RsuvPaginationGyth, RsuvResultAsau11, RsuvResultBoolPknz, RsuvResultTibo, RsuvSearchHow, RsuvSearchMode, RsuvTuArray, RsuvTuString, RsuvTxEmail, RsuvTxJsonServer, RsuvTxNumInt, RsuvTxNumIntAB, RsuvTxNumIntABB, RsuvTxNumIntAC, RsuvTxString, RsuvTxStringAA, RsuvTxStringB, RsuvTxStringC, RsuvValueAnd, RsuvZrnxSubData };
+/**
+* ID [[asau26]]
+*/
+var RsuvCaseSensitive;
+
+(function (RsuvCaseSensitive) {
+  RsuvCaseSensitive["CASE_SENSITIVE_TRUE"] = "case_sensitive_true_asau26";
+  RsuvCaseSensitive["CASE_SENSITIVE_FALSE"] = "case_sensitive_false_asau26";
+})(RsuvCaseSensitive || (RsuvCaseSensitive = {}));
+
+export { RSUV_AL_ALREADY_EXIST, RsuvAdapterZrnx, RsuvCaseSensitive, RsuvCheckModelGnpw, RsuvEcxm, RsuvErr, RsuvPaginationGyth, RsuvResultAsau11, RsuvResultBoolPknz, RsuvResultTibo, RsuvSearchHow, RsuvSearchMode, RsuvTuArray, RsuvTuString, RsuvTxEmail, RsuvTxJsonServer, RsuvTxNumInt, RsuvTxNumIntAB, RsuvTxNumIntABB, RsuvTxNumIntAC, RsuvTxString, RsuvTxStringAA, RsuvTxStringB, RsuvTxStringC, RsuvValueAnd, RsuvZrnxSubData };
 //# sourceMappingURL=rsuv-lib.esm.js.map

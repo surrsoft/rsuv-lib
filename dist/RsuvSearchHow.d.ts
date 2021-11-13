@@ -1,3 +1,4 @@
+import { RsuvCaseSensitive } from '.';
 import { RsuvSearchMode } from './RsuvSearchMode';
 /**
  * [[asau23]]
@@ -6,9 +7,9 @@ import { RsuvSearchMode } from './RsuvSearchMode';
  */
 export declare class RsuvSearchHow {
     searchMode: RsuvSearchMode;
-    /** если true то значит нужно учитывать регистр символов при поиске */
-    isCaseSensitive: boolean;
-    constructor(searchMode?: RsuvSearchMode, 
-    /** если true то значит нужно учитывать регистр символов при поиске */
-    isCaseSensitive?: boolean);
+    /** учитывать ли регистр символов при поиске */
+    isCaseSensitive: RsuvCaseSensitive;
+    constructor(searchMode: RsuvSearchMode, 
+    /** учитывать ли регистр символов при поиске */
+    isCaseSensitive: RsuvCaseSensitive);
 }
