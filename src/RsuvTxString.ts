@@ -4,6 +4,10 @@ import _ from 'lodash';
 
 /**
  * Представляет строку не нулевой длины
+ * 
+ * ID [[1636807341]]
+ * 
+ * @implements RsuvBnuwNT
  */
 export class RsuvTxString implements RsuvBnuwNT {
   constructor(public val: string) {}

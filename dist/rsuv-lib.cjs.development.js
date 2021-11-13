@@ -198,8 +198,10 @@ var RsuvResultBoolPknz = /*#__PURE__*/function () {
   return RsuvResultBoolPknz;
 }();
 
-/*
-[[tibo]]
+/**
+ * Представление результата "успешно/неуспешно" плюс значение <T> результата
+ *
+ * ID [[tibo]]
  */
 var RsuvResultTibo = /*#__PURE__*/function () {
   function RsuvResultTibo(tibo) {
@@ -244,6 +246,10 @@ var RSUV_AL_ALREADY_EXIST = 'RSUV_AL_ALREADY_EXIST';
 
 /**
  * Представляет строку не нулевой длины
+ *
+ * ID [[1636807341]]
+ *
+ * @implements RsuvBnuwNT
  */
 
 var RsuvTxString = /*#__PURE__*/function () {
@@ -2925,16 +2931,26 @@ var RsuvTxNumIntAC = /*#__PURE__*/function (_RsuvTxNumInt) {
  * КЛЮЧЕВЫЕ СЛОВА: поиск
  */
 
-var RsuvSearchHow = function RsuvSearchHow(searchMode,
-/** учитывать ли регистр символов при поиске */
-isCaseSensitive) {
-  if (searchMode === void 0) {
-    searchMode = exports.RsuvSearchMode.CONTAINS;
+var RsuvSearchHow = /*#__PURE__*/function () {
+  function RsuvSearchHow(searchMode,
+  /** учитывать ли регистр символов при поиске */
+  isCaseSensitive) {
+    if (searchMode === void 0) {
+      searchMode = exports.RsuvSearchMode.CONTAINS;
+    }
+
+    this.searchMode = searchMode;
+    this.isCaseSensitive = isCaseSensitive;
   }
 
-  this.searchMode = searchMode;
-  this.isCaseSensitive = isCaseSensitive;
-};
+  var _proto = RsuvSearchHow.prototype;
+
+  _proto.bnuwIsValid = function bnuwIsValid() {
+    return new RsuvResultBoolPknz(true);
+  };
+
+  return RsuvSearchHow;
+}();
 
 /**
 * ID [[asau26]]
@@ -2947,6 +2963,9 @@ isCaseSensitive) {
 
 /**
  * Представляет строку которая: (не нулевой длины) И (состоит только из символов [a-zA-Z0-9_])
+ *
+ * ID [[1636807311]]
+ * @implements RsuvBnuwNT
  */
 
 var RsuvTxStringAB = /*#__PURE__*/function (_RsuvTxString) {
@@ -2981,7 +3000,11 @@ var RsuvTxStringAB = /*#__PURE__*/function (_RsuvTxString) {
 }(RsuvTxString);
 
 /**
- * Представляет строку которая: (не нулевой длины) И (состоит только из символов [a-zA-Z0-9_]) И (начинается не с цифры)
+ * Представляет строку которая: (не нулевой длины) И (состоит только из символов [a-zA-Z0-9_])
+ * И (начинается не с цифры)
+ *
+ * ID [[1636807220]]
+ * @implements RsuvBnuwNT
  */
 
 var RsuvTxStringABB = /*#__PURE__*/function (_RsuvTxStringAB) {
@@ -3019,6 +3042,13 @@ var RsuvTxStringABB = /*#__PURE__*/function (_RsuvTxStringAB) {
  * Представляет типовой "ключ", "имя поля", "имя столбца таблицы БД" и т.п.,
  * т.е. это строка состоящая только из символов [a-zA-Z0-9_] и начинающаяся
  * не с цифры
+ *
+ * ID [[1636807194]]
+ *
+ * @implements RsuvBnuwNT
+ * @extends RsuvTxStringABB
+ * @extends RsuvTxStringAB
+ * @extends RsuvTxString
  */
 
 var RsuvTxFieldName = /*#__PURE__*/function (_RsuvTxStringABB) {
@@ -3042,16 +3072,27 @@ var RsuvTxFieldName = /*#__PURE__*/function (_RsuvTxStringABB) {
  * @param valueType (4) -- тип значения (3)
  */
 
-var RsuvSearchElem = function RsuvSearchElem(fieldName, searchHow, value, valueType) {
-  if (valueType === void 0) {
-    valueType = exports.RsuvEnDataTypes.TEXT;
+var RsuvSearchElem = /*#__PURE__*/function () {
+  function RsuvSearchElem(fieldName, searchHow, value, valueType) {
+    if (valueType === void 0) {
+      valueType = exports.RsuvEnDataTypes.TEXT;
+    }
+
+    this.fieldName = fieldName;
+    this.searchHow = searchHow;
+    this.value = value;
+    this.valueType = valueType;
   }
 
-  this.fieldName = fieldName;
-  this.searchHow = searchHow;
-  this.value = value;
-  this.valueType = valueType;
-};
+  var _proto = RsuvSearchElem.prototype;
+
+  _proto.bnuwIsValid = function bnuwIsValid() {
+    // TODO
+    return new RsuvResultBoolPknz();
+  };
+
+  return RsuvSearchElem;
+}();
 
 /**
  * ID [[asau27]]
@@ -3076,15 +3117,18 @@ var RsuvSearchElem = function RsuvSearchElem(fieldName, searchHow, value, valueT
 })(exports.RsuvEnDataTypes || (exports.RsuvEnDataTypes = {}));
 
 /**
+ * Представление нескольких RsuvSearchElem-ID[1636803407] (пар ключ/значение).
+ *
+ * Значения интерпретируются по правилу "И". Например, если элемента два, то поиск считается
+ * успешным если успешен поиск [(для элемента 1) "И" (для элемента 2)]
+ *
  * ID [[1636805160]]
- *
- * Представление нескольких RsuvSearchElem (ID [1636803407]) применяемых
- * по правилу "И".
- *
- * Например, если элемента два, то поиск считается
- * успешным если успешен поиск для элемента 1 "И" для элемента 2
  */
-var RsuvSearchElems = function RsuvSearchElems(elems) {
+var RsuvSearchElems =
+/**
+ * @param elems (1) --элементы
+ */
+function RsuvSearchElems(elems) {
   this.elems = elems;
 };
 
