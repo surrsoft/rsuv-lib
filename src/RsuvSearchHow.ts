@@ -1,8 +1,8 @@
-import { RsuvCaseSensitive } from '.';
+import { RsuvEnCaseSensitive } from './RsuvEnCaseSensitive';
 import { RsuvSearchMode } from './RsuvSearchMode';
 
 /**
- * [[asau23]]
+ * ID: [[asau23]]
  * Сущность для указания как искать.
  * КЛЮЧЕВЫЕ СЛОВА: поиск
  */
@@ -10,6 +10,6 @@ export class RsuvSearchHow {
   constructor(
     public searchMode: RsuvSearchMode = RsuvSearchMode.CONTAINS,
     /** учитывать ли регистр символов при поиске */
-    public isCaseSensitive: RsuvCaseSensitive
+    public isCaseSensitive: RsuvEnCaseSensitive
   ) {}
 }

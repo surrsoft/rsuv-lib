@@ -2920,7 +2920,7 @@ var RsuvTxNumIntAC = /*#__PURE__*/function (_RsuvTxNumInt) {
 })(exports.RsuvSearchMode || (exports.RsuvSearchMode = {}));
 
 /**
- * [[asau23]]
+ * ID: [[asau23]]
  * Сущность для указания как искать.
  * КЛЮЧЕВЫЕ СЛОВА: поиск
  */
@@ -2940,10 +2940,153 @@ isCaseSensitive) {
 * ID [[asau26]]
 */
 
-(function (RsuvCaseSensitive) {
-  RsuvCaseSensitive["CASE_SENSITIVE_TRUE"] = "case_sensitive_true_asau26";
-  RsuvCaseSensitive["CASE_SENSITIVE_FALSE"] = "case_sensitive_false_asau26";
-})(exports.RsuvCaseSensitive || (exports.RsuvCaseSensitive = {}));
+(function (RsuvEnCaseSensitive) {
+  RsuvEnCaseSensitive["CASE_SENSITIVE_TRUE"] = "case_sensitive_true_asau26";
+  RsuvEnCaseSensitive["CASE_SENSITIVE_FALSE"] = "case_sensitive_false_asau26";
+})(exports.RsuvEnCaseSensitive || (exports.RsuvEnCaseSensitive = {}));
+
+/**
+ * Представляет строку которая: (не нулевой длины) И (состоит только из символов [a-zA-Z0-9_])
+ */
+
+var RsuvTxStringAB = /*#__PURE__*/function (_RsuvTxString) {
+  _inheritsLoose(RsuvTxStringAB, _RsuvTxString);
+
+  function RsuvTxStringAB() {
+    return _RsuvTxString.apply(this, arguments) || this;
+  }
+
+  var _proto = RsuvTxStringAB.prototype;
+
+  _proto.bnuwIsValid = function bnuwIsValid() {
+    try {
+      var res = _RsuvTxString.prototype.bnuwIsValid.call(this);
+
+      if (!res.success) {
+        return res;
+      } // ---
+
+
+      if (!/^[a-zA-Z0-9_]+$/.test(this.val)) {
+        return new RsuvResultBoolPknz(false, '[[1636300398]]', 'allowable only [a-zA-Z0-9_] symbols');
+      }
+    } catch (err) {
+      return new RsuvResultBoolPknz(false, '[[1636300404]]', err.message);
+    }
+
+    return new RsuvResultBoolPknz(true);
+  };
+
+  return RsuvTxStringAB;
+}(RsuvTxString);
+
+/**
+ * Представляет строку которая: (не нулевой длины) И (состоит только из символов [a-zA-Z0-9_]) И (начинается не с цифры)
+ */
+
+var RsuvTxStringABB = /*#__PURE__*/function (_RsuvTxStringAB) {
+  _inheritsLoose(RsuvTxStringABB, _RsuvTxStringAB);
+
+  function RsuvTxStringABB() {
+    return _RsuvTxStringAB.apply(this, arguments) || this;
+  }
+
+  var _proto = RsuvTxStringABB.prototype;
+
+  _proto.bnuwIsValid = function bnuwIsValid() {
+    try {
+      var res = _RsuvTxStringAB.prototype.bnuwIsValid.call(this);
+
+      if (!res.success) {
+        return res;
+      } // ---
+
+
+      if (/^[0-9]$/.test(this.val[0])) {
+        return new RsuvResultBoolPknz(false, '[[1636301354]]', 'first number is not allowable');
+      }
+    } catch (err) {
+      return new RsuvResultBoolPknz(false, '[[1636301361]]', err.message);
+    }
+
+    return new RsuvResultBoolPknz(true);
+  };
+
+  return RsuvTxStringABB;
+}(RsuvTxStringAB);
+
+/**
+ * Представляет типовой "ключ", "имя поля", "имя столбца таблицы БД" и т.п.,
+ * т.е. это строка состоящая только из символов [a-zA-Z0-9_] и начинающаяся
+ * не с цифры
+ */
+
+var RsuvTxFieldName = /*#__PURE__*/function (_RsuvTxStringABB) {
+  _inheritsLoose(RsuvTxFieldName, _RsuvTxStringABB);
+
+  function RsuvTxFieldName() {
+    return _RsuvTxStringABB.apply(this, arguments) || this;
+  }
+
+  return RsuvTxFieldName;
+}(RsuvTxStringABB);
+
+/**
+ * ID [[1636803407]]
+ *
+ * Представление единичного элемента поиска "ключ/значение"
+ *
+ * @param fieldName (1) -- имя поля (ключ) в котором нужно искать значение (3)
+ * @param searchHow (2) -- указания как искать совпадение
+ * @param value: (3) -- значение. Вне зависимости какой это тип значения (4), тут должна быть строка
+ * @param valueType (4) -- тип значения (3)
+ */
+
+var RsuvSearchElem = function RsuvSearchElem(fieldName, searchHow, value, valueType) {
+  if (valueType === void 0) {
+    valueType = exports.RsuvEnDataTypes.TEXT;
+  }
+
+  this.fieldName = fieldName;
+  this.searchHow = searchHow;
+  this.value = value;
+  this.valueType = valueType;
+};
+
+/**
+ * ID [[asau27]]
+ * Обозначения основных типов данных, например использующихся в базах данных
+ */
+
+(function (RsuvEnDataTypes) {
+  /**
+   * строка
+   */
+  RsuvEnDataTypes["TEXT"] = "text_asau27";
+  /**
+   * целое число, положительное или отрицательное, в том числе ноль
+   */
+
+  RsuvEnDataTypes["INT"] = "int_asau27";
+  /**
+   * число дробное, с плавающей запятой
+   */
+
+  RsuvEnDataTypes["FLOAT"] = "real_asau27";
+})(exports.RsuvEnDataTypes || (exports.RsuvEnDataTypes = {}));
+
+/**
+ * ID [[1636805160]]
+ *
+ * Представление нескольких RsuvSearchElem (ID [1636803407]) применяемых
+ * по правилу "И".
+ *
+ * Например, если элемента два, то поиск считается
+ * успешным если успешен поиск для элемента 1 "И" для элемента 2
+ */
+var RsuvSearchElems = function RsuvSearchElems(elems) {
+  this.elems = elems;
+};
 
 exports.RSUV_AL_ALREADY_EXIST = RSUV_AL_ALREADY_EXIST;
 exports.RsuvAdapterZrnx = RsuvAdapterZrnx;
@@ -2954,10 +3097,13 @@ exports.RsuvPaginationGyth = RsuvPaginationGyth;
 exports.RsuvResultAsau11 = RsuvResultAsau11;
 exports.RsuvResultBoolPknz = RsuvResultBoolPknz;
 exports.RsuvResultTibo = RsuvResultTibo;
+exports.RsuvSearchElem = RsuvSearchElem;
+exports.RsuvSearchElems = RsuvSearchElems;
 exports.RsuvSearchHow = RsuvSearchHow;
 exports.RsuvTuArray = RsuvTuArray;
 exports.RsuvTuString = RsuvTuString;
 exports.RsuvTxEmail = RsuvTxEmail;
+exports.RsuvTxFieldName = RsuvTxFieldName;
 exports.RsuvTxJsonServer = RsuvTxJsonServer;
 exports.RsuvTxNumInt = RsuvTxNumInt;
 exports.RsuvTxNumIntAB = RsuvTxNumIntAB;
