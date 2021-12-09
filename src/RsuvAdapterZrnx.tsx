@@ -9,7 +9,12 @@ import { RsuvDataSourceAecrNT } from './RsuvDataSourceAecrNT';
 import { RsuvResultBoolPknz } from './RsuvResultBoolPknz';
 import { RsuvPaginationGyth } from './RsuvPaginationGyth';
 
+/**
+ * @class
+ */
 export class RsuvZrnxSubData<T> {
+
+  /** @constructor */
   constructor(
     /**
      * номер страницы
@@ -40,6 +45,8 @@ export class RsuvZrnxSubData<T> {
  * При вызове {@link make} делаются обращения к {@link dataSource} и на базе полученных данных вычисляются поля {@link page}
  * {@link elemsAllCount}, {@link elemsOfPage}, {@link pageCount}. Эти поля можно получить с помощью метода {@link dataGet}
  * в виде типа {@link RsuvZrnxSubData} для последующего использования в качестве входных данных для UI-списка-с-пагинацией
+ * 
+ * @class
  */
 export class RsuvAdapterZrnx<T> {
   private page: number = 0
@@ -48,7 +55,7 @@ export class RsuvAdapterZrnx<T> {
   private pageCount: number = 0
 
   /**
-   *
+   * @constructor
    * @param perPage (1) -- число-записей-на-странице, 1+
    * @param dataSource (2) -- источник-данных
    */
@@ -58,6 +65,7 @@ export class RsuvAdapterZrnx<T> {
   /**
    * Запрос данных и вычисление полей текущего объекта
    *
+   * @async
    * @param pageNum (1) -- номер страницы
    * @param last (2) -- если TRUE, то (1) игнирируется и вычисление выполняется для последней страницы
    */

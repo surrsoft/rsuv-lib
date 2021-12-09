@@ -35,6 +35,15 @@ export declare class RsuvTuArray {
      * @return RsuvResultAsau11
      */
     static elemsSwap(arrBack: Array<any>, index1: number, index2: number): RsuvResultAsau11;
+    /**
+     * Заменяет значением (2), первый элемент (1) удовлетворяющий предикату (3).
+     * Неудачей считаются (среди прочего): пустой массив (1), если предикат (3) не функция
+     * @param arrBack (1) -- массив, мутируется
+     * @param value (2) -- новое значение
+     * @param predicate (3) -- вызывается для каждого элемента (1); аргументы - первый это сам элемент, второй это
+     * индекс этого элемента
+     */
+    static elemUpdate(arrBack: Array<any>, value: any, predicate: (elem: any, index: number) => boolean): RsuvResultAsau11;
     static fnIndexValidIs(arr: Array<any>, index: number): boolean;
     static fnIndexValidIsB(arr: Array<any>, index: number): boolean;
     static fnArrValidIs(arr: Array<any>): boolean;

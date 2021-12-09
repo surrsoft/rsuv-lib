@@ -1635,7 +1635,13 @@ try {
 }
 });
 
-var RsuvZrnxSubData = function RsuvZrnxSubData(
+/**
+ * @class
+ */
+
+var RsuvZrnxSubData =
+/** @constructor */
+function RsuvZrnxSubData(
 /**
  * номер страницы
  */
@@ -1682,11 +1688,13 @@ elemsOfPage) {
  * При вызове {@link make} делаются обращения к {@link dataSource} и на базе полученных данных вычисляются поля {@link page}
  * {@link elemsAllCount}, {@link elemsOfPage}, {@link pageCount}. Эти поля можно получить с помощью метода {@link dataGet}
  * в виде типа {@link RsuvZrnxSubData} для последующего использования в качестве входных данных для UI-списка-с-пагинацией
+ *
+ * @class
  */
 
 var RsuvAdapterZrnx = /*#__PURE__*/function () {
   /**
-   *
+   * @constructor
    * @param perPage (1) -- число-записей-на-странице, 1+
    * @param dataSource (2) -- источник-данных
    */
@@ -1701,6 +1709,7 @@ var RsuvAdapterZrnx = /*#__PURE__*/function () {
   /**
    * Запрос данных и вычисление полей текущего объекта
    *
+   * @async
    * @param pageNum (1) -- номер страницы
    * @param last (2) -- если TRUE, то (1) игнирируется и вычисление выполняется для последней страницы
    */
@@ -2734,6 +2743,38 @@ var RsuvTuArray = /*#__PURE__*/function () {
     var a = arrBack[index1];
     arrBack[index1] = arrBack[index2];
     arrBack[index2] = a;
+    return new RsuvResultAsau11(0, true);
+  }
+  /**
+   * Заменяет значением (2), первый элемент (1) удовлетворяющий предикату (3).
+   * Неудачей считаются (среди прочего): пустой массив (1), если предикат (3) не функция
+   * @param arrBack (1) -- массив, мутируется
+   * @param value (2) -- новое значение
+   * @param predicate (3) -- вызывается для каждого элемента (1); аргументы - первый это сам элемент, второй это
+   * индекс этого элемента
+   */
+  ;
+
+  RsuvTuArray.elemUpdate = function elemUpdate(arrBack, value, predicate) {
+    if (!RsuvTuArray.fnArrValidIs(arrBack)) return new RsuvResultAsau11(1);
+
+    if (!_.isFunction(predicate)) {
+      return new RsuvResultAsau11(2);
+    }
+
+    if (arrBack.length < 1) {
+      return new RsuvResultAsau11(3);
+    }
+
+    var ix = arrBack.findIndex(function (el, index) {
+      return predicate(el, index);
+    });
+
+    if (ix === -1) {
+      return new RsuvResultAsau11(4);
+    }
+
+    arrBack[ix] = value;
     return new RsuvResultAsau11(0, true);
   };
 

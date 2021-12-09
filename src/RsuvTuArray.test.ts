@@ -120,4 +120,19 @@ describe('RsuvTuArray', () => {
 
   })
 
+  describe('elemUpdate()', () => {
+    it('01', () => {
+      const arr = ['aa', 'bb', 'cc', 'dd']
+      const res = RsuvTuArray.elemUpdate(arr, 'ff', el => el === 'bb')
+      expect(res.success).toEqual(true)
+      expect(arr).toStrictEqual(['aa', 'ff', 'cc', 'dd'])
+    })
+    it('02', () => {
+      const arr = ['aa', 'bb', {nx: 2}, 'dd']
+      const res = RsuvTuArray.elemUpdate(arr, 'ff', el => el.nx === 2)
+      expect(res.success).toEqual(true)
+      expect(arr).toStrictEqual(['aa', 'bb', 'ff', 'dd'])
+    })
+  })
+
 })

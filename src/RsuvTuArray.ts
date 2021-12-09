@@ -75,6 +75,30 @@ export class RsuvTuArray {
     return new RsuvResultAsau11(0, true)
   }
 
+  /**
+   * Заменяет значением (2), первый элемент (1) удовлетворяющий предикату (3).
+   * Неудачей считаются (среди прочего): пустой массив (1), если предикат (3) не функция
+   * @param arrBack (1) -- массив, мутируется
+   * @param value (2) -- новое значение
+   * @param predicate (3) -- вызывается для каждого элемента (1); аргументы - первый это сам элемент, второй это
+   * индекс этого элемента
+   */
+  static elemUpdate(arrBack: Array<any>, value: any, predicate: (elem: any, index: number) => boolean) {
+    if (!RsuvTuArray.fnArrValidIs(arrBack)) return new RsuvResultAsau11(1)
+    if (!_.isFunction(predicate)) {
+      return new RsuvResultAsau11(2)
+    }
+    if (arrBack.length < 1) {
+      return new RsuvResultAsau11(3)
+    }
+    const ix = arrBack.findIndex((el, index) => predicate(el, index))
+    if (ix === -1) {
+      return new RsuvResultAsau11(4)
+    }
+    arrBack[ix] = value;
+    return new RsuvResultAsau11(0, true)
+  }
+
   static fnIndexValidIs(arr: Array<any>, index: number) {
     if (index < 0) {
       return false
