@@ -1,4 +1,5 @@
 import _ from 'lodash-es';
+import dayjs from 'dayjs';
 import EmailValidator from 'email-validator';
 import toInteger from 'lodash-es/toInteger';
 
@@ -404,6 +405,121 @@ var RsuvTxStringAA = /*#__PURE__*/function (_RsuvTxString) {
 
   return RsuvTxStringAA;
 }(RsuvTxString);
+
+/**
+ * Представляет строку которая: (не нулевой длины) И (состоит только из символов [a-zA-Z0-9_])
+ *
+ * ID [[1636807311]]
+ * @implements RsuvBnuwNT
+ */
+
+var RsuvTxStringAB = /*#__PURE__*/function (_RsuvTxString) {
+  _inheritsLoose(RsuvTxStringAB, _RsuvTxString);
+
+  function RsuvTxStringAB() {
+    return _RsuvTxString.apply(this, arguments) || this;
+  }
+
+  var _proto = RsuvTxStringAB.prototype;
+
+  _proto.bnuwIsValid = function bnuwIsValid() {
+    try {
+      var res = _RsuvTxString.prototype.bnuwIsValid.call(this);
+
+      if (!res.success) {
+        return res;
+      } // ---
+
+
+      if (!/^[a-zA-Z0-9_]+$/.test(this.val)) {
+        return new RsuvResultBoolPknz(false, '[[1636300398]]', 'allowable only [a-zA-Z0-9_] symbols');
+      }
+    } catch (err) {
+      return new RsuvResultBoolPknz(false, '[[1636300404]]', err.message);
+    }
+
+    return new RsuvResultBoolPknz(true);
+  };
+
+  return RsuvTxStringAB;
+}(RsuvTxString);
+
+/**
+ * Представляет строку которая: (не нулевой длины) И (состоит только из символов [a-zA-Z0-9_])
+ * И (начинается не с цифры)
+ *
+ * ID [[1636807220]]
+ * @implements RsuvBnuwNT
+ */
+
+var RsuvTxStringABB = /*#__PURE__*/function (_RsuvTxStringAB) {
+  _inheritsLoose(RsuvTxStringABB, _RsuvTxStringAB);
+
+  function RsuvTxStringABB() {
+    return _RsuvTxStringAB.apply(this, arguments) || this;
+  }
+
+  var _proto = RsuvTxStringABB.prototype;
+
+  _proto.bnuwIsValid = function bnuwIsValid() {
+    try {
+      var res = _RsuvTxStringAB.prototype.bnuwIsValid.call(this);
+
+      if (!res.success) {
+        return res;
+      } // ---
+
+
+      if (/^[0-9]$/.test(this.val[0])) {
+        return new RsuvResultBoolPknz(false, '[[1636301354]]', 'first number is not allowable');
+      }
+    } catch (err) {
+      return new RsuvResultBoolPknz(false, '[[1636301361]]', err.message);
+    }
+
+    return new RsuvResultBoolPknz(true);
+  };
+
+  return RsuvTxStringABB;
+}(RsuvTxStringAB);
+
+/**
+ * Представляет строку которая: (не нулевой длины) И (состоит только из символов [0-9] т.е. только из цифр)
+ *
+ * ID [[211210125644]]
+ * @implements RsuvBnuwNT
+ */
+
+var RsuvTxStringABC = /*#__PURE__*/function (_RsuvTxStringAB) {
+  _inheritsLoose(RsuvTxStringABC, _RsuvTxStringAB);
+
+  function RsuvTxStringABC() {
+    return _RsuvTxStringAB.apply(this, arguments) || this;
+  }
+
+  var _proto = RsuvTxStringABC.prototype;
+
+  _proto.bnuwIsValid = function bnuwIsValid() {
+    try {
+      var res = _RsuvTxStringAB.prototype.bnuwIsValid.call(this);
+
+      if (!res.success) {
+        return res;
+      } // ---
+
+
+      if (!/^[0-9]+$/.test(this.val)) {
+        return new RsuvResultBoolPknz(false, '[[211210125801]]', 'only numbers allowable');
+      }
+    } catch (err) {
+      return new RsuvResultBoolPknz(false, '[[211210125818]]', err.message);
+    }
+
+    return new RsuvResultBoolPknz(true);
+  };
+
+  return RsuvTxStringABC;
+}(RsuvTxStringAB);
 
 /*
 утилиты для String
@@ -840,6 +956,131 @@ var RsuvTxStringC = /*#__PURE__*/function (_RsuvTxStringB) {
 
   return RsuvTxStringC;
 }(RsuvTxStringB);
+
+/*
+ПОНЯТИЯ:
+-- [yata] - {number} милисекунды с 01.01.1970
+-- [necz] - {string} [yata] в виде строки
+-- [rvuo] - {string} формат YYYY-MM-DDTHH:mm, например '2021-12-12T12:04'
+ */
+
+var DATETIME;
+
+(function (DATETIME) {
+  DATETIME["YATA"] = "yata";
+  DATETIME["NECZ"] = "necz";
+  DATETIME["RVUO"] = "rvuo";
+})(DATETIME || (DATETIME = {}));
+
+var ResultAsau36 = function ResultAsau36(success, value, code) {
+  this.success = success;
+  this.value = value;
+  this.code = code;
+}; // export function convert(from: DATETIME, to: DATETIME, fromVal: any): ResultAsau36<any> {
+//   if (!from) {
+//     return new ResultAsau36(false, null, 1)
+//   }
+//   if (!to) {
+//     return new ResultAsau36(false, null, 2)
+//   }
+//   if (!fromVal) {
+//     return new ResultAsau36(false, null, 3)
+//   }
+//
+// }
+
+/**
+ * Преобразование формата [yata] (1) в формат [rvuo].
+ * @param yata {number} (1) -- [yata], например 1637347161129
+ * @return null если (1) не finite-число
+ */
+
+function rvuoFromYata(yata) {
+  if (!yataIs(yata)) {
+    return null;
+  }
+
+  return dayjs(yata).format('YYYY-MM-DDTHH:mm');
+}
+function yataFromRvuo(rvuo) {
+  if (!_.isString(rvuo)) {
+    return new ResultAsau36(false, 0, 2);
+  }
+
+  var necz = rvuoIs(rvuo);
+
+  if (necz) {
+    var yata = _.toInteger(necz);
+
+    return new ResultAsau36(true, yata, 0);
+  }
+
+  return new ResultAsau36(false, 0, 1);
+}
+function yataIs(yata) {
+  if (!_.isFinite(yata)) {
+    return false;
+  }
+
+  return true;
+}
+/**
+ * Возвращает [necz] ([yata] как строка) от (1) если (1) это валидный [rvuo], иначе возвращает null
+ * @param rvuo (1) -- [rvuo], например '2021-12-10T12:04'
+ */
+
+function rvuoIs(rvuo) {
+  if (!_.isString(rvuo)) {
+    return null;
+  }
+
+  var ex = /^(\d\d\d\d+)-(\d\d)-(\d\d)T(\d\d):(\d\d)$/.exec(rvuo);
+
+  if (ex) {
+    var month = Number(ex[2]);
+
+    var _day = Number(ex[3]);
+
+    var hour = Number(ex[4]);
+    var minute = Number(ex[5]);
+
+    if (month < 1 || month > 12) {
+      return null;
+    }
+
+    if (_day < 1 || _day > 31) {
+      return null;
+    }
+
+    if (hour < 0 && hour > 24) {
+      return null;
+    }
+
+    if (minute < 0 && minute > 59) {
+      return null;
+    }
+  } // ---
+
+
+  var day = dayjs(rvuo);
+  var yata = day.toDate().getTime();
+
+  if (!_.isFinite(yata)) {
+    return null;
+  }
+
+  return yata + '';
+}
+
+var RsuvTuDateTime = {
+  __proto__: null,
+  get DATETIME () { return DATETIME; },
+  ResultAsau36: ResultAsau36,
+  rvuoFromYata: rvuoFromYata,
+  yataFromRvuo: yataFromRvuo,
+  yataIs: yataIs,
+  rvuoIs: rvuoIs
+};
 
 var RsuvTxEmail = /*#__PURE__*/function (_RsuvTxStringAA) {
   _inheritsLoose(RsuvTxEmail, _RsuvTxStringAA);
@@ -2999,83 +3240,6 @@ var RsuvEnCaseSensitive;
 })(RsuvEnCaseSensitive || (RsuvEnCaseSensitive = {}));
 
 /**
- * Представляет строку которая: (не нулевой длины) И (состоит только из символов [a-zA-Z0-9_])
- *
- * ID [[1636807311]]
- * @implements RsuvBnuwNT
- */
-
-var RsuvTxStringAB = /*#__PURE__*/function (_RsuvTxString) {
-  _inheritsLoose(RsuvTxStringAB, _RsuvTxString);
-
-  function RsuvTxStringAB() {
-    return _RsuvTxString.apply(this, arguments) || this;
-  }
-
-  var _proto = RsuvTxStringAB.prototype;
-
-  _proto.bnuwIsValid = function bnuwIsValid() {
-    try {
-      var res = _RsuvTxString.prototype.bnuwIsValid.call(this);
-
-      if (!res.success) {
-        return res;
-      } // ---
-
-
-      if (!/^[a-zA-Z0-9_]+$/.test(this.val)) {
-        return new RsuvResultBoolPknz(false, '[[1636300398]]', 'allowable only [a-zA-Z0-9_] symbols');
-      }
-    } catch (err) {
-      return new RsuvResultBoolPknz(false, '[[1636300404]]', err.message);
-    }
-
-    return new RsuvResultBoolPknz(true);
-  };
-
-  return RsuvTxStringAB;
-}(RsuvTxString);
-
-/**
- * Представляет строку которая: (не нулевой длины) И (состоит только из символов [a-zA-Z0-9_])
- * И (начинается не с цифры)
- *
- * ID [[1636807220]]
- * @implements RsuvBnuwNT
- */
-
-var RsuvTxStringABB = /*#__PURE__*/function (_RsuvTxStringAB) {
-  _inheritsLoose(RsuvTxStringABB, _RsuvTxStringAB);
-
-  function RsuvTxStringABB() {
-    return _RsuvTxStringAB.apply(this, arguments) || this;
-  }
-
-  var _proto = RsuvTxStringABB.prototype;
-
-  _proto.bnuwIsValid = function bnuwIsValid() {
-    try {
-      var res = _RsuvTxStringAB.prototype.bnuwIsValid.call(this);
-
-      if (!res.success) {
-        return res;
-      } // ---
-
-
-      if (/^[0-9]$/.test(this.val[0])) {
-        return new RsuvResultBoolPknz(false, '[[1636301354]]', 'first number is not allowable');
-      }
-    } catch (err) {
-      return new RsuvResultBoolPknz(false, '[[1636301361]]', err.message);
-    }
-
-    return new RsuvResultBoolPknz(true);
-  };
-
-  return RsuvTxStringABB;
-}(RsuvTxStringAB);
-
-/**
  * Представляет типовой "ключ", "имя поля", "имя столбца таблицы БД" и т.п.,
  * т.е. это строка состоящая только из символов [a-zA-Z0-9_] и начинающаяся
  * не с цифры
@@ -3170,5 +3334,5 @@ function RsuvSearchElems(elems) {
   this.elems = elems;
 };
 
-export { RSUV_AL_ALREADY_EXIST, RsuvAdapterZrnx, RsuvCheckModelGnpw, RsuvEcxm, RsuvEnCaseSensitive, RsuvEnDataTypes, RsuvErr, RsuvPaginationGyth, RsuvResultAsau11, RsuvResultBoolPknz, RsuvResultTibo, RsuvSearchElem, RsuvSearchElems, RsuvSearchHow, RsuvSearchMode, RsuvTuArray, RsuvTuString, RsuvTxEmail, RsuvTxFieldName, RsuvTxJsonServer, RsuvTxNumInt, RsuvTxNumIntAB, RsuvTxNumIntABB, RsuvTxNumIntAC, RsuvTxString, RsuvTxStringAA, RsuvTxStringB, RsuvTxStringC, RsuvValueAnd, RsuvZrnxSubData };
+export { RSUV_AL_ALREADY_EXIST, RsuvAdapterZrnx, RsuvCheckModelGnpw, RsuvEcxm, RsuvEnCaseSensitive, RsuvEnDataTypes, RsuvErr, RsuvPaginationGyth, RsuvResultAsau11, RsuvResultBoolPknz, RsuvResultTibo, RsuvSearchElem, RsuvSearchElems, RsuvSearchHow, RsuvSearchMode, RsuvTuArray, RsuvTuDateTime, RsuvTuString, RsuvTxEmail, RsuvTxFieldName, RsuvTxJsonServer, RsuvTxNumInt, RsuvTxNumIntAB, RsuvTxNumIntABB, RsuvTxNumIntAC, RsuvTxString, RsuvTxStringAA, RsuvTxStringAB, RsuvTxStringABB, RsuvTxStringABC, RsuvTxStringB, RsuvTxStringC, RsuvValueAnd, RsuvZrnxSubData };
 //# sourceMappingURL=rsuv-lib.esm.js.map

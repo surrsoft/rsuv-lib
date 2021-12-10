@@ -37,6 +37,7 @@
 - `RsuvTxStringC` - тоже что `RsuvTxStringB` только не начинается с пробела/переноса и не заканчивается пробелом/переносом
 - `RsuvTxStringAB` - тоже что `RsuvTxString` только состоит только из символов [a-zA-Z0-9_]
 - `RsuvTxStringABB` - тоже что `RsuvTxStringAB` только начинается не с цифры
+- `RsuvTxStringABC` - тоже что `RsuvTxStringAB` только состоящая только из символов [0-9] (т.е. только из цифр)
 
 ### Целое число
 

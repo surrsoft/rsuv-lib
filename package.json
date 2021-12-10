@@ -1,5 +1,5 @@
 {
-  "version": "1.21.00",
+  "version": "1.22.01",
   "name": "rsuv-lib",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -53,6 +53,7 @@
   "dependencies": {
     "@types/lodash": "^4.14.170",
     "@types/validator": "^13.6.2",
+    "dayjs": "^1.10.7",
     "email-validator": "^2.0.4",
     "hogg-lib": "^1.1.0",
     "isomorphic-fetch": "^3.0.0",
