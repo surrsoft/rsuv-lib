@@ -966,7 +966,9 @@ var RsuvTxStringC = /*#__PURE__*/function (_RsuvTxStringB) {
 /*
 ПОНЯТИЯ:
 -- [yata] - {number} милисекунды с 01.01.1970
+-- [eavv] - {number} секунды с 01.01.1970
 -- [necz] - {string} [yata] в виде строки
+-- [tafb] - {string} [eavv] в виде строки
 -- [rvuo] - {string} формат YYYY-MM-DDTHH:mm, например '2021-12-12T12:04'
  */
 
@@ -1030,6 +1032,42 @@ function yataIs(yata) {
 
   return true;
 }
+function yataFromEavv(eavv) {
+  if (!eavvIs(eavv)) {
+    return new ResultAsau36(false, 0, 1);
+  }
+
+  var yata = eavv * 1000;
+  return new ResultAsau36(true, yata, 0);
+}
+/**
+ * Возвращает {success: true, value: true, ...} если дата (1) не достигла даты (2) (т.е. меньше даты (2))
+ * @param yata (1) -- [yata]
+ * @param yataExpire (2) -- [yata]
+ */
+
+function yataIsActual(yata, yataExpire) {
+  if (!yataIs(yata)) {
+    return new ResultAsau36(false, false, 1);
+  }
+
+  if (!yataIs(yataExpire)) {
+    return new ResultAsau36(false, false, 2);
+  }
+
+  if (yata > yataExpire) {
+    return new ResultAsau36(true, false, 0);
+  }
+
+  return new ResultAsau36(true, true, 0);
+}
+function eavvIs(eavv) {
+  if (!_.isFinite(eavv)) {
+    return false;
+  }
+
+  return true;
+}
 /**
  * Возвращает [necz] ([yata] как строка) от (1) если (1) это валидный [rvuo], иначе возвращает null
  * @param rvuo (1) -- [rvuo], например '2021-12-10T12:04'
@@ -1085,6 +1123,9 @@ var RsuvTuDateTime = {
   rvuoFromYata: rvuoFromYata,
   yataFromRvuo: yataFromRvuo,
   yataIs: yataIs,
+  yataFromEavv: yataFromEavv,
+  yataIsActual: yataIsActual,
+  eavvIs: eavvIs,
   rvuoIs: rvuoIs
 };
 

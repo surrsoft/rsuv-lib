@@ -4,7 +4,9 @@ import _ from 'lodash';
 /*
 ПОНЯТИЯ:
 -- [yata] - {number} милисекунды с 01.01.1970
+-- [eavv] - {number} секунды с 01.01.1970
 -- [necz] - {string} [yata] в виде строки
+-- [tafb] - {string} [eavv] в виде строки
 -- [rvuo] - {string} формат YYYY-MM-DDTHH:mm, например '2021-12-12T12:04'
  */
 
@@ -58,6 +60,39 @@ export function yataFromRvuo(rvuo: string | any): ResultAsau36<number> {
 
 export function yataIs(yata: number | any): boolean {
   if (!_.isFinite(yata)) {
+    return false;
+  }
+  return true;
+}
+
+export function yataFromEavv(eavv: number | any): ResultAsau36<number> {
+  if (!eavvIs(eavv)) {
+    return new ResultAsau36<number>(false, 0, 1)
+  }
+  const yata = eavv * 1000;
+  return new ResultAsau36<number>(true, yata, 0)
+}
+
+/**
+ * Возвращает {success: true, value: true, ...} если дата (1) не достигла даты (2) (т.е. меньше даты (2))
+ * @param yata (1) -- [yata]
+ * @param yataExpire (2) -- [yata]
+ */
+export function yataIsActual(yata: number | any, yataExpire: number | any): ResultAsau36<boolean> {
+  if (!yataIs(yata)) {
+    return new ResultAsau36<boolean>(false, false, 1)
+  }
+  if (!yataIs(yataExpire)) {
+    return new ResultAsau36<boolean>(false, false, 2)
+  }
+  if (yata > yataExpire) {
+    return new ResultAsau36<boolean>(true, false, 0)
+  }
+  return new ResultAsau36<boolean>(true, true, 0)
+}
+
+export function eavvIs(eavv: number | any): boolean {
+  if (!_.isFinite(eavv)) {
     return false;
   }
   return true;
