@@ -34,3 +34,4 @@ export { RsuvTxFieldName } from './RsuvTxFieldName';
 export { RsuvSearchElem } from './RsuvSearchElem';
 export { RsuvEnDataTypes } from './RsuvEnDataTypes';
 export { RsuvSearchElems } from './RsuvSearchElems';
+export * as RsuvTuInfo from './RsuvTuInfo';
