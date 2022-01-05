@@ -2071,6 +2071,378 @@ var RsuvAdapterZrnx = /*#__PURE__*/function () {
   return RsuvAdapterZrnx;
 }();
 
+var bnuwUtilsVerify = function bnuwUtilsVerify(value) {
+  if (!value) {
+    return new RsuvResultBoolPknz(false, '[[210711215605]]', 'value is falsy');
+  }
+
+  var res = value.bnuwIsValid();
+
+  if (!res) {
+    return new RsuvResultBoolPknz(false, '[[210711215805]]', 'invalid value');
+  }
+
+  return res;
+};
+/**
+ * Если возвращает пустой массив, значит все элементы (1) валидные, иначе в массиве результы неудачных проверок
+ * @param values (1) -- элементы для проверки; пустой массив не валиден
+ */
+
+var bnuwUtilsVerifyMulti = function bnuwUtilsVerifyMulti(values) {
+  if (Array.isArray(values) && values.length > 0) {
+    var ret = [];
+    values.forEach(function (el) {
+      var verif = bnuwUtilsVerify(el);
+
+      if (!verif.success) {
+        ret.push(verif);
+      }
+    });
+    return ret;
+  }
+
+  return [new RsuvResultBoolPknz(false, '[[210711221552]]')];
+};
+
+/*
+ * Представляет boolean
+ */
+var RsuvTxBoolean = /*#__PURE__*/function () {
+  function RsuvTxBoolean(val) {
+    this.val = val;
+  }
+
+  var _proto = RsuvTxBoolean.prototype;
+
+  _proto.bnuwIsValid = function bnuwIsValid() {
+    try {
+      if (!_.isBoolean(this.val)) {
+        return new RsuvResultBoolPknz(false, '[[210711220826]]', 'is not boolean');
+      }
+    } catch (err) {
+      return new RsuvResultBoolPknz(false, '[[210705185560]]', err.message);
+    }
+
+    return new RsuvResultBoolPknz(true);
+  };
+
+  return RsuvTxBoolean;
+}();
+
+/*
+Сущности для работы с checked-списками (списки хранящие информацию о том какой элемент чекнут, какой нет)
+
+[[ecxm]] - массив из [gnpw]-объектов или пустой массив
+[[gnpw]] - объект вида {id: string, checked: boolean}
+ */
+var RsuvEcxm = /*#__PURE__*/function () {
+  function RsuvEcxm() {}
+
+  RsuvEcxm.find = function find(models, id) {
+    return models.find(function (model) {
+      return model.id === id;
+    });
+  }
+  /**
+   * Добавляет новый элемент (2) в конец (1)
+   * @param modelsBack (1) --
+   * @param model
+   */
+  ;
+
+  RsuvEcxm.append = function append(modelsBack, model) {
+    var fModel = RsuvEcxm.find(modelsBack, model.id);
+
+    if (fModel) {
+      return new RsuvResultBoolPknz(false, '[[210712155908]]', 'already exist');
+    }
+
+    modelsBack.push(model);
+    return new RsuvResultBoolPknz(true);
+  };
+
+  RsuvEcxm.appendMulti = function appendMulti(modelsBack, models) {
+    var ret = [];
+    models.forEach(function (model) {
+      var res = RsuvEcxm.append(modelsBack, model);
+
+      if (!res.success) {
+        ret.push(res);
+      }
+    });
+    return ret;
+  };
+
+  RsuvEcxm.update = function update(modelsBack, model) {
+    var elem = RsuvEcxm.find(modelsBack, model.id);
+
+    if (elem) {
+      elem.checked = model.checked;
+      return new RsuvResultBoolPknz(true);
+    }
+
+    return new RsuvResultBoolPknz(false, '[[210712160222]]', 'not finded');
+  };
+
+  RsuvEcxm.updateMulti = function updateMulti(modelsBack, models) {
+    var ret = [];
+    models.forEach(function (model) {
+      var res = RsuvEcxm.update(modelsBack, model);
+
+      if (!res.success) {
+        ret.push(res);
+      }
+    });
+    return ret;
+  };
+
+  RsuvEcxm["delete"] = function _delete(modelsBack, model) {
+    var index = modelsBack.findIndex(function (elModel) {
+      return elModel.id === model.id;
+    });
+
+    if (index !== -1) {
+      modelsBack.splice(index, 1);
+      return new RsuvResultBoolPknz(true);
+    }
+
+    return new RsuvResultBoolPknz(false, '[[210712160441]]', 'not finded');
+  };
+
+  RsuvEcxm.deleteMulti = function deleteMulti(modelsBack, models) {
+    var ret = [];
+    models.forEach(function (model) {
+      var res = RsuvEcxm["delete"](modelsBack, model);
+
+      if (!res.success) {
+        ret.push(res);
+      }
+    });
+    return ret;
+  };
+
+  RsuvEcxm.filter = function filter(models, checked) {
+    return models.filter(function (elModel) {
+      return elModel.checked === checked;
+    });
+  };
+
+  RsuvEcxm.inverse = function inverse(modelsBack) {
+    modelsBack.forEach(function (elModel) {
+      return elModel.checked = !elModel.checked;
+    });
+  };
+
+  RsuvEcxm.selectAll = function selectAll(modelsBack) {
+    modelsBack.forEach(function (elModel) {
+      if (!elModel.checked) {
+        elModel.checked = true;
+      }
+    });
+  };
+
+  RsuvEcxm.deselectAll = function deselectAll(modelsBack) {
+    modelsBack.forEach(function (elModel) {
+      if (elModel.checked) {
+        elModel.checked = false;
+      }
+    });
+  };
+
+  return RsuvEcxm;
+}();
+/**
+ * Представление [gnpw]
+ */
+
+var RsuvCheckModelGnpw = /*#__PURE__*/function () {
+  function RsuvCheckModelGnpw(id, checked) {
+    if (id === void 0) {
+      id = '';
+    }
+
+    if (checked === void 0) {
+      checked = false;
+    }
+
+    this.id = id;
+    this.checked = checked;
+  }
+
+  var _proto = RsuvCheckModelGnpw.prototype;
+
+  _proto.bnuwIsValid = function bnuwIsValid() {
+    var res = bnuwUtilsVerifyMulti([new RsuvTxStringAA(this.id), new RsuvTxBoolean(this.checked)]);
+
+    if (res.length > 0) {
+      return res[0];
+    }
+
+    return new RsuvResultBoolPknz(true);
+  };
+
+  return RsuvCheckModelGnpw;
+}();
+
+/**
+ * -- success - TRUE означает успешный результат
+ * -- codeNum - любое положительное число означает ошибку, -1 означает неопределённый результат, значение
+ * меньшее -1 означает код успешного результата
+ */
+var RsuvResultAsau11 = function RsuvResultAsau11(codeNum, success) {
+  if (codeNum === void 0) {
+    codeNum = -1;
+  }
+
+  if (success === void 0) {
+    success = false;
+  }
+
+  this.success = false;
+  this.codeNum = 0;
+  this.success = success;
+  this.codeNum = codeNum;
+};
+
+/**
+ * Утилитные статические методы для работы с массивами
+ */
+
+var RsuvTuArray = /*#__PURE__*/function () {
+  function RsuvTuArray() {}
+
+  /**
+   * Удаляет элемент по индексу (2)
+   * @param arrBack
+   * @param index
+   * @return RsuvResultAsau11
+   */
+  RsuvTuArray.elemDelete = function elemDelete(arrBack, index) {
+    if (!RsuvTuArray.fnArrValidIs(arrBack)) return new RsuvResultAsau11(1);
+    if (!RsuvTuArray.fnIndexValidIs(arrBack, index)) return new RsuvResultAsau11(2);
+    arrBack.splice(index, 1);
+    return new RsuvResultAsau11(0, true);
+  }
+  /**
+   * Добавляет элемент (3) по индексу (2), существующие элементы сдвигаются. Если нужно добавить в самый конец,
+   * указать индекс (2) равный длине массива (1)
+   * @param arrBack (1) -- массив, мутируется, например [1, 2, 3]
+   * @param index (2) -- например 1
+   * @param elem (3) -- например 's'
+   * @return RsuvResultAsau11 ..., (1) например [1, 's',  2, 3]
+   */
+  ;
+
+  RsuvTuArray.elemAdd = function elemAdd(arrBack, index, elem) {
+    if (!RsuvTuArray.fnArrValidIs(arrBack)) return new RsuvResultAsau11(1);
+    if (!RsuvTuArray.fnIndexValidIsB(arrBack, index)) return new RsuvResultAsau11(2);
+    arrBack.splice(index, 0, elem);
+    return new RsuvResultAsau11(0, true);
+  }
+  /**
+   * В массиве (1) перемещает элемент с индекса (2) на индекс (3)
+   * @param arrBack {any[]} (1) -- массив, мутируется
+   * @param indexFrom {number} (2) --
+   * @param indexTo {number} (3) --
+   * @return RsuvResultAsau11
+   */
+  ;
+
+  RsuvTuArray.elemMove = function elemMove(arrBack, indexFrom, indexTo) {
+    if (!RsuvTuArray.fnArrValidIs(arrBack)) return new RsuvResultAsau11(1);
+    if (!RsuvTuArray.fnIndexValidIs(arrBack, indexFrom)) return new RsuvResultAsau11(2);
+    if (!RsuvTuArray.fnIndexValidIs(arrBack, indexTo)) return new RsuvResultAsau11(3);
+
+    if (indexFrom === indexTo) {
+      return new RsuvResultAsau11(0, true);
+    } // ---
+
+
+    var el = arrBack.splice(indexFrom, 1);
+    arrBack.splice(indexTo, 0, el[0]);
+    return new RsuvResultAsau11(0, true);
+  }
+  /**
+   * Меняет местами элементы (2) и (3)
+   * @param arrBack (1) -- массив, мутируется
+   * @param index1 (2) --
+   * @param index2 (3) --
+   * @return RsuvResultAsau11
+   */
+  ;
+
+  RsuvTuArray.elemsSwap = function elemsSwap(arrBack, index1, index2) {
+    if (!RsuvTuArray.fnArrValidIs(arrBack)) return new RsuvResultAsau11(1);
+    if (!RsuvTuArray.fnIndexValidIs(arrBack, index1)) return new RsuvResultAsau11(2);
+    if (!RsuvTuArray.fnIndexValidIs(arrBack, index2)) return new RsuvResultAsau11(3);
+
+    if (index1 === index2) {
+      return new RsuvResultAsau11(0, true);
+    } // ---
+
+
+    var a = arrBack[index1];
+    arrBack[index1] = arrBack[index2];
+    arrBack[index2] = a;
+    return new RsuvResultAsau11(0, true);
+  }
+  /**
+   * Заменяет значением (2), первый элемент (1) удовлетворяющий предикату (3).
+   * Неудачей считаются (среди прочего): пустой массив (1), если предикат (3) не функция
+   * @param arrBack (1) -- массив, мутируется
+   * @param value (2) -- новое значение
+   * @param predicate (3) -- вызывается для каждого элемента (1); аргументы - первый это сам элемент, второй это
+   * индекс этого элемента
+   */
+  ;
+
+  RsuvTuArray.elemUpdate = function elemUpdate(arrBack, value, predicate) {
+    if (!RsuvTuArray.fnArrValidIs(arrBack)) return new RsuvResultAsau11(1);
+
+    if (!_.isFunction(predicate)) {
+      return new RsuvResultAsau11(2);
+    }
+
+    if (arrBack.length < 1) {
+      return new RsuvResultAsau11(3);
+    }
+
+    var ix = arrBack.findIndex(function (el, index) {
+      return predicate(el, index);
+    });
+
+    if (ix === -1) {
+      return new RsuvResultAsau11(4);
+    }
+
+    arrBack[ix] = value;
+    return new RsuvResultAsau11(0, true);
+  };
+
+  RsuvTuArray.fnIndexValidIs = function fnIndexValidIs(arr, index) {
+    if (index < 0) {
+      return false;
+    }
+
+    return index <= arr.length - 1;
+  };
+
+  RsuvTuArray.fnIndexValidIsB = function fnIndexValidIsB(arr, index) {
+    if (index < 0) {
+      return false;
+    }
+
+    return index <= arr.length;
+  };
+
+  RsuvTuArray.fnArrValidIs = function fnArrValidIs(arr) {
+    return !!_.isArray(arr);
+  };
+
+  return RsuvTuArray;
+}();
+
 /*
 -- [[ntxe]] - фильтр, например 'id=1&id=2' или 'json-server&author=typicode'.
           Тут & работает как ИЛИ, т.е. для 'id=1&id=2' вернутся две записи (если они существуют с такими id)
@@ -2717,378 +3089,6 @@ var RsuvTxJsonServer = /*#__PURE__*/function () {
   return RsuvTxJsonServer;
 }();
 
-var bnuwUtilsVerify = function bnuwUtilsVerify(value) {
-  if (!value) {
-    return new RsuvResultBoolPknz(false, '[[210711215605]]', 'value is falsy');
-  }
-
-  var res = value.bnuwIsValid();
-
-  if (!res) {
-    return new RsuvResultBoolPknz(false, '[[210711215805]]', 'invalid value');
-  }
-
-  return res;
-};
-/**
- * Если возвращает пустой массив, значит все элементы (1) валидные, иначе в массиве результы неудачных проверок
- * @param values (1) -- элементы для проверки; пустой массив не валиден
- */
-
-var bnuwUtilsVerifyMulti = function bnuwUtilsVerifyMulti(values) {
-  if (Array.isArray(values) && values.length > 0) {
-    var ret = [];
-    values.forEach(function (el) {
-      var verif = bnuwUtilsVerify(el);
-
-      if (!verif.success) {
-        ret.push(verif);
-      }
-    });
-    return ret;
-  }
-
-  return [new RsuvResultBoolPknz(false, '[[210711221552]]')];
-};
-
-/*
- * Представляет boolean
- */
-var RsuvTxBoolean = /*#__PURE__*/function () {
-  function RsuvTxBoolean(val) {
-    this.val = val;
-  }
-
-  var _proto = RsuvTxBoolean.prototype;
-
-  _proto.bnuwIsValid = function bnuwIsValid() {
-    try {
-      if (!_.isBoolean(this.val)) {
-        return new RsuvResultBoolPknz(false, '[[210711220826]]', 'is not boolean');
-      }
-    } catch (err) {
-      return new RsuvResultBoolPknz(false, '[[210705185560]]', err.message);
-    }
-
-    return new RsuvResultBoolPknz(true);
-  };
-
-  return RsuvTxBoolean;
-}();
-
-/*
-Сущности для работы с checked-списками (списки хранящие информацию о том какой элемент чекнут, какой нет)
-
-[[ecxm]] - массив из [gnpw]-объектов или пустой массив
-[[gnpw]] - объект вида {id: string, checked: boolean}
- */
-var RsuvEcxm = /*#__PURE__*/function () {
-  function RsuvEcxm() {}
-
-  RsuvEcxm.find = function find(models, id) {
-    return models.find(function (model) {
-      return model.id === id;
-    });
-  }
-  /**
-   * Добавляет новый элемент (2) в конец (1)
-   * @param modelsBack (1) --
-   * @param model
-   */
-  ;
-
-  RsuvEcxm.append = function append(modelsBack, model) {
-    var fModel = RsuvEcxm.find(modelsBack, model.id);
-
-    if (fModel) {
-      return new RsuvResultBoolPknz(false, '[[210712155908]]', 'already exist');
-    }
-
-    modelsBack.push(model);
-    return new RsuvResultBoolPknz(true);
-  };
-
-  RsuvEcxm.appendMulti = function appendMulti(modelsBack, models) {
-    var ret = [];
-    models.forEach(function (model) {
-      var res = RsuvEcxm.append(modelsBack, model);
-
-      if (!res.success) {
-        ret.push(res);
-      }
-    });
-    return ret;
-  };
-
-  RsuvEcxm.update = function update(modelsBack, model) {
-    var elem = RsuvEcxm.find(modelsBack, model.id);
-
-    if (elem) {
-      elem.checked = model.checked;
-      return new RsuvResultBoolPknz(true);
-    }
-
-    return new RsuvResultBoolPknz(false, '[[210712160222]]', 'not finded');
-  };
-
-  RsuvEcxm.updateMulti = function updateMulti(modelsBack, models) {
-    var ret = [];
-    models.forEach(function (model) {
-      var res = RsuvEcxm.update(modelsBack, model);
-
-      if (!res.success) {
-        ret.push(res);
-      }
-    });
-    return ret;
-  };
-
-  RsuvEcxm["delete"] = function _delete(modelsBack, model) {
-    var index = modelsBack.findIndex(function (elModel) {
-      return elModel.id === model.id;
-    });
-
-    if (index !== -1) {
-      modelsBack.splice(index, 1);
-      return new RsuvResultBoolPknz(true);
-    }
-
-    return new RsuvResultBoolPknz(false, '[[210712160441]]', 'not finded');
-  };
-
-  RsuvEcxm.deleteMulti = function deleteMulti(modelsBack, models) {
-    var ret = [];
-    models.forEach(function (model) {
-      var res = RsuvEcxm["delete"](modelsBack, model);
-
-      if (!res.success) {
-        ret.push(res);
-      }
-    });
-    return ret;
-  };
-
-  RsuvEcxm.filter = function filter(models, checked) {
-    return models.filter(function (elModel) {
-      return elModel.checked === checked;
-    });
-  };
-
-  RsuvEcxm.inverse = function inverse(modelsBack) {
-    modelsBack.forEach(function (elModel) {
-      return elModel.checked = !elModel.checked;
-    });
-  };
-
-  RsuvEcxm.selectAll = function selectAll(modelsBack) {
-    modelsBack.forEach(function (elModel) {
-      if (!elModel.checked) {
-        elModel.checked = true;
-      }
-    });
-  };
-
-  RsuvEcxm.deselectAll = function deselectAll(modelsBack) {
-    modelsBack.forEach(function (elModel) {
-      if (elModel.checked) {
-        elModel.checked = false;
-      }
-    });
-  };
-
-  return RsuvEcxm;
-}();
-/**
- * Представление [gnpw]
- */
-
-var RsuvCheckModelGnpw = /*#__PURE__*/function () {
-  function RsuvCheckModelGnpw(id, checked) {
-    if (id === void 0) {
-      id = '';
-    }
-
-    if (checked === void 0) {
-      checked = false;
-    }
-
-    this.id = id;
-    this.checked = checked;
-  }
-
-  var _proto = RsuvCheckModelGnpw.prototype;
-
-  _proto.bnuwIsValid = function bnuwIsValid() {
-    var res = bnuwUtilsVerifyMulti([new RsuvTxStringAA(this.id), new RsuvTxBoolean(this.checked)]);
-
-    if (res.length > 0) {
-      return res[0];
-    }
-
-    return new RsuvResultBoolPknz(true);
-  };
-
-  return RsuvCheckModelGnpw;
-}();
-
-/**
- * -- success - TRUE означает успешный результат
- * -- codeNum - любое положительное число означает ошибку, -1 означает неопределённый результат, значение
- * меньшее -1 означает код успешного результата
- */
-var RsuvResultAsau11 = function RsuvResultAsau11(codeNum, success) {
-  if (codeNum === void 0) {
-    codeNum = -1;
-  }
-
-  if (success === void 0) {
-    success = false;
-  }
-
-  this.success = false;
-  this.codeNum = 0;
-  this.success = success;
-  this.codeNum = codeNum;
-};
-
-/**
- * Утилитные статические методы для работы с массивами
- */
-
-var RsuvTuArray = /*#__PURE__*/function () {
-  function RsuvTuArray() {}
-
-  /**
-   * Удаляет элемент по индексу (2)
-   * @param arrBack
-   * @param index
-   * @return RsuvResultAsau11
-   */
-  RsuvTuArray.elemDelete = function elemDelete(arrBack, index) {
-    if (!RsuvTuArray.fnArrValidIs(arrBack)) return new RsuvResultAsau11(1);
-    if (!RsuvTuArray.fnIndexValidIs(arrBack, index)) return new RsuvResultAsau11(2);
-    arrBack.splice(index, 1);
-    return new RsuvResultAsau11(0, true);
-  }
-  /**
-   * Добавляет элемент (3) по индексу (2), существующие элементы сдвигаются. Если нужно добавить в самый конец,
-   * указать индекс (2) равный длине массива (1)
-   * @param arrBack (1) -- массив, мутируется, например [1, 2, 3]
-   * @param index (2) -- например 1
-   * @param elem (3) -- например 's'
-   * @return RsuvResultAsau11 ..., (1) например [1, 's',  2, 3]
-   */
-  ;
-
-  RsuvTuArray.elemAdd = function elemAdd(arrBack, index, elem) {
-    if (!RsuvTuArray.fnArrValidIs(arrBack)) return new RsuvResultAsau11(1);
-    if (!RsuvTuArray.fnIndexValidIsB(arrBack, index)) return new RsuvResultAsau11(2);
-    arrBack.splice(index, 0, elem);
-    return new RsuvResultAsau11(0, true);
-  }
-  /**
-   * В массиве (1) перемещает элемент с индекса (2) на индекс (3)
-   * @param arrBack {any[]} (1) -- массив, мутируется
-   * @param indexFrom {number} (2) --
-   * @param indexTo {number} (3) --
-   * @return RsuvResultAsau11
-   */
-  ;
-
-  RsuvTuArray.elemMove = function elemMove(arrBack, indexFrom, indexTo) {
-    if (!RsuvTuArray.fnArrValidIs(arrBack)) return new RsuvResultAsau11(1);
-    if (!RsuvTuArray.fnIndexValidIs(arrBack, indexFrom)) return new RsuvResultAsau11(2);
-    if (!RsuvTuArray.fnIndexValidIs(arrBack, indexTo)) return new RsuvResultAsau11(3);
-
-    if (indexFrom === indexTo) {
-      return new RsuvResultAsau11(0, true);
-    } // ---
-
-
-    var el = arrBack.splice(indexFrom, 1);
-    arrBack.splice(indexTo, 0, el[0]);
-    return new RsuvResultAsau11(0, true);
-  }
-  /**
-   * Меняет местами элементы (2) и (3)
-   * @param arrBack (1) -- массив, мутируется
-   * @param index1 (2) --
-   * @param index2 (3) --
-   * @return RsuvResultAsau11
-   */
-  ;
-
-  RsuvTuArray.elemsSwap = function elemsSwap(arrBack, index1, index2) {
-    if (!RsuvTuArray.fnArrValidIs(arrBack)) return new RsuvResultAsau11(1);
-    if (!RsuvTuArray.fnIndexValidIs(arrBack, index1)) return new RsuvResultAsau11(2);
-    if (!RsuvTuArray.fnIndexValidIs(arrBack, index2)) return new RsuvResultAsau11(3);
-
-    if (index1 === index2) {
-      return new RsuvResultAsau11(0, true);
-    } // ---
-
-
-    var a = arrBack[index1];
-    arrBack[index1] = arrBack[index2];
-    arrBack[index2] = a;
-    return new RsuvResultAsau11(0, true);
-  }
-  /**
-   * Заменяет значением (2), первый элемент (1) удовлетворяющий предикату (3).
-   * Неудачей считаются (среди прочего): пустой массив (1), если предикат (3) не функция
-   * @param arrBack (1) -- массив, мутируется
-   * @param value (2) -- новое значение
-   * @param predicate (3) -- вызывается для каждого элемента (1); аргументы - первый это сам элемент, второй это
-   * индекс этого элемента
-   */
-  ;
-
-  RsuvTuArray.elemUpdate = function elemUpdate(arrBack, value, predicate) {
-    if (!RsuvTuArray.fnArrValidIs(arrBack)) return new RsuvResultAsau11(1);
-
-    if (!_.isFunction(predicate)) {
-      return new RsuvResultAsau11(2);
-    }
-
-    if (arrBack.length < 1) {
-      return new RsuvResultAsau11(3);
-    }
-
-    var ix = arrBack.findIndex(function (el, index) {
-      return predicate(el, index);
-    });
-
-    if (ix === -1) {
-      return new RsuvResultAsau11(4);
-    }
-
-    arrBack[ix] = value;
-    return new RsuvResultAsau11(0, true);
-  };
-
-  RsuvTuArray.fnIndexValidIs = function fnIndexValidIs(arr, index) {
-    if (index < 0) {
-      return false;
-    }
-
-    return index <= arr.length - 1;
-  };
-
-  RsuvTuArray.fnIndexValidIsB = function fnIndexValidIsB(arr, index) {
-    if (index < 0) {
-      return false;
-    }
-
-    return index <= arr.length;
-  };
-
-  RsuvTuArray.fnArrValidIs = function fnArrValidIs(arr) {
-    return !!_.isArray(arr);
-  };
-
-  return RsuvTuArray;
-}();
-
 /**
  * Представляет целое число, положительное, отрицательное, ноль, но не дробное, NaN, Infinity и т.п.
  */
@@ -3229,6 +3229,51 @@ var RsuvTxNumIntAC = /*#__PURE__*/function (_RsuvTxNumInt) {
 }(RsuvTxNumInt);
 
 /**
+ * Представляет типовой "ключ", "имя поля", "имя столбца таблицы БД" и т.п.,
+ * т.е. это строка состоящая только из символов [a-zA-Z0-9_] и начинающаяся
+ * не с цифры
+ *
+ * ID [[1636807194]]
+ *
+ * @implements RsuvBnuwNT
+ * @extends RsuvTxStringABB
+ * @extends RsuvTxStringAB
+ * @extends RsuvTxString
+ */
+
+var RsuvTxFieldName = /*#__PURE__*/function (_RsuvTxStringABB) {
+  _inheritsLoose(RsuvTxFieldName, _RsuvTxStringABB);
+
+  function RsuvTxFieldName() {
+    return _RsuvTxStringABB.apply(this, arguments) || this;
+  }
+
+  return RsuvTxFieldName;
+}(RsuvTxStringABB);
+
+/**
+ * Представление сортировки чего-либо абстрактного, обозначенного идентификатором
+ */
+var RsuvTxSort =
+/**
+ * Бросает исключение если идентификатор (1) невалиден
+ *
+ * @param id (1) -- условный идентификатор
+ * @param sortDirect (2) -- направление сортировки
+ */
+function RsuvTxSort(id, sortDirect) {
+  this.id = id;
+  this.sortDirect = sortDirect; // --- id verify
+
+  var validRes = id.bnuwIsValid();
+
+  if (!validRes.success) {
+    throw new Error(validRes.errCode + ' : ' + validRes.errMessage);
+  } // ---
+
+};
+
+/**
  * [[asau22]]
  * КЛЮЧЕВЫЕ СЛОВА: поиск, строка
  * СМ ТАКЖЕ: [asau24]
@@ -3285,27 +3330,41 @@ var RsuvSearchHow = /*#__PURE__*/function () {
 })(exports.RsuvEnCaseSensitive || (exports.RsuvEnCaseSensitive = {}));
 
 /**
- * Представляет типовой "ключ", "имя поля", "имя столбца таблицы БД" и т.п.,
- * т.е. это строка состоящая только из символов [a-zA-Z0-9_] и начинающаяся
- * не с цифры
- *
- * ID [[1636807194]]
- *
- * @implements RsuvBnuwNT
- * @extends RsuvTxStringABB
- * @extends RsuvTxStringAB
- * @extends RsuvTxString
+ * ID [[asau27]]
+ * Обозначения основных типов данных, например использующихся в базах данных
  */
 
-var RsuvTxFieldName = /*#__PURE__*/function (_RsuvTxStringABB) {
-  _inheritsLoose(RsuvTxFieldName, _RsuvTxStringABB);
+(function (RsuvEnDataTypes) {
+  /**
+   * строка
+   */
+  RsuvEnDataTypes["TEXT"] = "text_asau27";
+  /**
+   * целое число, положительное или отрицательное, в том числе ноль
+   */
 
-  function RsuvTxFieldName() {
-    return _RsuvTxStringABB.apply(this, arguments) || this;
-  }
+  RsuvEnDataTypes["INT"] = "int_asau27";
+  /**
+   * число дробное, с плавающей запятой
+   */
 
-  return RsuvTxFieldName;
-}(RsuvTxStringABB);
+  RsuvEnDataTypes["FLOAT"] = "real_asau27";
+})(exports.RsuvEnDataTypes || (exports.RsuvEnDataTypes = {}));
+
+/**
+ * Представление направления сортировки
+ */
+
+(function (RsuvEnSort) {
+  /** по возрастанию */
+  RsuvEnSort["ASC"] = "asc";
+  /** по убыванию */
+
+  RsuvEnSort["DESC"] = "desc";
+  /** не определено */
+
+  RsuvEnSort["UNDEF"] = "undef";
+})(exports.RsuvEnSort || (exports.RsuvEnSort = {}));
 
 /**
  * ID [[1636803407]]
@@ -3341,28 +3400,6 @@ var RsuvSearchElem = /*#__PURE__*/function () {
 }();
 
 /**
- * ID [[asau27]]
- * Обозначения основных типов данных, например использующихся в базах данных
- */
-
-(function (RsuvEnDataTypes) {
-  /**
-   * строка
-   */
-  RsuvEnDataTypes["TEXT"] = "text_asau27";
-  /**
-   * целое число, положительное или отрицательное, в том числе ноль
-   */
-
-  RsuvEnDataTypes["INT"] = "int_asau27";
-  /**
-   * число дробное, с плавающей запятой
-   */
-
-  RsuvEnDataTypes["FLOAT"] = "real_asau27";
-})(exports.RsuvEnDataTypes || (exports.RsuvEnDataTypes = {}));
-
-/**
  * Представление нескольких RsuvSearchElem-ID[1636803407] (пар ключ/значение).
  *
  * Значения интерпретируются по правилу "И". Например, если элемента два, то поиск считается
@@ -3376,6 +3413,26 @@ var RsuvSearchElems =
  */
 function RsuvSearchElems(elems) {
   this.elems = elems;
+};
+
+/*
+Утилиты для получения информации об объектах.
+
+Статус: в разработке
+ */
+var TypeAsau42;
+
+(function (TypeAsau42) {
+  TypeAsau42["KFRX"] = "kfrx";
+})(TypeAsau42 || (TypeAsau42 = {}));
+
+function info(entry) {
+}
+
+var RsuvTuInfo = {
+  __proto__: null,
+  get TypeAsau42 () { return TypeAsau42; },
+  info: info
 };
 
 exports.RSUV_AL_ALREADY_EXIST = RSUV_AL_ALREADY_EXIST;
@@ -3392,6 +3449,7 @@ exports.RsuvSearchElems = RsuvSearchElems;
 exports.RsuvSearchHow = RsuvSearchHow;
 exports.RsuvTuArray = RsuvTuArray;
 exports.RsuvTuDateTime = RsuvTuDateTime;
+exports.RsuvTuInfo = RsuvTuInfo;
 exports.RsuvTuString = RsuvTuString;
 exports.RsuvTxEmail = RsuvTxEmail;
 exports.RsuvTxFieldName = RsuvTxFieldName;
@@ -3400,6 +3458,7 @@ exports.RsuvTxNumInt = RsuvTxNumInt;
 exports.RsuvTxNumIntAB = RsuvTxNumIntAB;
 exports.RsuvTxNumIntABB = RsuvTxNumIntABB;
 exports.RsuvTxNumIntAC = RsuvTxNumIntAC;
+exports.RsuvTxSort = RsuvTxSort;
 exports.RsuvTxString = RsuvTxString;
 exports.RsuvTxStringAA = RsuvTxStringAA;
 exports.RsuvTxStringAB = RsuvTxStringAB;
