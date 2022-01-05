@@ -8,10 +8,10 @@ import { RsuvEnSort } from './RsuvEnSort';
 export class RsuvTxSort {
 
   /**
-   * Бросает исключение если идентификатор (1) невалиден
    *
    * @param id (1) -- условный идентификатор
    * @param sortDirect (2) -- направление сортировки
+   * @throws Error если идентификатор (1) невалиден
    */
   constructor(public id: RsuvTxStringAB, public sortDirect: RsuvEnSort) {
     // --- id verify

@@ -1,6 +1,10 @@
 import { RsuvBnuwNT } from './RsuvBnuwNT';
 import { RsuvResultBoolPknz } from './RsuvResultBoolPknz';
 
+/**
+ * Проверяет значение (1)
+ * @param value (1) --
+ */
 export const bnuwUtilsVerify = (value: RsuvBnuwNT | any): RsuvResultBoolPknz => {
   if (!value) {
     return new RsuvResultBoolPknz(false, '[[210711215605]]', 'value is falsy')
