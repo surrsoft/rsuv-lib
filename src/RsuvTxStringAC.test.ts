@@ -1,31 +1,18 @@
 import { RsuvResultBoolPknz } from './RsuvResultBoolPknz';
-import { RsuvTxNumInt } from './RsuvTxNumInt';
+import { RsuvTxStringAC } from './RsuvTxStringAC';
 
-const valuesOk = [1, 100, 0, +0, -0, -1, -100, 1.0, 1.0, 999999999999999];
-const valuesKo = [
-  1.1,
-  1.00000001,
-  NaN,
-  null,
-  undefined,
-  '1',
-  Infinity,
-  +Infinity,
-  -Infinity,
-  { a: 1 },
-  {},
-  9999999999999999, // слишком большое целое число
-];
+const valuesOk = ['aaAA11_', '1', '_'];
+const valuesKo = [null, NaN, undefined, ' 1', {}, 'a a', '1a^'];
 
 function fnVerif(values: any, isTrue: boolean) {
   values.forEach((elVal: any) => {
     it(`val [${elVal}] isTrue [${isTrue}]`, () => {
       if (!isTrue) {
         expect(() => {
-          new RsuvTxNumInt(elVal);
+          new RsuvTxStringAC(elVal);
         }).toThrow()
       } else {
-        const nm = new RsuvTxNumInt(elVal);
+        const nm = new RsuvTxStringAC(elVal);
         const res: RsuvResultBoolPknz = nm.bnuwIsValid();
         expect(res.success).toEqual(isTrue);
       }
@@ -33,7 +20,7 @@ function fnVerif(values: any, isTrue: boolean) {
   });
 }
 
-describe('RsuvTxNumInt', () => {
+describe('RsuvTxStringAB', () => {
   fnVerif(valuesOk, true);
   fnVerif(valuesKo, false);
 });

@@ -1,16 +1,19 @@
 import { RsuvBnuwNT } from './RsuvBnuwNT';
 import { RsuvResultBoolPknz } from './RsuvResultBoolPknz';
 import _ from 'lodash';
+import { bnuwUtilsThrowIf } from './RsuvBnuwUtils';
 
 /**
  * Представляет строку не нулевой длины
- * 
+ *
  * ID [[1636807341]]
- * 
+ *
  * @implements RsuvBnuwNT
  */
 export class RsuvTxString implements RsuvBnuwNT {
-  constructor(public val: string) {}
+  constructor(public val: string) {
+    bnuwUtilsThrowIf(this)
+  }
 
   bnuwIsValid(): RsuvResultBoolPknz {
     try {

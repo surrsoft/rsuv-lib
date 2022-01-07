@@ -2,9 +2,12 @@ import { RsuvResultBoolPknz } from './RsuvResultBoolPknz';
 import { RsuvTxString } from './RsuvTxString';
 
 /**
- * Представляет строку которая: (не нулевой длины) И (не содержит пробелов/переносов)
+ * Представляет строку которая: (не нулевой длины) И (состоит только из символов [a-zA-Z0-9_])
+ *
+ * ID [[1636807311]]
+ * @implements RsuvBnuwNT
  */
-export class RsuvTxStringAA extends RsuvTxString {
+export class RsuvTxStringAC extends RsuvTxString {
   bnuwIsValid(): RsuvResultBoolPknz {
     try {
       const res = super.bnuwIsValid();
@@ -12,17 +15,17 @@ export class RsuvTxStringAA extends RsuvTxString {
         return res;
       }
       // ---
-      if (/\s/.test(this.val)) {
+      if (!/^[a-zA-Z0-9_]+$/.test(this.val)) {
         return new RsuvResultBoolPknz(
           false,
-          '[[210706092510]]',
-          'includes whitespace(s)'
+          '[[1636300398]]',
+          'allowable only [a-zA-Z0-9_] symbols'
         );
       }
     } catch (err) {
       return new RsuvResultBoolPknz(
         false,
-        '[[210706092135]]',
+        '[[1636300404]]',
         (err as Error).message
       );
     }

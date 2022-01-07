@@ -1,4 +1,4 @@
-import { RsuvTxStringAB } from './RsuvTxStringAB';
+import { RsuvTxStringAC } from './RsuvTxStringAC';
 import { RsuvEnSort } from './RsuvEnSort';
 
 
@@ -13,7 +13,7 @@ export class RsuvTxSort {
    * @param sortDirect (2) -- направление сортировки
    * @throws Error если идентификатор (1) невалиден
    */
-  constructor(public id: RsuvTxStringAB, public sortDirect: RsuvEnSort) {
+  constructor(public id: RsuvTxStringAC, public sortDirect: RsuvEnSort) {
     // --- id verify
     const validRes = id.bnuwIsValid();
     if (!validRes.success) {

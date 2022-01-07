@@ -2,6 +2,29 @@ import { RsuvBnuwNT } from './RsuvBnuwNT';
 import { RsuvResultBoolPknz } from './RsuvResultBoolPknz';
 
 /**
+ * Вызывает (1) и возвращает его результат если не было брошено исключения внутри (1), иначе возвращает null
+ * @param fn (1) --
+ */
+export function bnuwFactory<T extends RsuvBnuwNT>(fn: () => T): T | null {
+  try {
+    return fn()
+  } catch (err) {
+    return null
+  }
+}
+
+/**
+ * Выполняет [bnuw]-проверку сущности (1) и если результат неуспешен то брасает исключение с результатом этой проверки
+ * @param obj
+ */
+export function bnuwUtilsThrowIf(obj: RsuvBnuwNT) {
+  const validRes = obj.bnuwIsValid()
+  if (!validRes.success) {
+    throw validRes
+  }
+}
+
+/**
  * Проверяет значение (1)
  * @param value (1) --
  */

@@ -1,11 +1,11 @@
 import { RsuvResultBoolPknz } from './RsuvResultBoolPknz';
-import { RsuvTxStringB } from './RsuvTxStringB';
+import { RsuvTxStringAD } from './RsuvTxStringAD';
 
 /**
  * Представляет строку которая: (не нулевой длины) И (не состоит из одних пробелов/переносов) И (не начинается с пробела/переноса)
  * И (не заканчивается пробелом/переносом)
  */
-export class RsuvTxStringC extends RsuvTxStringB {
+export class RsuvTxStringADB extends RsuvTxStringAD {
   bnuwIsValid(): RsuvResultBoolPknz {
     try {
       const res = super.bnuwIsValid();

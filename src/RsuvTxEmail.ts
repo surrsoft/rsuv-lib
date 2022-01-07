@@ -1,8 +1,8 @@
-import { RsuvTxStringAA } from './RsuvTxStringAA';
+import { RsuvTxStringAB } from './RsuvTxStringAB';
 import { RsuvResultBoolPknz } from './RsuvResultBoolPknz';
 import EmailValidator from 'email-validator';
 
-export class RsuvTxEmail extends RsuvTxStringAA {
+export class RsuvTxEmail extends RsuvTxStringAB {
   bnuwIsValid(): RsuvResultBoolPknz {
     const resV = EmailValidator.validate(this.val)
     if(!resV) {

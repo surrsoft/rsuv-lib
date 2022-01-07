@@ -1,12 +1,16 @@
 import _ from 'lodash';
 import { RsuvBnuwNT } from '.';
 import { RsuvResultBoolPknz } from './RsuvResultBoolPknz';
+import { bnuwUtilsThrowIf } from './RsuvBnuwUtils';
 
 /**
  * Представляет целое число, положительное, отрицательное, ноль, но не дробное, NaN, Infinity и т.п.
  */
 export class RsuvTxNumInt implements RsuvBnuwNT {
-  constructor(public val: number) {}
+  constructor(public val: number) {
+    bnuwUtilsThrowIf(this)
+  }
+
   bnuwIsValid(): RsuvResultBoolPknz {
     try {
       if (!this.val && this.val !== 0) {

@@ -5,7 +5,7 @@ import { isEmptyOrWhitespaces } from './RsuvTuString';
 /**
  * Представляет строку которая: (не нулевой длины) И (не состоит из одних пробелов/переносов)
  */
-export class RsuvTxStringB extends RsuvTxString {
+export class RsuvTxStringAD extends RsuvTxString {
   bnuwIsValid(): RsuvResultBoolPknz {
     try {
       const res = super.bnuwIsValid();

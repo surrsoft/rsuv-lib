@@ -104,9 +104,15 @@ describe('RsuvTxEmail', () => {
   // ---
   [...testData0, ...plus].forEach(el => {
     it(el.desc, () => {
-      const rts = new RsuvTxEmail(el.val as any)
-      const valid = rts.bnuwIsValid()
-      expect(valid.success).toEqual(el.res);
+      if (!el.res) {
+        expect(() => {
+          new RsuvTxEmail(el.val as any);
+        }).toThrow()
+      } else {
+        const rts = new RsuvTxEmail(el.val as any)
+        const valid = rts.bnuwIsValid()
+        expect(valid.success).toEqual(el.res);
+      }
     })
   })
 });

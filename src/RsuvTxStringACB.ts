@@ -1,13 +1,14 @@
 import { RsuvResultBoolPknz } from './RsuvResultBoolPknz';
-import { RsuvTxStringAB } from './RsuvTxStringAB';
+import { RsuvTxStringAC } from './RsuvTxStringAC';
 
 /**
- * Представляет строку которая: (не нулевой длины) И (состоит только из символов [0-9] т.е. только из цифр)
+ * Представляет строку которая: (не нулевой длины) И (состоит только из символов [a-zA-Z0-9_])
+ * И (начинается не с цифры)
  *
- * ID [[211210125644]]
+ * ID [[1636807220]]
  * @implements RsuvBnuwNT
  */
-export class RsuvTxStringABC extends RsuvTxStringAB {
+export class RsuvTxStringACB extends RsuvTxStringAC {
   bnuwIsValid(): RsuvResultBoolPknz {
     try {
       const res = super.bnuwIsValid();
@@ -15,17 +16,17 @@ export class RsuvTxStringABC extends RsuvTxStringAB {
         return res;
       }
       // ---
-      if (!/^[0-9]+$/.test(this.val)) {
+      if (/^[0-9]$/.test(this.val[0])) {
         return new RsuvResultBoolPknz(
           false,
-          '[[211210125801]]',
-          'only numbers allowable'
+          '[[1636301354]]',
+          'first number is not allowable'
         );
       }
     } catch (err) {
       return new RsuvResultBoolPknz(
         false,
-        '[[211210125818]]',
+        '[[1636301361]]',
         (err as Error).message
       );
     }

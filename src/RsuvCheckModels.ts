@@ -9,7 +9,7 @@ import { RsuvBnuwNT } from './RsuvBnuwNT';
 import { RsuvResultBoolPknz } from './RsuvResultBoolPknz';
 import { bnuwUtilsVerifyMulti } from './RsuvBnuwUtils';
 import { RsuvTxBoolean } from './RsuvTxBoolean';
-import { RsuvTxStringAA } from './RsuvTxStringAA';
+import { RsuvTxStringAB } from './RsuvTxStringAB';
 
 /**
  * Вместо этого типа нужно передавать тип UnwrapRef<RsuvCheckModelGnpw[]>, т.е. value из ref сделанного на RsuvCheckModelGnpw[]
@@ -124,7 +124,7 @@ export class RsuvCheckModelGnpw implements RsuvBnuwNT {
   }
 
   bnuwIsValid(): RsuvResultBoolPknz {
-    const res = bnuwUtilsVerifyMulti([new RsuvTxStringAA(this.id), new RsuvTxBoolean(this.checked)])
+    const res = bnuwUtilsVerifyMulti([new RsuvTxStringAB(this.id), new RsuvTxBoolean(this.checked)])
     if (res.length > 0) {
       return res[0]
     }

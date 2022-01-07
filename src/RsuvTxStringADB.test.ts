@@ -1,4 +1,4 @@
-import { RsuvTxStringC } from './RsuvTxStringC';
+import { RsuvTxStringADB } from './RsuvTxStringADB';
 import { testData } from './RsuvTu';
 import _ from 'lodash';
 
@@ -14,9 +14,15 @@ describe('RsuvTxStringC', () => {
   // ---
   testData0.forEach(el => {
     it(el.desc, () => {
-      const rts = new RsuvTxStringC(el.val as any)
-      const valid = rts.bnuwIsValid()
-      expect(valid.success).toEqual(el.res);
+      if (!el.res) {
+        expect(() => {
+          new RsuvTxStringADB(el.val as any);
+        }).toThrow()
+      } else {
+        const rts = new RsuvTxStringADB(el.val as any)
+        const valid = rts.bnuwIsValid()
+        expect(valid.success).toEqual(el.res);
+      }
     })
   })
 });

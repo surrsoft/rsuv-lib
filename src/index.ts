@@ -9,12 +9,12 @@ export { RsuvResultTibo } from './RsuvResultTibo';
 export * from './RsuvConst';
 export { RsuvBnuwNT } from './RsuvBnuwNT';
 export { RsuvTxString } from './RsuvTxString';
-export { RsuvTxStringAA } from './RsuvTxStringAA';
 export { RsuvTxStringAB } from './RsuvTxStringAB';
-export { RsuvTxStringABB } from './RsuvTxStringABB';
-export { RsuvTxStringABC } from './RsuvTxStringABC';
-export { RsuvTxStringB } from './RsuvTxStringB';
-export { RsuvTxStringC } from './RsuvTxStringC';
+export { RsuvTxStringAC } from './RsuvTxStringAC';
+export { RsuvTxStringACB } from './RsuvTxStringACB';
+export { RsuvTxStringACC } from './RsuvTxStringACC';
+export { RsuvTxStringAD } from './RsuvTxStringAD';
+export { RsuvTxStringADB } from './RsuvTxStringADB';
 
 export * as RsuvTuString from './RsuvTuString';
 export * as RsuvTuDateTime from './RsuvTuDateTime';
@@ -29,6 +29,7 @@ export { RsuvTxNumInt } from './RsuvTxNumInt';
 export { RsuvTxNumIntAB } from './RsuvTxNumIntAB';
 export { RsuvTxNumIntABB } from './RsuvTxNumIntABB';
 export { RsuvTxNumIntAC } from './RsuvTxNumIntAC';
+export { RsuvTxNumIntDiap } from './RsuvTxNumIntDiap';
 export { RsuvTxFieldName } from './RsuvTxFieldName';
 export { RsuvTxSort } from './RsuvTxSort';
 

@@ -2,6 +2,9 @@
 - on base `tsdx` https://github.com/formium/tsdx
 - https://www.npmjs.com/package/rsuv-lib
 
+# Rev 2
+- в этой редакции, все `RsuvTx...`-сущности бросают исключение, если их невозможно создать с указанными входными параметрами конструктора 
+
 # Элементы
 
 ## Приставки
@@ -32,12 +35,12 @@
 ### Строка
 
 - `RsuvTxString` - строка не нулевой длины
-- `RsuvTxStringAA` - тоже что `RsuvTxString` только ещё не содержит пробелов/переносов
-- `RsuvTxStringB` - тоже что `RsuvTxString` только не состоит из одних только пробелов/переносов
-- `RsuvTxStringC` - тоже что `RsuvTxStringB` только не начинается с пробела/переноса и не заканчивается пробелом/переносом
-- `RsuvTxStringAB` - тоже что `RsuvTxString` только состоит только из символов [a-zA-Z0-9_]
-- `RsuvTxStringABB` - тоже что `RsuvTxStringAB` только начинается не с цифры
-- `RsuvTxStringABC` - тоже что `RsuvTxStringAB` только состоящая только из символов [0-9] (т.е. только из цифр)
+- `RsuvTxStringAB` - тоже что `RsuvTxString` только не содержит пробелов/переносов
+- `RsuvTxStringAC` - тоже что `RsuvTxString` но состоит только из символов [a-zA-Z0-9_]
+- `RsuvTxStringACB` - тоже что `RsuvTxStringAC` только начинается не с цифры
+- `RsuvTxStringACC` - тоже что `RsuvTxStringAC` только состоит только из символов [0-9] (т.е. только из цифр)
+- `RsuvTxStringAD` - тоже что `RsuvTxString` только эта строка не может состоять из одних только пробелов/переносов
+- `RsuvTxStringADB` - тоже что `RsuvTxStringAD` только не начинается с пробела/переноса и не заканчивается пробелом/переносом
 
 ### Целое число
 
@@ -45,6 +48,9 @@
 - `RsuvTxNumIntAB` - тоже что `RsuvTxNumInt` но >= 0
 - `RsuvTxNumIntABB` - тоже что `RsuvTxNumIntAB` но > 0
 - `RsuvTxNumIntAC` - тоже что `RsuvTxNumInt` но >= -1
+
+### Диапазон целых чисел
+- `RsuvTxNumIntDiap` - представление диапазона целых положительных чисел (>= 0), второе число >= первого
 
 ### Boolean
 

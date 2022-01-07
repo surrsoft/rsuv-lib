@@ -14,9 +14,15 @@ describe('RsuvTxString', () => {
   // ---
   testData0.forEach(el => {
     it(el.desc, () => {
-      const rts = new RsuvTxString(el.val as any)
-      const valid = rts.bnuwIsValid()
-      expect(valid.success).toEqual(el.res);
+      if (!el.res) {
+        expect(() => {
+          new RsuvTxString(el.val as any);
+        }).toThrow()
+      } else {
+        const rts = new RsuvTxString(el.val as any);
+        const valid = rts.bnuwIsValid()
+        expect(valid.success).toEqual(el.res);
+      }
     })
   })
 });

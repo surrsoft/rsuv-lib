@@ -68,12 +68,6 @@ describe('RsuvTuString', () => {
       expect(val?.notSensitive.rsuvT3.includes(RSUV_T3.COMPLETE_MATCH)).toEqual(false);
     })
 
-    it('невалидный второй аргумент', () => {
-      const info: RsuvResultTibo<RsuvT5> = stringsTwoInfoB(new RsuvTxString('AabbaaAaccdd'), new RsuvTxString(''))
-      expect(info.success).toEqual(false)
-      const val: RsuvT5 | undefined = info.value
-      expect(val).toBeUndefined()
-    })
   })
 
   describe('stringsTwoInfo()', () => {
@@ -157,19 +151,6 @@ describe('RsuvTuString', () => {
       expect(val?.rsuvT3.includes(RSUV_T3.COMPLETE_MATCH)).toEqual(false);
     })
 
-    it('невалидный второй аргумент, ignoreCase = true', () => {
-      const info: RsuvResultTibo<RsuvT4> = stringsTwoInfo(new RsuvTxString('AabbaaAaccdd'), new RsuvTxString(''), true)
-      expect(info.success).toEqual(false)
-      const val: RsuvT4 | undefined = info.value
-      expect(val).toBeUndefined()
-    })
-
-    it('невалидный второй аргумент, ignoreCase = false', () => {
-      const info: RsuvResultTibo<RsuvT4> = stringsTwoInfo(new RsuvTxString('AabbaaAaccdd'), new RsuvTxString(''), false)
-      expect(info.success).toEqual(false)
-      const val: RsuvT4 | undefined = info.value
-      expect(val).toBeUndefined()
-    })
   })
 
 
