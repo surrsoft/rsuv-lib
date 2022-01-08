@@ -85,7 +85,7 @@
 - `RsuvResultCountAndData` - простой класс вида `{ countAll: number, data: T[], hasNext: boolean }`
 - `RsuvValueAnd` - представления значения полученного откуда либо.
   - МОТИВАЦИЯ: допустим мы хотим получить значение ячейки столбца, но такого столбца не существует; в этом случае возврат просто falsy значения (undefined и т.п.) не позволяет понять, это значение ячейки undefined или же это означает что ячейки не существует.
-- `RsuvEnResultCrudSet` (enum) - представление результата set operation ([asau45])
+- `RsuvEnResultCrudSet` (enum) - представление результата set operation ([asau45]) или upsert opertaion ([asau46])
 
 ## Представления ошибок
 

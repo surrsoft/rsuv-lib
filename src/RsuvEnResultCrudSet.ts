@@ -1,5 +1,5 @@
 /**
- * Представление результата set operation ([asau45])
+ * Представление результата set operation ([asau45]) или upsert opertaion ([asau46])
  *
  * ID [[220108131133]] rev 1 1.0.0 2022-01-08
  */
