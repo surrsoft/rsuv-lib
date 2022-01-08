@@ -135,6 +135,8 @@ var RsuvPaginationGyth = /*#__PURE__*/function () {
  * [[pknz]]
  *
  * представление результата вида "успех/не-успех"
+ *
+ * СМ. ТАКЖЕ: [220108130347]
  */
 var RsuvResultBoolPknz = /*#__PURE__*/function () {
   function RsuvResultBoolPknz(success, errCode, errMessage) {
@@ -216,6 +218,11 @@ var RsuvResultTibo = /*#__PURE__*/function () {
       this.errMessage = tibo.errMessage;
     }
   }
+  /**
+   * [[220108130347]]
+   * @param pknz
+   */
+
 
   RsuvResultTibo.fromPknz = function fromPknz(pknz) {
     if (pknz) {
@@ -3412,6 +3419,29 @@ var RsuvSearchHow = /*#__PURE__*/function () {
 
   RsuvEnSort["UNDEF"] = "undef";
 })(exports.RsuvEnSort || (exports.RsuvEnSort = {}));
+
+/**
+ * Представление результата set operation ([asau45])
+ *
+ * ID [[220108131133]] rev 1 1.0.0 2022-01-08
+ */
+
+(function (RsuvEnResultCrudSet) {
+  /**
+   * Была создана новая запись
+   */
+  RsuvEnResultCrudSet["CREATED"] = "created";
+  /**
+   * Была обновлена существующая запись
+   */
+
+  RsuvEnResultCrudSet["UPDATED"] = "updated";
+  /**
+   * Возникли проблемы. Новая запись создана не была, текущая обновлена не была
+   */
+
+  RsuvEnResultCrudSet["ERROR"] = "error";
+})(exports.RsuvEnResultCrudSet || (exports.RsuvEnResultCrudSet = {}));
 
 /**
  * ID [[1636803407]]

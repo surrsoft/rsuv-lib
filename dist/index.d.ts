@@ -35,6 +35,7 @@ export { RsuvSearchHow } from './RsuvSearchHow';
 export { RsuvEnCaseSensitive } from './RsuvEnCaseSensitive';
 export { RsuvEnDataTypes } from './RsuvEnDataTypes';
 export { RsuvEnSort } from './RsuvEnSort';
+export { RsuvEnResultCrudSet } from './RsuvEnResultCrudSet';
 export { RsuvSearchElem } from './RsuvSearchElem';
 export { RsuvSearchElems } from './RsuvSearchElems';
 export * as RsuvTuInfo from './RsuvTuInfo';

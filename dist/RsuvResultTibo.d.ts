@@ -11,5 +11,9 @@ export declare class RsuvResultTibo<T> {
     errCode?: string;
     errMessage?: string;
     constructor(tibo?: RsuvResultTibo<T>);
+    /**
+     * [[220108130347]]
+     * @param pknz
+     */
     static fromPknz(pknz: RsuvResultBoolPknz): RsuvResultTibo<any>;
 }

@@ -2,6 +2,8 @@
  * [[pknz]]
  *
  * представление результата вида "успех/не-успех"
+ *
+ * СМ. ТАКЖЕ: [220108130347]
  */
 export declare class RsuvResultBoolPknz {
     readonly success: boolean;

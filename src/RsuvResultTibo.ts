@@ -2,7 +2,7 @@ import { RsuvResultBoolPknz } from './RsuvResultBoolPknz';
 
 /**
  * Представление результата "успешно/неуспешно" плюс значение <T> результата
- * 
+ *
  * ID [[tibo]]
  */
 export class RsuvResultTibo<T> {
@@ -22,6 +22,10 @@ export class RsuvResultTibo<T> {
     }
   }
 
+  /**
+   * [[220108130347]]
+   * @param pknz
+   */
   static fromPknz(pknz: RsuvResultBoolPknz): RsuvResultTibo<any> {
     if (pknz) {
       return new RsuvResultTibo({

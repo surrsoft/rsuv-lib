@@ -129,6 +129,8 @@ var RsuvPaginationGyth = /*#__PURE__*/function () {
  * [[pknz]]
  *
  * представление результата вида "успех/не-успех"
+ *
+ * СМ. ТАКЖЕ: [220108130347]
  */
 var RsuvResultBoolPknz = /*#__PURE__*/function () {
   function RsuvResultBoolPknz(success, errCode, errMessage) {
@@ -210,6 +212,11 @@ var RsuvResultTibo = /*#__PURE__*/function () {
       this.errMessage = tibo.errMessage;
     }
   }
+  /**
+   * [[220108130347]]
+   * @param pknz
+   */
+
 
   RsuvResultTibo.fromPknz = function fromPknz(pknz) {
     if (pknz) {
@@ -3412,6 +3419,30 @@ var RsuvEnSort;
 })(RsuvEnSort || (RsuvEnSort = {}));
 
 /**
+ * Представление результата set operation ([asau45])
+ *
+ * ID [[220108131133]] rev 1 1.0.0 2022-01-08
+ */
+var RsuvEnResultCrudSet;
+
+(function (RsuvEnResultCrudSet) {
+  /**
+   * Была создана новая запись
+   */
+  RsuvEnResultCrudSet["CREATED"] = "created";
+  /**
+   * Была обновлена существующая запись
+   */
+
+  RsuvEnResultCrudSet["UPDATED"] = "updated";
+  /**
+   * Возникли проблемы. Новая запись создана не была, текущая обновлена не была
+   */
+
+  RsuvEnResultCrudSet["ERROR"] = "error";
+})(RsuvEnResultCrudSet || (RsuvEnResultCrudSet = {}));
+
+/**
  * ID [[1636803407]]
  *
  * Представление единичного элемента поиска "ключ/значение"
@@ -3480,5 +3511,5 @@ var RsuvTuInfo = {
   info: info
 };
 
-export { RSUV_AL_ALREADY_EXIST, RsuvAdapterZrnx, RsuvCheckModelGnpw, RsuvEcxm, RsuvEnCaseSensitive, RsuvEnDataTypes, RsuvEnSort, RsuvErr, RsuvPaginationGyth, RsuvResultAsau11, RsuvResultBoolPknz, RsuvResultTibo, RsuvSearchElem, RsuvSearchElems, RsuvSearchHow, RsuvSearchMode, RsuvTuArray, RsuvTuDateTime, RsuvTuInfo, RsuvTuString, RsuvTxEmail, RsuvTxFieldName, RsuvTxJsonServer, RsuvTxNumInt, RsuvTxNumIntAB, RsuvTxNumIntABB, RsuvTxNumIntAC, RsuvTxNumIntDiap, RsuvTxSort, RsuvTxString, RsuvTxStringAB, RsuvTxStringAC, RsuvTxStringACB, RsuvTxStringACC, RsuvTxStringAD, RsuvTxStringADB, RsuvValueAnd, RsuvZrnxSubData };
+export { RSUV_AL_ALREADY_EXIST, RsuvAdapterZrnx, RsuvCheckModelGnpw, RsuvEcxm, RsuvEnCaseSensitive, RsuvEnDataTypes, RsuvEnResultCrudSet, RsuvEnSort, RsuvErr, RsuvPaginationGyth, RsuvResultAsau11, RsuvResultBoolPknz, RsuvResultTibo, RsuvSearchElem, RsuvSearchElems, RsuvSearchHow, RsuvSearchMode, RsuvTuArray, RsuvTuDateTime, RsuvTuInfo, RsuvTuString, RsuvTxEmail, RsuvTxFieldName, RsuvTxJsonServer, RsuvTxNumInt, RsuvTxNumIntAB, RsuvTxNumIntABB, RsuvTxNumIntAC, RsuvTxNumIntDiap, RsuvTxSort, RsuvTxString, RsuvTxStringAB, RsuvTxStringAC, RsuvTxStringACB, RsuvTxStringACC, RsuvTxStringAD, RsuvTxStringADB, RsuvValueAnd, RsuvZrnxSubData };
 //# sourceMappingURL=rsuv-lib.esm.js.map
