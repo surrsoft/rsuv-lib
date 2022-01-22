@@ -2464,6 +2464,70 @@ var RsuvTuArray = /*#__PURE__*/function () {
 }();
 
 /*
+ПОНЯТИЯ:
+-- [[asau55]], pResults - массив представляющий результат работы Promise.allSettled()
+ */
+
+/**
+ * [[asau56]]
+ * Статусы Promise.allSettled()
+ */
+var EnStatusAsau56;
+
+(function (EnStatusAsau56) {
+  EnStatusAsau56["REJECTED"] = "rejected";
+  EnStatusAsau56["FULFILLED"] = "fulfilled";
+})(EnStatusAsau56 || (EnStatusAsau56 = {}));
+/**
+ * Утилиты для работы с Promise.allSettled()
+ */
+
+
+var RsuvTuPromiseAllSettled = /*#__PURE__*/function () {
+  function RsuvTuPromiseAllSettled() {}
+
+  /**
+   * Извлекает reason-ы "реджектнутых" промисов
+   * @param pResults
+   */
+  RsuvTuPromiseAllSettled.rejected = function rejected(pResults) {
+    var rejs = pResults.filter(function (el) {
+      return el.status === EnStatusAsau56.REJECTED;
+    });
+    return rejs.map(function (el) {
+      return el.reason;
+    });
+  }
+  /**
+   * Извлекает value-ы успешных промисов
+   * @param pResults
+   */
+  ;
+
+  RsuvTuPromiseAllSettled.fulfilled = function fulfilled(pResults) {
+    var rejs = pResults.filter(function (el) {
+      return el.status === EnStatusAsau56.FULFILLED;
+    });
+    return rejs.map(function (el) {
+      return el.value;
+    });
+  }
+  /**
+   * Возвращает TRUE если все результаты в (1) являются успешными
+   * @param pResults
+   */
+  ;
+
+  RsuvTuPromiseAllSettled.isAllSuccess = function isAllSuccess(pResults) {
+    return pResults.every(function (el) {
+      return el.status === EnStatusAsau56.FULFILLED;
+    });
+  };
+
+  return RsuvTuPromiseAllSettled;
+}();
+
+/*
 -- [[ntxe]] - фильтр, например 'id=1&id=2' или 'json-server&author=typicode'.
           Тут & работает как ИЛИ, т.е. для 'id=1&id=2' вернутся две записи (если они существуют с такими id)
 
@@ -3511,5 +3575,5 @@ var RsuvTuInfo = {
   info: info
 };
 
-export { RSUV_AL_ALREADY_EXIST, RsuvAdapterZrnx, RsuvCheckModelGnpw, RsuvEcxm, RsuvEnCaseSensitive, RsuvEnDataTypes, RsuvEnResultCrudSet, RsuvEnSort, RsuvErr, RsuvPaginationGyth, RsuvResultAsau11, RsuvResultBoolPknz, RsuvResultTibo, RsuvSearchElem, RsuvSearchElems, RsuvSearchHow, RsuvSearchMode, RsuvTuArray, RsuvTuDateTime, RsuvTuInfo, RsuvTuString, RsuvTxEmail, RsuvTxFieldName, RsuvTxJsonServer, RsuvTxNumInt, RsuvTxNumIntAB, RsuvTxNumIntABB, RsuvTxNumIntAC, RsuvTxNumIntDiap, RsuvTxSort, RsuvTxString, RsuvTxStringAB, RsuvTxStringAC, RsuvTxStringACB, RsuvTxStringACC, RsuvTxStringAD, RsuvTxStringADB, RsuvValueAnd, RsuvZrnxSubData };
+export { EnStatusAsau56, RSUV_AL_ALREADY_EXIST, RsuvAdapterZrnx, RsuvCheckModelGnpw, RsuvEcxm, RsuvEnCaseSensitive, RsuvEnDataTypes, RsuvEnResultCrudSet, RsuvEnSort, RsuvErr, RsuvPaginationGyth, RsuvResultAsau11, RsuvResultBoolPknz, RsuvResultTibo, RsuvSearchElem, RsuvSearchElems, RsuvSearchHow, RsuvSearchMode, RsuvTuArray, RsuvTuDateTime, RsuvTuInfo, RsuvTuPromiseAllSettled, RsuvTuString, RsuvTxEmail, RsuvTxFieldName, RsuvTxJsonServer, RsuvTxNumInt, RsuvTxNumIntAB, RsuvTxNumIntABB, RsuvTxNumIntAC, RsuvTxNumIntDiap, RsuvTxSort, RsuvTxString, RsuvTxStringAB, RsuvTxStringAC, RsuvTxStringACB, RsuvTxStringACC, RsuvTxStringAD, RsuvTxStringADB, RsuvValueAnd, RsuvZrnxSubData };
 //# sourceMappingURL=rsuv-lib.esm.js.map
