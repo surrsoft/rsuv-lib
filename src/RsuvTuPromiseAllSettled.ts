@@ -12,6 +12,11 @@ export enum EnStatusAsau56 {
   FULFILLED = 'fulfilled'
 }
 
+export class Asau57 {
+  ix: number = -1
+  reason: any
+}
+
 /**
  * Утилиты для работы с Promise.allSettled()
  */
@@ -21,9 +26,14 @@ export class RsuvTuPromiseAllSettled {
    * Извлекает reason-ы "реджектнутых" промисов
    * @param pResults
    */
-  static rejected(pResults: Array<any>): Array<any> {
-    const rejs = pResults.filter((el) => el.status === EnStatusAsau56.REJECTED)
-    return rejs.map(el => el.reason)
+  static rejected(pResults: Array<any>): Array<Asau57> {
+    const ret: Asau57[] = []
+    pResults.forEach((el, ix) => {
+      if (el.status === EnStatusAsau56.REJECTED) {
+        ret.push({ix, reason: el.reason})
+      }
+    })
+    return ret;
   }
 
   /**
@@ -31,8 +41,13 @@ export class RsuvTuPromiseAllSettled {
    * @param pResults
    */
   static fulfilled(pResults: Array<any>): Array<any> {
-    const rejs = pResults.filter((el) => el.status === EnStatusAsau56.FULFILLED)
-    return rejs.map(el => el.value)
+    const ret: Asau57[] = []
+    pResults.forEach((el, ix) => {
+      if (el.status === EnStatusAsau56.FULFILLED) {
+        ret.push({ix, reason: el.value})
+      }
+    })
+    return ret;
   }
 
   /**

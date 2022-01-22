@@ -22,7 +22,7 @@ export { RsuvTxEmail } from './RsuvTxEmail';
 export { RsuvAdapterZrnx, RsuvZrnxSubData } from './RsuvAdapterZrnx';
 export { RsuvCheckModelGnpw, RsuvEcxm, RsuvT1 } from './RsuvCheckModels';
 export { RsuvTuArray } from './RsuvTuArray';
-export { RsuvTuPromiseAllSettled, EnStatusAsau56 } from './RsuvTuPromiseAllSettled';
+export { RsuvTuPromiseAllSettled, EnStatusAsau56, Asau57 } from './RsuvTuPromiseAllSettled';
 export { RsuvResultAsau11 } from './RsuvResultAsau11';
 
 export { RsuvTxJsonServer } from './RsuvTxJsonServer';
