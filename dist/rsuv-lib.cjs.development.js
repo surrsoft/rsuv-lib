@@ -2472,6 +2472,7 @@ var RsuvTuArray = /*#__PURE__*/function () {
 /*
 ПОНЯТИЯ:
 -- [[asau55]], pResults - массив представляющий результат работы Promise.allSettled()
+-- [[asau66]], pElem - отдельный элемент массива pResults
  */
 
 (function (EnStatusAsau56) {
@@ -2532,6 +2533,36 @@ var RsuvTuPromiseAllSettled = /*#__PURE__*/function () {
   RsuvTuPromiseAllSettled.isAllSuccess = function isAllSuccess(pResults) {
     return pResults.every(function (el) {
       return el.status === exports.EnStatusAsau56.FULFILLED;
+    });
+  }
+  /**
+   * Возвращает TRUE если *pElem (1) обладает статусом (2)
+   * @param pElem
+   * @param status
+   */
+  ;
+
+  RsuvTuPromiseAllSettled.pElemIs = function pElemIs(pElem, status) {
+    return pElem.status === status;
+  }
+  /**
+   * Для каждого *pElem из (1) вызвает (2) если *pElem is fulfilled или (3) если *pElem is rejected, и результат (2)(3)
+   * добавляет в итоговый массив
+   * @param pResults (1) --
+   * @param cbFulfilled (2) --
+   * @param cbRejected (3) --
+   */
+  ;
+
+  RsuvTuPromiseAllSettled.handle = function handle(pResults, cbFulfilled, cbRejected) {
+    var _this = this;
+
+    return pResults.map(function (elPElem) {
+      if (_this.pElemIs(elPElem, exports.EnStatusAsau56.FULFILLED)) {
+        return cbFulfilled(elPElem.value);
+      } else {
+        return cbRejected(elPElem.reason);
+      }
     });
   };
 
