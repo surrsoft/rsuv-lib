@@ -45,3 +45,4 @@ export declare const testData: ({
     desc: string;
     res: boolean;
 })[];
+export declare const RSUV_NO_TAGS_SPC_VALUE = "<no tags>";

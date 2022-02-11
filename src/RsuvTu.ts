@@ -50,3 +50,5 @@ export const testData = [
     `, desc: 'строка из одних переносов', res: true
   },
 ]
+
+export const RSUV_NO_TAGS_SPC_VALUE = '<no tags>'

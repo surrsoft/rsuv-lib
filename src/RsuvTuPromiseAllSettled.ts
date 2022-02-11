@@ -17,6 +17,10 @@ export class Asau57 {
   ix: number = -1
   reason: any
 }
+export class RsuvAsau67 {
+  ix: number = -1
+  value: any
+}
 
 export class PElemAsau66 {
   status: EnStatusAsau56 = EnStatusAsau56.REJECTED
@@ -47,11 +51,11 @@ export class RsuvTuPromiseAllSettled {
    * Извлекает value-ы успешных промисов
    * @param pResults
    */
-  static fulfilled(pResults: Array<PElemAsau66>): Array<any> {
-    const ret: Asau57[] = []
+  static fulfilled(pResults: Array<PElemAsau66>): Array<RsuvAsau67> {
+    const ret: RsuvAsau67[] = []
     pResults.forEach((el, ix) => {
       if (el.status === EnStatusAsau56.FULFILLED) {
-        ret.push({ix, reason: el.value})
+        ret.push({ix, value: el.value})
       }
     })
     return ret;

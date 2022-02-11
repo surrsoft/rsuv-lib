@@ -40,3 +40,4 @@ export { RsuvEnResultCrudSet } from './RsuvEnResultCrudSet';
 export { RsuvSearchElem } from './RsuvSearchElem';
 export { RsuvSearchElems } from './RsuvSearchElems';
 export * as RsuvTuInfo from './RsuvTuInfo';
+export * as RsuvTu from './RsuvTu';
