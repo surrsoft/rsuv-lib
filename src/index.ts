@@ -33,6 +33,7 @@ export { RsuvTxNumIntAC } from './RsuvTxNumIntAC';
 export { RsuvTxNumIntDiap } from './RsuvTxNumIntDiap';
 export { RsuvTxFieldName } from './RsuvTxFieldName';
 export { RsuvTxSort } from './RsuvTxSort';
+export { RsuvTxChecked } from './RsuvTxChecked';
 
 export { RsuvSearchMode } from './RsuvSearchMode';
 export { RsuvSearchHow } from './RsuvSearchHow';

@@ -3428,6 +3428,25 @@ function RsuvTxSort(id, sortDirect) {
 };
 
 /**
+ * Представляет элемент который может быть чекнут (например элемент выпадающего списка)
+ */
+var RsuvTxChecked = function RsuvTxChecked(id, visibleText, checked, disabled, payload) {
+  if (checked === void 0) {
+    checked = false;
+  }
+
+  if (disabled === void 0) {
+    disabled = false;
+  }
+
+  this.id = id;
+  this.visibleText = visibleText;
+  this.checked = checked;
+  this.disabled = disabled;
+  this.payload = payload;
+};
+
+/**
  * [[asau22]]
  * КЛЮЧЕВЫЕ СЛОВА: поиск, строка
  * СМ ТАКЖЕ: [asau24]
@@ -3765,5 +3784,5 @@ var RsuvTu = {
   RSUV_NO_TAGS_SPC_VALUE: RSUV_NO_TAGS_SPC_VALUE
 };
 
-export { Asau57, EnStatusAsau56, RSUV_AL_ALREADY_EXIST, RsuvAdapterZrnx, RsuvCheckModelGnpw, RsuvEcxm, RsuvEnCaseSensitive, RsuvEnDataTypes, RsuvEnResultCrudSet, RsuvEnSort, RsuvErr, RsuvPaginationGyth, RsuvResultAsau11, RsuvResultBoolPknz, RsuvResultTibo, RsuvSearchElem, RsuvSearchElems, RsuvSearchHow, RsuvSearchMode, RsuvTu, RsuvTuArray, RsuvTuDateTime, RsuvTuInfo, RsuvTuPromiseAllSettled, RsuvTuString, RsuvTxEmail, RsuvTxFieldName, RsuvTxJsonServer, RsuvTxNumInt, RsuvTxNumIntAB, RsuvTxNumIntABB, RsuvTxNumIntAC, RsuvTxNumIntDiap, RsuvTxSort, RsuvTxString, RsuvTxStringAB, RsuvTxStringAC, RsuvTxStringACB, RsuvTxStringACC, RsuvTxStringAD, RsuvTxStringADB, RsuvValueAnd, RsuvZrnxSubData };
+export { Asau57, EnStatusAsau56, RSUV_AL_ALREADY_EXIST, RsuvAdapterZrnx, RsuvCheckModelGnpw, RsuvEcxm, RsuvEnCaseSensitive, RsuvEnDataTypes, RsuvEnResultCrudSet, RsuvEnSort, RsuvErr, RsuvPaginationGyth, RsuvResultAsau11, RsuvResultBoolPknz, RsuvResultTibo, RsuvSearchElem, RsuvSearchElems, RsuvSearchHow, RsuvSearchMode, RsuvTu, RsuvTuArray, RsuvTuDateTime, RsuvTuInfo, RsuvTuPromiseAllSettled, RsuvTuString, RsuvTxChecked, RsuvTxEmail, RsuvTxFieldName, RsuvTxJsonServer, RsuvTxNumInt, RsuvTxNumIntAB, RsuvTxNumIntABB, RsuvTxNumIntAC, RsuvTxNumIntDiap, RsuvTxSort, RsuvTxString, RsuvTxStringAB, RsuvTxStringAC, RsuvTxStringACB, RsuvTxStringACC, RsuvTxStringAD, RsuvTxStringADB, RsuvValueAnd, RsuvZrnxSubData };
 //# sourceMappingURL=rsuv-lib.esm.js.map

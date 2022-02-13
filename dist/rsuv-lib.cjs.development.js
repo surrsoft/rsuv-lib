@@ -3428,6 +3428,25 @@ function RsuvTxSort(id, sortDirect) {
 };
 
 /**
+ * Представляет элемент который может быть чекнут (например элемент выпадающего списка)
+ */
+var RsuvTxChecked = function RsuvTxChecked(id, visibleText, checked, disabled, payload) {
+  if (checked === void 0) {
+    checked = false;
+  }
+
+  if (disabled === void 0) {
+    disabled = false;
+  }
+
+  this.id = id;
+  this.visibleText = visibleText;
+  this.checked = checked;
+  this.disabled = disabled;
+  this.payload = payload;
+};
+
+/**
  * [[asau22]]
  * КЛЮЧЕВЫЕ СЛОВА: поиск, строка
  * СМ ТАКЖЕ: [asau24]
@@ -3779,6 +3798,7 @@ exports.RsuvTuDateTime = RsuvTuDateTime;
 exports.RsuvTuInfo = RsuvTuInfo;
 exports.RsuvTuPromiseAllSettled = RsuvTuPromiseAllSettled;
 exports.RsuvTuString = RsuvTuString;
+exports.RsuvTxChecked = RsuvTxChecked;
 exports.RsuvTxEmail = RsuvTxEmail;
 exports.RsuvTxFieldName = RsuvTxFieldName;
 exports.RsuvTxJsonServer = RsuvTxJsonServer;
