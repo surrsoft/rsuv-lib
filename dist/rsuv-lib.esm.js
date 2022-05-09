@@ -2463,6 +2463,57 @@ var RsuvTuArray = /*#__PURE__*/function () {
   return RsuvTuArray;
 }();
 
+/**
+ работа с "деревом" которое образуют поля объектов
+ */
+var RsuvTuTree = /*#__PURE__*/function () {
+  function RsuvTuTree() {}
+
+  /**
+   * Проходит по всем собственным полям (2) объекта (1) и возвращает их значения в виде массива.
+   * Детей ищет в собсвенном поле (3) объектов дерева
+   * @param obj (1) -- например [{id: 1, childs: [{id: 3}]}, {id: 2}]
+   * @param fieldValueName (2) -- например 'id'
+   * @param fieldChildsName (3) -- например 'childs'
+   * @return например [1, 3, 2]
+   */
+  RsuvTuTree.values = function values(obj, fieldValueName, fieldChildsName) {
+    function recurs(arrBack, elems) {
+      elems.forEach(function (obj) {
+        if (obj.hasOwnProperty(fieldValueName)) {
+          arrBack.push(obj[fieldValueName]);
+        }
+
+        var childs = obj[fieldChildsName];
+
+        if (childs && Array.isArray(childs) && childs.length > 0) {
+          recurs(arrBack, childs);
+        }
+      });
+    }
+
+    var result = [];
+
+    if (Array.isArray(obj)) {
+      recurs(result, obj);
+    } else {
+      if (obj.hasOwnProperty(fieldValueName)) {
+        result.push(obj[fieldValueName]);
+      }
+
+      var childs = obj[fieldChildsName];
+
+      if (childs && Array.isArray(childs) && childs.length > 0) {
+        recurs(result, childs);
+      }
+    }
+
+    return result;
+  };
+
+  return RsuvTuTree;
+}();
+
 /*
 ПОНЯТИЯ:
 -- [[asau55]], pResults - массив представляющий результат работы Promise.allSettled()
@@ -3447,6 +3498,30 @@ var RsuvTxChecked = function RsuvTxChecked(id, visibleText, checked, disabled, p
 };
 
 /**
+ * Представление для имени поля объекта, как единичного, так и составного через точку '.' (в lodash стиле).
+ * Примеры: 'name', 'user.profile', 'users.0.name'
+ */
+
+var RsuvTxFieldNameLodash = /*#__PURE__*/function () {
+  function RsuvTxFieldNameLodash(val) {
+    this.val = val;
+    bnuwUtilsThrowIf(this);
+  }
+
+  var _proto = RsuvTxFieldNameLodash.prototype;
+
+  _proto.bnuwIsValid = function bnuwIsValid() {
+    if (this.val) {
+      return new RsuvResultBoolPknz();
+    }
+
+    return new RsuvResultBoolPknz(false, '[[220509121136]]');
+  };
+
+  return RsuvTxFieldNameLodash;
+}();
+
+/**
  * [[asau22]]
  * КЛЮЧЕВЫЕ СЛОВА: поиск, строка
  * СМ ТАКЖЕ: [asau24]
@@ -3784,5 +3859,5 @@ var RsuvTu = {
   RSUV_NO_TAGS_SPC_VALUE: RSUV_NO_TAGS_SPC_VALUE
 };
 
-export { Asau57, EnStatusAsau56, RSUV_AL_ALREADY_EXIST, RsuvAdapterZrnx, RsuvCheckModelGnpw, RsuvEcxm, RsuvEnCaseSensitive, RsuvEnDataTypes, RsuvEnResultCrudSet, RsuvEnSort, RsuvErr, RsuvPaginationGyth, RsuvResultAsau11, RsuvResultBoolPknz, RsuvResultTibo, RsuvSearchElem, RsuvSearchElems, RsuvSearchHow, RsuvSearchMode, RsuvTu, RsuvTuArray, RsuvTuDateTime, RsuvTuInfo, RsuvTuPromiseAllSettled, RsuvTuString, RsuvTxChecked, RsuvTxEmail, RsuvTxFieldName, RsuvTxJsonServer, RsuvTxNumInt, RsuvTxNumIntAB, RsuvTxNumIntABB, RsuvTxNumIntAC, RsuvTxNumIntDiap, RsuvTxSort, RsuvTxString, RsuvTxStringAB, RsuvTxStringAC, RsuvTxStringACB, RsuvTxStringACC, RsuvTxStringAD, RsuvTxStringADB, RsuvValueAnd, RsuvZrnxSubData };
+export { Asau57, EnStatusAsau56, RSUV_AL_ALREADY_EXIST, RsuvAdapterZrnx, RsuvCheckModelGnpw, RsuvEcxm, RsuvEnCaseSensitive, RsuvEnDataTypes, RsuvEnResultCrudSet, RsuvEnSort, RsuvErr, RsuvPaginationGyth, RsuvResultAsau11, RsuvResultBoolPknz, RsuvResultTibo, RsuvSearchElem, RsuvSearchElems, RsuvSearchHow, RsuvSearchMode, RsuvTu, RsuvTuArray, RsuvTuDateTime, RsuvTuInfo, RsuvTuPromiseAllSettled, RsuvTuString, RsuvTuTree, RsuvTxChecked, RsuvTxEmail, RsuvTxFieldName, RsuvTxFieldNameLodash, RsuvTxJsonServer, RsuvTxNumInt, RsuvTxNumIntAB, RsuvTxNumIntABB, RsuvTxNumIntAC, RsuvTxNumIntDiap, RsuvTxSort, RsuvTxString, RsuvTxStringAB, RsuvTxStringAC, RsuvTxStringACB, RsuvTxStringACC, RsuvTxStringAD, RsuvTxStringADB, RsuvValueAnd, RsuvZrnxSubData };
 //# sourceMappingURL=rsuv-lib.esm.js.map
