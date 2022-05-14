@@ -1,10 +1,33 @@
 import _ from 'lodash';
 import { RsuvResultAsau11 } from './RsuvResultAsau11';
+import { RsuvResultTibo } from './RsuvResultTibo';
 
 /**
  * Утилитные статические методы для работы с массивами
  */
 export class RsuvTuArray {
+
+  /**
+   * Извлекает из массива (1) элементы с индекса (2) по индекс (3) (включая эти индексы), и возвращает их в виде нового
+   * массива.
+   * В случае проблем возвращает тип {@link RsuvResultAsau11}
+   * @param arr (1) -- например ['aa', 'ab', 'ac', 'ad']
+   * @param indexStart (2) -- например 1
+   * @param indexEnd (3) -- например 2
+   * @return например ['ab', 'ac']
+   */
+  static elemsDiap(arr: Array<any>, indexStart: number, indexEnd: number): RsuvResultTibo<any> {
+    if (!RsuvTuArray.fnArrValidIs(arr)) return new RsuvResultTibo<any>({success: false, errCode: '1'})
+    if (!RsuvTuArray.fnIndexValidIs(arr, indexStart)) return new RsuvResultTibo<any>({success: false, errCode: '2'})
+    if (!RsuvTuArray.fnIndexValidIs(arr, indexEnd)) return new RsuvResultTibo<any>({success: false, errCode: '3'})
+    if (indexEnd < indexStart) {
+      return new RsuvResultTibo<any>({success: false, errCode: '4'})
+    }
+    if (indexEnd === indexStart) {
+      return new RsuvResultTibo<any>({success: true, value: [arr[indexStart]], successCode: '100'})
+    }
+    return new RsuvResultTibo<any>({success: true, value: arr.slice(indexStart, indexEnd + 1), successCode: '101'})
+  }
 
   /**
    * Удаляет элемент по индексу (2)

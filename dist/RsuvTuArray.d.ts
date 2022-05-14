@@ -1,8 +1,19 @@
 import { RsuvResultAsau11 } from './RsuvResultAsau11';
+import { RsuvResultTibo } from './RsuvResultTibo';
 /**
  * Утилитные статические методы для работы с массивами
  */
 export declare class RsuvTuArray {
+    /**
+     * Извлекает из массива (1) элементы с индекса (2) по индекс (3) (включая эти индексы), и возвращает их в виде нового
+     * массива.
+     * В случае проблем возвращает тип {@link RsuvResultAsau11}
+     * @param arr (1) -- например ['aa', 'ab', 'ac', 'ad']
+     * @param indexStart (2) -- например 1
+     * @param indexEnd (3) -- например 2
+     * @return например ['ab', 'ac']
+     */
+    static elemsDiap(arr: Array<any>, indexStart: number, indexEnd: number): RsuvResultTibo<any>;
     /**
      * Удаляет элемент по индексу (2)
      * @param arrBack

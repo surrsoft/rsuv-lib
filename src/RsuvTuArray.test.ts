@@ -53,7 +53,7 @@ describe('RsuvTuArray', () => {
 
   // ---
 
-  describe('elemMove()', () => {
+  describe('elemAdd()', () => {
 
     it('01 добавление в середину', () => {
       const arr = ['aa', 'bb', 'cc', 'dd']
@@ -132,6 +132,42 @@ describe('RsuvTuArray', () => {
       const res = RsuvTuArray.elemUpdate(arr, 'ff', el => el.nx === 2)
       expect(res.success).toEqual(true)
       expect(arr).toStrictEqual(['aa', 'bb', 'ff', 'dd'])
+    })
+  })
+
+  describe('elemDiap()', () => {
+    it('01 всё штатно', () => {
+      const arr = ['aa', 'bb', 'cc', 'dd'];
+      const res = RsuvTuArray.elemsDiap(arr, 1, 2);
+      expect(res?.success).toEqual(true);
+      expect(res?.value).toStrictEqual(['bb', 'cc']);
+    })
+    it('02 всё штатно', () => {
+      const arr = ['aa', 'bb', 'cc', 'dd'];
+      const res = RsuvTuArray.elemsDiap(arr, 0, 3);
+      expect(res?.success).toEqual(true);
+      expect(res?.value).toStrictEqual(['aa', 'bb', 'cc', 'dd']);
+    })
+    it('02-2 всё штатно; одинаковые индексы', () => {
+      const arr = ['aa', 'bb', 'cc', 'dd'];
+      const res = RsuvTuArray.elemsDiap(arr, 1, 1);
+      expect(res?.success).toEqual(true);
+      expect(res?.value).toStrictEqual(['bb']);
+    })
+    it('03 правый индекс слишком большой', () => {
+      const arr = ['aa', 'bb', 'cc', 'dd'];
+      const res = RsuvTuArray.elemsDiap(arr, 0, 4);
+      expect(res?.success).toEqual(false);
+    })
+    it('04 левый индекс меньше 0', () => {
+      const arr = ['aa', 'bb', 'cc', 'dd'];
+      const res = RsuvTuArray.elemsDiap(arr, -1, 3);
+      expect(res?.success).toEqual(false);
+    })
+    it('05 правый индекс больше чем левый', () => {
+      const arr = ['aa', 'bb', 'cc', 'dd'];
+      const res = RsuvTuArray.elemsDiap(arr, 2, 1);
+      expect(res?.success).toEqual(false);
     })
   })
 

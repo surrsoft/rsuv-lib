@@ -669,7 +669,7 @@ function substrIndexes(target, substr, ignoreCase) {
 /**
  * Предоставляет полную информацию о том как строка (2) соотносится со строкой (1), например содержит ли (1) подстроку
  * (2), начинается ли с неё, заканчивается ли ей, имеет ли с ней полное соответствие. Вся эта информация проверяется для
- * двух варинатов - с учетом регистра и без учета регистра символов (этим отличается от версии А текущей функции)
+ * двух вариантов - с учетом регистра и без учета регистра символов (этим отличается от версии А текущей функции)
  *
  * @param strTarget (1) --
  * @param strSub (2) --
@@ -2333,11 +2333,57 @@ var RsuvTuArray = /*#__PURE__*/function () {
   function RsuvTuArray() {}
 
   /**
+   * Извлекает из массива (1) элементы с индекса (2) по индекс (3) (включая эти индексы), и возвращает их в виде нового
+   * массива.
+   * В случае проблем возвращает тип {@link RsuvResultAsau11}
+   * @param arr (1) -- например ['aa', 'ab', 'ac', 'ad']
+   * @param indexStart (2) -- например 1
+   * @param indexEnd (3) -- например 2
+   * @return например ['ab', 'ac']
+   */
+  RsuvTuArray.elemsDiap = function elemsDiap(arr, indexStart, indexEnd) {
+    if (!RsuvTuArray.fnArrValidIs(arr)) return new RsuvResultTibo({
+      success: false,
+      errCode: '1'
+    });
+    if (!RsuvTuArray.fnIndexValidIs(arr, indexStart)) return new RsuvResultTibo({
+      success: false,
+      errCode: '2'
+    });
+    if (!RsuvTuArray.fnIndexValidIs(arr, indexEnd)) return new RsuvResultTibo({
+      success: false,
+      errCode: '3'
+    });
+
+    if (indexEnd < indexStart) {
+      return new RsuvResultTibo({
+        success: false,
+        errCode: '4'
+      });
+    }
+
+    if (indexEnd === indexStart) {
+      return new RsuvResultTibo({
+        success: true,
+        value: [arr[indexStart]],
+        successCode: '100'
+      });
+    }
+
+    return new RsuvResultTibo({
+      success: true,
+      value: arr.slice(indexStart, indexEnd + 1),
+      successCode: '101'
+    });
+  }
+  /**
    * Удаляет элемент по индексу (2)
    * @param arrBack
    * @param index
    * @return RsuvResultAsau11
    */
+  ;
+
   RsuvTuArray.elemDelete = function elemDelete(arrBack, index) {
     if (!RsuvTuArray.fnArrValidIs(arrBack)) return new RsuvResultAsau11(1);
     if (!RsuvTuArray.fnIndexValidIs(arrBack, index)) return new RsuvResultAsau11(2);
@@ -2470,8 +2516,8 @@ var RsuvTuTree = /*#__PURE__*/function () {
   function RsuvTuTree() {}
 
   /**
-   * Проходит по всем собственным полям (2) объекта (1) и возвращает их значения в виде массива.
-   * Детей ищет в собсвенном поле (3) объектов дерева
+   * Рекурсивно проходит по всем собственным полям (2) объекта (1) и возвращает их значения в виде массива.
+   * Детей ищет в собственном поле (3) объектов дерева
    * @param obj (1) -- например [{id: 1, childs: [{id: 3}]}, {id: 2}]
    * @param fieldValueName (2) -- например 'id'
    * @param fieldChildsName (3) -- например 'childs'
