@@ -2512,6 +2512,13 @@ var RsuvTuArray = /*#__PURE__*/function () {
 /**
  работа с "деревом" которое образуют поля объектов
  */
+var RsuvAsau90;
+
+(function (RsuvAsau90) {
+  RsuvAsau90["SUCCESS_CODE_1"] = "1";
+  RsuvAsau90["SUCCESS_CODE_2"] = "2";
+})(RsuvAsau90 || (RsuvAsau90 = {}));
+
 var RsuvTuTree = /*#__PURE__*/function () {
   function RsuvTuTree() {}
 
@@ -2555,6 +2562,80 @@ var RsuvTuTree = /*#__PURE__*/function () {
     }
 
     return result;
+  }
+  /**
+   * Подсчитывает строки из поля (2) объектов массива-объектов (1). В роли количества выступает массив ID из поля (3)
+   * объектов.
+   * Числовые значения из (2) и (3) преобразуются к строке.
+   *
+   * Моё видео-объяснение: https://www.notion.so/surr/video-220514-2257-6195c03c8fe3412b846401d181f6f6c0
+   *
+   * @param arr (1) -- массив объектов, например [
+   *         {name: 'name1', tags: ['tag1', 'tag2']},
+   *         {name: 'name2', tags: ['tag2', 'tag3']},
+   *       ]
+   * @param fieldNameValues (2) -- поле содежащее массив string | number, например 'tags'
+   * @param fieldNameId (3) -- поле содержащее идентификатор типа string | number, например 'name'
+   * @return например { success: true, value: [{value: 'tag1', ids: ['name1'], ...}], ...}
+   */
+  ;
+
+  RsuvTuTree.accum = function accum(arr, fieldNameValues, fieldNameId) {
+    /**
+     * Добавляет (или не добавляет) в аккумулятор (1) запись
+     * @param acc
+     * @param key
+     * @param id
+     */
+    function fnToAcc(acc, key, id) {
+      if (!acc.has(key)) {
+        acc.set(key, [id]);
+      } else {
+        var arr0 = acc.get(key);
+        arr0.includes(id) || arr0.push(id);
+      }
+    }
+
+    if (arr.length > 0) {
+      // --- acc
+      var acc = new Map();
+      arr.map(function (elObj) {
+        var values = _.get(elObj, fieldNameValues, []);
+
+        if (_.isArray(values) && values.length > 0) {
+          values.map(function (elVal) {
+            if (_.isString(elVal) || _.isFinite(elVal)) {
+              var elVal0 = elVal + '';
+
+              var id = _.get(elObj, fieldNameId);
+
+              var id0 = _.isString(id) ? id : _.isFinite(id) ? String(id) : '';
+              fnToAcc(acc, elVal0, id0);
+            }
+          });
+        }
+      }); // --- преобразуем acc к RsuvAsau89[]
+
+      var ret = [];
+      acc.forEach(function (val, key) {
+        ret.push({
+          value: key,
+          ids: val
+        });
+      }); // ---
+
+      return new RsuvResultTibo({
+        success: true,
+        value: ret,
+        successCode: RsuvAsau90.SUCCESS_CODE_1
+      });
+    }
+
+    return new RsuvResultTibo({
+      success: true,
+      value: [],
+      successCode: RsuvAsau90.SUCCESS_CODE_2
+    });
   };
 
   return RsuvTuTree;
@@ -3905,5 +3986,5 @@ var RsuvTu = {
   RSUV_NO_TAGS_SPC_VALUE: RSUV_NO_TAGS_SPC_VALUE
 };
 
-export { Asau57, EnStatusAsau56, RSUV_AL_ALREADY_EXIST, RsuvAdapterZrnx, RsuvCheckModelGnpw, RsuvEcxm, RsuvEnCaseSensitive, RsuvEnDataTypes, RsuvEnResultCrudSet, RsuvEnSort, RsuvErr, RsuvPaginationGyth, RsuvResultAsau11, RsuvResultBoolPknz, RsuvResultTibo, RsuvSearchElem, RsuvSearchElems, RsuvSearchHow, RsuvSearchMode, RsuvTu, RsuvTuArray, RsuvTuDateTime, RsuvTuInfo, RsuvTuPromiseAllSettled, RsuvTuString, RsuvTuTree, RsuvTxChecked, RsuvTxEmail, RsuvTxFieldName, RsuvTxFieldNameLodash, RsuvTxJsonServer, RsuvTxNumInt, RsuvTxNumIntAB, RsuvTxNumIntABB, RsuvTxNumIntAC, RsuvTxNumIntDiap, RsuvTxSort, RsuvTxString, RsuvTxStringAB, RsuvTxStringAC, RsuvTxStringACB, RsuvTxStringACC, RsuvTxStringAD, RsuvTxStringADB, RsuvValueAnd, RsuvZrnxSubData };
+export { Asau57, EnStatusAsau56, RSUV_AL_ALREADY_EXIST, RsuvAdapterZrnx, RsuvAsau90, RsuvCheckModelGnpw, RsuvEcxm, RsuvEnCaseSensitive, RsuvEnDataTypes, RsuvEnResultCrudSet, RsuvEnSort, RsuvErr, RsuvPaginationGyth, RsuvResultAsau11, RsuvResultBoolPknz, RsuvResultTibo, RsuvSearchElem, RsuvSearchElems, RsuvSearchHow, RsuvSearchMode, RsuvTu, RsuvTuArray, RsuvTuDateTime, RsuvTuInfo, RsuvTuPromiseAllSettled, RsuvTuString, RsuvTuTree, RsuvTxChecked, RsuvTxEmail, RsuvTxFieldName, RsuvTxFieldNameLodash, RsuvTxJsonServer, RsuvTxNumInt, RsuvTxNumIntAB, RsuvTxNumIntABB, RsuvTxNumIntAC, RsuvTxNumIntDiap, RsuvTxSort, RsuvTxString, RsuvTxStringAB, RsuvTxStringAC, RsuvTxStringACB, RsuvTxStringACC, RsuvTxStringAD, RsuvTxStringADB, RsuvValueAnd, RsuvZrnxSubData };
 //# sourceMappingURL=rsuv-lib.esm.js.map

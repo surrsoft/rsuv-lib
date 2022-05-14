@@ -22,7 +22,7 @@ export { RsuvTxEmail } from './RsuvTxEmail';
 export { RsuvAdapterZrnx, RsuvZrnxSubData } from './RsuvAdapterZrnx';
 export { RsuvCheckModelGnpw, RsuvEcxm, RsuvT1 } from './RsuvCheckModels';
 export { RsuvTuArray } from './RsuvTuArray';
-export { RsuvTuTree } from './RsuvTuTree';
+export { RsuvTuTree, RsuvAsau89, RsuvAsau90 } from './RsuvTuTree';
 export { RsuvTuPromiseAllSettled, EnStatusAsau56, Asau57 } from './RsuvTuPromiseAllSettled';
 export { RsuvResultAsau11 } from './RsuvResultAsau11';
 
@@ -36,6 +36,7 @@ export { RsuvTxFieldName } from './RsuvTxFieldName';
 export { RsuvTxSort } from './RsuvTxSort';
 export { RsuvTxChecked } from './RsuvTxChecked';
 export { RsuvTxFieldNameLodash } from './RsuvTxFieldNameLodash';
+export { RsuvTxFieldNameLodashB } from './RsuvTxFieldNameLodashB';
 
 export { RsuvSearchMode } from './RsuvSearchMode';
 export { RsuvSearchHow } from './RsuvSearchHow';
