@@ -2530,13 +2530,12 @@ var RsuvTuArray = /*#__PURE__*/function () {
 
 
 var RSUV_SPC_ID_PLUG_PREFIX = 'rsuv-spc-id-plug-';
-var RsuvAsau92;
 
 (function (RsuvAsau92) {
   RsuvAsau92["SUCCESS_CODE_1"] = "1";
   RsuvAsau92["SUCCESS_CODE_2"] = "2";
   RsuvAsau92["ERR_CODE_1"] = "100";
-})(RsuvAsau92 || (RsuvAsau92 = {}));
+})(exports.RsuvAsau92 || (exports.RsuvAsau92 = {}));
 
 var RsuvTuTree = /*#__PURE__*/function () {
   function RsuvTuTree() {}
@@ -2703,7 +2702,7 @@ var RsuvTuTree = /*#__PURE__*/function () {
       return new RsuvResultTibo({
         success: true,
         value: [],
-        successCode: RsuvAsau92.SUCCESS_CODE_2
+        successCode: exports.RsuvAsau92.SUCCESS_CODE_2
       });
     } // --- mp
 
@@ -2734,7 +2733,7 @@ var RsuvTuTree = /*#__PURE__*/function () {
     if (isSomeFieldNotExist) {
       return new RsuvResultTibo({
         success: false,
-        errCode: RsuvAsau92.ERR_CODE_1
+        errCode: exports.RsuvAsau92.ERR_CODE_1
       });
     } // ---
 
@@ -2753,7 +2752,7 @@ var RsuvTuTree = /*#__PURE__*/function () {
     return new RsuvResultTibo({
       success: true,
       value: ret,
-      successCode: RsuvAsau92.SUCCESS_CODE_1
+      successCode: exports.RsuvAsau92.SUCCESS_CODE_1
     });
   };
 
