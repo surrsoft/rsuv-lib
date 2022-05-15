@@ -2530,15 +2530,30 @@ var RsuvTuArray = /*#__PURE__*/function () {
 
 
 var RSUV_SPC_ID_PLUG_PREFIX = 'rsuv-spc-id-plug-';
+var RsuvAsau92;
+
+(function (RsuvAsau92) {
+  RsuvAsau92["SUCCESS_CODE_1"] = "1";
+  RsuvAsau92["SUCCESS_CODE_2"] = "2";
+  RsuvAsau92["ERR_CODE_1"] = "100";
+})(RsuvAsau92 || (RsuvAsau92 = {}));
+
 var RsuvTuTree = /*#__PURE__*/function () {
   function RsuvTuTree() {}
 
   /**
-   * Рекурсивно проходит по всем собственным полям (2) объекта (1) и возвращает их значения в виде массива.
-   * Детей ищет в собственном поле (3) объектов дерева
+   * Собирает из *объектов значения поля (2). *Объекты ищет как в (1), если (1) это массив, так и во всех полях (3),
+   * если они массивы, рекурсивно.
+   *
+   * ПОНЯТИЯ
+   * -- *объект - объект из (1) если (1) это массив, или объект из (3) если это массив. В *объекте ищется значение
+   * поля (2)
+   *
+   * Моё видео-объяснение - https://www.notion.so/surr/video-220515-1250-dfeab95377e74c238c1eb066b51f730c
+   *
    * @param obj (1) -- например [{id: 1, childs: [{id: 3}]}, {id: 2}]
    * @param fieldValueName (2) -- например 'id'
-   * @param fieldChildsName (3) -- например 'childs'
+   * @param fieldChildsName (3) -- например 'childs'; если значение falsy то искать в этом поле не будет
    * @return например [1, 3, 2]
    */
   RsuvTuTree.values = function values(obj, fieldValueName, fieldChildsName) {
@@ -2671,6 +2686,74 @@ var RsuvTuTree = /*#__PURE__*/function () {
       success: true,
       value: [],
       successCode: exports.RsuvAsau90.SUCCESS_CODE_2
+    });
+  }
+  /**
+   * Проверяет на уникальность поле (2) объектов из (1). Если они все уникальны, то возвращает пустой массив, иначе
+   * возвращает массив тех значений из (2) которые повторяются и то сколько раз они повторяются, и на каких индексах
+   * эти повторы располагаются
+   * @param arr (1) --
+   * @param fieldName (2) -- например 'profile.name'
+   * @param errInit (3) -- если TRUE то, если хоть в одном объекте из (1) не будет поля (2), то будет возвращён неуспех
+   */
+  ;
+
+  RsuvTuTree.uniqValuesIs = function uniqValuesIs(arr, fieldName, errInit) {
+    if (arr.length < 1) {
+      return new RsuvResultTibo({
+        success: true,
+        value: [],
+        successCode: RsuvAsau92.SUCCESS_CODE_2
+      });
+    } // --- mp
+
+
+    var mp = new Map();
+    var isSomeFieldNotExist = false;
+    arr.map(function (el, ix) {
+      var isHasField = _.has(el, fieldName);
+
+      if (isHasField) {
+        var value = _.get(el, fieldName);
+
+        if (mp.has(value)) {
+          var rr = mp.get(value);
+          rr.count++;
+          rr.indexes.push(ix);
+        } else {
+          mp.set(value, {
+            count: 1,
+            indexes: [ix]
+          });
+        }
+      } else if (errInit) {
+        isSomeFieldNotExist = true;
+      }
+    }); // ---
+
+    if (isSomeFieldNotExist) {
+      return new RsuvResultTibo({
+        success: false,
+        errCode: RsuvAsau92.ERR_CODE_1
+      });
+    } // ---
+
+
+    var ret = [];
+    mp.forEach(function (val, key) {
+      if (val.count > 1) {
+        ret.push({
+          value: key,
+          count: val.count,
+          indexes: val.indexes
+        });
+      }
+    }); // ---
+
+    return new RsuvResultTibo({
+      success: true,
+      value: ret,
+      successCode: RsuvAsau92.SUCCESS_CODE_1
     });
   };
 

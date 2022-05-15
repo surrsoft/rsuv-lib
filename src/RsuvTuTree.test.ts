@@ -2,6 +2,7 @@ import { RSUV_SPC_ID_PLUG_PREFIX, RsuvTuTree } from './RsuvTuTree';
 
 describe('RsuvTuTree', () => {
   describe('values()', () => {
+
     it('10 array', () => {
       const obj = [{id: 1, childs: [{id: 3}]}, {id: 2}]
       const res = RsuvTuTree.values(obj, 'id', 'childs')
@@ -10,6 +11,7 @@ describe('RsuvTuTree', () => {
       expect(res).toContain(2)
       expect(res.length).toEqual(3)
     })
+
     it('20 object', () => {
       const obj = {id: 1, childs: [{id: 3, childs: [{id: 4}]}]}
       const res = RsuvTuTree.values(obj, 'id', 'childs')
@@ -18,6 +20,14 @@ describe('RsuvTuTree', () => {
       expect(res).toContain(4)
       expect(res.length).toEqual(3)
     })
+
+    it('30 указано несуществующее child-поле', () => {
+      const obj = {id: 1, childs: [{id: 3, childs: [{id: 4}]}]}
+      const res = RsuvTuTree.values(obj, 'id', '')
+      expect(res).toContain(1)
+      expect(res.length).toEqual(1)
+    })
+
   })
 
   describe('accum()', () => {
@@ -181,4 +191,82 @@ describe('RsuvTuTree', () => {
     })
 
   })
+
+  describe('uniqValuesIs', () => {
+    it('10 есть повтор', () => {
+      const arr = [
+        {id: 'aa'},
+        {id: 'ab'},
+        {id: 'aa'}
+      ]
+      const tibo = RsuvTuTree.uniqValuesIs(arr, 'id', false)
+      expect(tibo.success).toEqual(true)
+      expect(tibo.value?.[0].value).toEqual('aa')
+      expect(tibo.value?.[0].count).toEqual(2)
+      expect(tibo.value?.[0].indexes.includes(0)).toEqual(true)
+      expect(tibo.value?.[0].indexes.includes(2)).toEqual(true)
+      expect(tibo.value?.length).toEqual(1)
+    });
+
+    it('20 нет повторов', () => {
+      const arr = [
+        {id: 'a1'},
+        {id: 'a2'},
+        {id: 'a3'}
+      ]
+      const tibo = RsuvTuTree.uniqValuesIs(arr, 'id', false)
+      expect(tibo.success).toEqual(true)
+      expect(tibo.value?.length).toEqual(0)
+    });
+
+    it('30 указанное поле не существует', () => {
+      const arr = [
+        {id: 'a1'},
+        {id: 'a2'},
+        {id: 'a3'}
+      ]
+      const tibo = RsuvTuTree.uniqValuesIs(arr, 'bad', false)
+      expect(tibo.success).toEqual(true)
+      expect(tibo.value?.length).toEqual(0)
+    });
+
+    it('30-2 указанное поле не существует, при этом errInit === true', () => {
+      const arr = [
+        {id: 'a1'},
+        {id: 'a2'},
+        {id: 'a3'}
+      ]
+      const tibo = RsuvTuTree.uniqValuesIs(arr, 'bad', true)
+      expect(tibo.success).toEqual(false)
+    });
+
+    it('40 указанное поле не существует в одном из объектов, есть повтор', () => {
+      const arr = [
+        {id: 'a1'},
+        {idx: 'a1'},
+        {id: 'a3'},
+        {id: 'a1'},
+      ]
+      const tibo = RsuvTuTree.uniqValuesIs(arr, 'id', false)
+      expect(tibo.success).toEqual(true)
+      expect(tibo.value?.[0].value).toEqual('a1')
+      expect(tibo.value?.[0].count).toEqual(2)
+      expect(tibo.value?.[0].indexes.includes(0)).toEqual(true)
+      expect(tibo.value?.[0].indexes.includes(3)).toEqual(true)
+      expect(tibo.value?.length).toEqual(1)
+    });
+
+    it('40-2 отличается от 40 тем что errInit === true', () => {
+      const arr = [
+        {id: 'a1'},
+        {idx: 'a1'},
+        {id: 'a3'},
+        {id: 'a1'},
+      ]
+      const tibo = RsuvTuTree.uniqValuesIs(arr, 'id', true)
+      expect(tibo.success).toEqual(false)
+    });
+
+  })
+
 })
