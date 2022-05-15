@@ -2512,13 +2512,23 @@ var RsuvTuArray = /*#__PURE__*/function () {
 /**
  работа с "деревом" которое образуют поля объектов
  */
+/**
+ * Используется в RsuvTuTree.accum()
+ */
+
 var RsuvAsau90;
 
 (function (RsuvAsau90) {
   RsuvAsau90["SUCCESS_CODE_1"] = "1";
   RsuvAsau90["SUCCESS_CODE_2"] = "2";
 })(RsuvAsau90 || (RsuvAsau90 = {}));
+/**
+ * Используется в RsuvTuTree.accum().
+ * Префикс используемый если не найден валидный ID *элемента.
+ */
 
+
+var RSUV_SPC_ID_PLUG_PREFIX = 'rsuv-spc-id-plug-';
 var RsuvTuTree = /*#__PURE__*/function () {
   function RsuvTuTree() {}
 
@@ -2564,11 +2574,25 @@ var RsuvTuTree = /*#__PURE__*/function () {
     return result;
   }
   /**
-   * Подсчитывает строки из поля (2) объектов массива-объектов (1). В роли количества выступает массив ID из поля (3)
-   * объектов.
+   * Подсчитывает (аккумулирует) *строки. Для каждой *строки создаёт *рез-объект.
    * Числовые значения из (2) и (3) преобразуются к строке.
+   * Если *ид-значение это не строка и не целое число, либо поля (3) в *элементе нет, то генерирует специальную
+   * ID-заглушку с префиксом "{@link RSUV_SPC_ID_PLUG_PREFIX} + число-соответствующее-индексу-*элемента".
+   * Регистр символов *строк учитывается.
+   * Если *строка повторяется в *массиве-тегов несколько раз, то и *ид-значение будет встречаться несколько раз
+   * в *рез-объекте если (4) is FALSE, иначе только один раз
    *
    * Моё видео-объяснение: https://www.notion.so/surr/video-220514-2257-6195c03c8fe3412b846401d181f6f6c0
+   *
+   * ПОНЯТИЯ
+   * -- *массив - массив объектов (1)
+   * -- *элемент - отдельный элемент *массива
+   * -- *массив-тегов - массив из поля (2) *элемента
+   * -- *ид-значение - содержимое поля (3) *элемента
+   * -- *строка - элемент *массива-тегов
+   * -- *рез-объект, тип {@link RsuvAsau89}  - объект описывающий результат по отдельной *строке; имеет вид
+   * {value: X, ids: Y[]},
+   * где X - это *строка, а Y - это массив *ид-значений *элементов где эта *строка встречается
    *
    * @param arr (1) -- массив объектов, например [
    *         {name: 'name1', tags: ['tag1', 'tag2']},
@@ -2576,11 +2600,12 @@ var RsuvTuTree = /*#__PURE__*/function () {
    *       ]
    * @param fieldNameValues (2) -- поле содежащее массив string | number, например 'tags'
    * @param fieldNameId (3) -- поле содержащее идентификатор типа string | number, например 'name'
+   * @param isUniqueIds (4) --
    * @return например { success: true, value: [{value: 'tag1', ids: ['name1'], ...}], ...}
    */
   ;
 
-  RsuvTuTree.accum = function accum(arr, fieldNameValues, fieldNameId) {
+  RsuvTuTree.accum = function accum(arr, fieldNameValues, fieldNameId, isUniqueIds) {
     /**
      * Добавляет (или не добавляет) в аккумулятор (1) запись
      * @param acc
@@ -2592,14 +2617,19 @@ var RsuvTuTree = /*#__PURE__*/function () {
         acc.set(key, [id]);
       } else {
         var arr0 = acc.get(key);
-        arr0.includes(id) || arr0.push(id);
+
+        if (isUniqueIds) {
+          arr0.includes(id) || arr0.push(id);
+        } else {
+          arr0.push(id);
+        }
       }
     }
 
     if (arr.length > 0) {
       // --- acc
       var acc = new Map();
-      arr.map(function (elObj) {
+      arr.map(function (elObj, ix) {
         var values = _.get(elObj, fieldNameValues, []);
 
         if (_.isArray(values) && values.length > 0) {
@@ -2609,7 +2639,12 @@ var RsuvTuTree = /*#__PURE__*/function () {
 
               var id = _.get(elObj, fieldNameId);
 
-              var id0 = _.isString(id) ? id : _.isFinite(id) ? String(id) : '';
+              var id0 = _.isString(id) ? id : _.isFinite(id) ? String(id) : null;
+
+              if (id0 === null) {
+                id0 = RSUV_SPC_ID_PLUG_PREFIX + String(ix);
+              }
+
               fnToAcc(acc, elVal0, id0);
             }
           });
@@ -3986,5 +4021,5 @@ var RsuvTu = {
   RSUV_NO_TAGS_SPC_VALUE: RSUV_NO_TAGS_SPC_VALUE
 };
 
-export { Asau57, EnStatusAsau56, RSUV_AL_ALREADY_EXIST, RsuvAdapterZrnx, RsuvAsau90, RsuvCheckModelGnpw, RsuvEcxm, RsuvEnCaseSensitive, RsuvEnDataTypes, RsuvEnResultCrudSet, RsuvEnSort, RsuvErr, RsuvPaginationGyth, RsuvResultAsau11, RsuvResultBoolPknz, RsuvResultTibo, RsuvSearchElem, RsuvSearchElems, RsuvSearchHow, RsuvSearchMode, RsuvTu, RsuvTuArray, RsuvTuDateTime, RsuvTuInfo, RsuvTuPromiseAllSettled, RsuvTuString, RsuvTuTree, RsuvTxChecked, RsuvTxEmail, RsuvTxFieldName, RsuvTxFieldNameLodash, RsuvTxJsonServer, RsuvTxNumInt, RsuvTxNumIntAB, RsuvTxNumIntABB, RsuvTxNumIntAC, RsuvTxNumIntDiap, RsuvTxSort, RsuvTxString, RsuvTxStringAB, RsuvTxStringAC, RsuvTxStringACB, RsuvTxStringACC, RsuvTxStringAD, RsuvTxStringADB, RsuvValueAnd, RsuvZrnxSubData };
+export { Asau57, EnStatusAsau56, RSUV_AL_ALREADY_EXIST, RSUV_SPC_ID_PLUG_PREFIX, RsuvAdapterZrnx, RsuvAsau90, RsuvCheckModelGnpw, RsuvEcxm, RsuvEnCaseSensitive, RsuvEnDataTypes, RsuvEnResultCrudSet, RsuvEnSort, RsuvErr, RsuvPaginationGyth, RsuvResultAsau11, RsuvResultBoolPknz, RsuvResultTibo, RsuvSearchElem, RsuvSearchElems, RsuvSearchHow, RsuvSearchMode, RsuvTu, RsuvTuArray, RsuvTuDateTime, RsuvTuInfo, RsuvTuPromiseAllSettled, RsuvTuString, RsuvTuTree, RsuvTxChecked, RsuvTxEmail, RsuvTxFieldName, RsuvTxFieldNameLodash, RsuvTxJsonServer, RsuvTxNumInt, RsuvTxNumIntAB, RsuvTxNumIntABB, RsuvTxNumIntAC, RsuvTxNumIntDiap, RsuvTxSort, RsuvTxString, RsuvTxStringAB, RsuvTxStringAC, RsuvTxStringACB, RsuvTxStringACC, RsuvTxStringAD, RsuvTxStringADB, RsuvValueAnd, RsuvZrnxSubData };
 //# sourceMappingURL=rsuv-lib.esm.js.map
