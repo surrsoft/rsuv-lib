@@ -122,6 +122,20 @@ export class RsuvTuArray {
     return new RsuvResultAsau11(0, true)
   }
 
+  /**
+   * Возвращает TRUE если массив (1) содержит ВСЕ элементы присутствующие в массиве (2), при условии выбрасывания
+   * из (2) всех повторяющихся элементов.
+   *
+   * Если (1) или (2) это пустые массивы, то возвращает FALSE.
+   * @param arr1
+   * @param arr2
+   */
+  static containsAll(arr1: any[], arr2: any[]): boolean {
+    if (arr1.length < 1 || arr2.length < 1) return false;
+    const arr3 = _.uniq(arr2)
+    return _.intersection(arr1, arr3).length === arr3.length
+  }
+
   static fnIndexValidIs(arr: Array<any>, index: number) {
     if (index < 0) {
       return false

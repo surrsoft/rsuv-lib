@@ -55,6 +55,15 @@ export declare class RsuvTuArray {
      * индекс этого элемента
      */
     static elemUpdate(arrBack: Array<any>, value: any, predicate: (elem: any, index: number) => boolean): RsuvResultAsau11;
+    /**
+     * Возвращает TRUE если массив (1) содержит ВСЕ элементы присутствующие в массиве (2), при условии выбрасывания
+     * из (2) всех повторяющихся элементов.
+     *
+     * Если (1) или (2) это пустые массивы, то возвращает FALSE.
+     * @param arr1
+     * @param arr2
+     */
+    static containsAll(arr1: any[], arr2: any[]): boolean;
     static fnIndexValidIs(arr: Array<any>, index: number): boolean;
     static fnIndexValidIsB(arr: Array<any>, index: number): boolean;
     static fnArrValidIs(arr: Array<any>): boolean;

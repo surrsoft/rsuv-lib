@@ -2484,6 +2484,23 @@ var RsuvTuArray = /*#__PURE__*/function () {
 
     arrBack[ix] = value;
     return new RsuvResultAsau11(0, true);
+  }
+  /**
+   * Возвращает TRUE если массив (1) содержит ВСЕ элементы присутствующие в массиве (2), при условии выбрасывания
+   * из (2) всех повторяющихся элементов.
+   *
+   * Если (1) или (2) это пустые массивы, то возвращает FALSE.
+   * @param arr1
+   * @param arr2
+   */
+  ;
+
+  RsuvTuArray.containsAll = function containsAll(arr1, arr2) {
+    if (arr1.length < 1 || arr2.length < 1) return false;
+
+    var arr3 = _.uniq(arr2);
+
+    return _.intersection(arr1, arr3).length === arr3.length;
   };
 
   RsuvTuArray.fnIndexValidIs = function fnIndexValidIs(arr, index) {
