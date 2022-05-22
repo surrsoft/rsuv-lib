@@ -171,4 +171,31 @@ describe('RsuvTuArray', () => {
     })
   })
 
+  describe('containsAll()', () => {
+    it('10', () => {
+      const res = RsuvTuArray.containsAll([1, 2, 4], [4, 2])
+      expect(res).toEqual(true)
+    });
+    it('20 во втором массиве есть повторяющиеся элементы, и в первом тоже', () => {
+      const res = RsuvTuArray.containsAll([1, 2, 1, 4], [4, 2, 4])
+      expect(res).toEqual(true)
+    });
+    it('30', () => {
+      const res = RsuvTuArray.containsAll([1, 2, 4], [14, 12, 14])
+      expect(res).toEqual(false)
+    });
+    it('40 второй массив пустой', () => {
+      const res = RsuvTuArray.containsAll([1, 2, 4], [])
+      expect(res).toEqual(false)
+    });
+    it('50 первый массив пустой', () => {
+      const res = RsuvTuArray.containsAll([], [1, 2, 4])
+      expect(res).toEqual(false)
+    });
+    it('60 оба массива пусты', () => {
+      const res = RsuvTuArray.containsAll([], [])
+      expect(res).toEqual(false)
+    });
+  });
+
 })
