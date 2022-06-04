@@ -51,6 +51,12 @@ export enum RsuvAsau92 {
   ERR_CODE_1 = '100'
 }
 
+export interface RsuvAdau97 {
+  key: any,
+  value: any,
+  parent: any
+}
+
 export class RsuvTuTree {
   /**
    * Собирает из *объектов значения поля (2). *Объекты ищет как в (1), если (1) это массив, так и во всех полях (3),
@@ -264,4 +270,37 @@ export class RsuvTuTree {
     })
     return acc;
   }
+
+  /**
+   * Отличается от А тем что даёт информацию также о родителе (хосте) найденных сущностей, и соответственно возвращает
+   * результат в другом формате - в виде массива объектов { key: , value: , parent: }, где parent - это родитель (хост)
+   * @param entry
+   * @param predicate
+   * @param isEvery
+   */
+  static findDeepByB(
+    entry: object | any[],
+    predicate: (key: string | number, value: any) => boolean,
+    isEvery: boolean
+  ): RsuvAdau97[] {
+    if (!entry) return [];
+    const ret: RsuvAdau97[] = []
+    let isFinded = false;
+    let isFirst = true;
+    JSON.stringify(entry, function (key0, value0) {
+      if (!isFirst && (isEvery || (!isEvery && !isFinded))) {
+        if (predicate(key0, value0)) {
+          ret.push({key: key0, value: value0, parent: this})
+          isFinded = true;
+        }
+      }
+      if (!isFirst && !isEvery && isFinded) {
+        return undefined;
+      }
+      isFirst = false;
+      return value0;
+    })
+    return ret;
+  }
+
 }

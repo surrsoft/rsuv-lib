@@ -2806,6 +2806,41 @@ var RsuvTuTree = /*#__PURE__*/function () {
       return value0;
     });
     return acc;
+  }
+  /**
+   * Отличается от А тем что даёт информацию также о родителе (хосте) найденных сущностей, и соответственно возвращает
+   * результат в другом формате - в виде массива объектов { key: , value: , parent: }, где parent - это родитель (хост)
+   * @param entry
+   * @param predicate
+   * @param isEvery
+   */
+  ;
+
+  RsuvTuTree.findDeepByB = function findDeepByB(entry, predicate, isEvery) {
+    if (!entry) return [];
+    var ret = [];
+    var isFinded = false;
+    var isFirst = true;
+    JSON.stringify(entry, function (key0, value0) {
+      if (!isFirst && (isEvery || !isEvery && !isFinded)) {
+        if (predicate(key0, value0)) {
+          ret.push({
+            key: key0,
+            value: value0,
+            parent: this
+          });
+          isFinded = true;
+        }
+      }
+
+      if (!isFirst && !isEvery && isFinded) {
+        return undefined;
+      }
+
+      isFirst = false;
+      return value0;
+    });
+    return ret;
   };
 
   return RsuvTuTree;
