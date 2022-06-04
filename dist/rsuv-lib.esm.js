@@ -2810,9 +2810,9 @@ var RsuvTuTree = /*#__PURE__*/function () {
   /**
    * Отличается от А тем что даёт информацию также о родителе (хосте) найденных сущностей, и соответственно возвращает
    * результат в другом формате - в виде массива объектов { key: , value: , parent: }, где parent - это родитель (хост)
-   * @param entry
-   * @param predicate
-   * @param isEvery
+   * @param entry (1) --
+   * @param predicate (2) -- отличается от А тем что также третьим параметром получает ссылку на родителя (хоста)
+   * @param isEvery (3) --
    */
   ;
 
@@ -2823,7 +2823,7 @@ var RsuvTuTree = /*#__PURE__*/function () {
     var isFirst = true;
     JSON.stringify(entry, function (key0, value0) {
       if (!isFirst && (isEvery || !isEvery && !isFinded)) {
-        if (predicate(key0, value0)) {
+        if (predicate(key0, value0, this)) {
           ret.push({
             key: key0,
             value: value0,
