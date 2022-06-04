@@ -2798,6 +2798,10 @@ var RsuvTuTree = /*#__PURE__*/function () {
         }
       }
 
+      if (!isFirst && !isEvery && isFinded) {
+        return undefined;
+      }
+
       isFirst = false;
       return value0;
     });

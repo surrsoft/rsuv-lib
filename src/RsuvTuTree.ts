@@ -256,6 +256,9 @@ export class RsuvTuTree {
           isFinded = true;
         }
       }
+      if (!isFirst && !isEvery && isFinded) {
+        return undefined;
+      }
       isFirst = false;
       return value0;
     })
