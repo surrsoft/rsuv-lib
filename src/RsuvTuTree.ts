@@ -229,4 +229,36 @@ export class RsuvTuTree {
     // ---
     return new RsuvResultTibo<RsuvAsau91[]>({success: true, value: ret, successCode: RsuvAsau92.SUCCESS_CODE_1})
   }
+
+  /**
+   * Проходит по всем(*A*) сущностям (1), рекурсивно, и возвращает те их них (в виде массива объектов), для которых (2) даёт TRUE.
+   *
+   * (*A*) если (3) is FALSY по прекращает поиск после первой же находки.
+   *
+   * @param entry (1) -- массив или объект, например {aa: 1, bb: { cc: 3 }}
+   * @param predicate (2) -- 1-параметр это ключ сущности, 2-й это значение сущности; например (key) => key === 'cc'
+   * @param isEvery (3) -- например true
+   * @return например [{ cc: 3 }]
+   */
+  static findDeepBy(
+    entry: object | any[],
+    predicate: (key: string | number, value: any) => boolean,
+    isEvery: boolean
+  ): any[] {
+    if (!entry) return [];
+    const acc: any[] = []
+    let isFinded = false;
+    let isFirst = true;
+    JSON.stringify(entry, (key0, value0) => {
+      if (!isFirst && (isEvery || (!isEvery && !isFinded))) {
+        if (predicate(key0, value0)) {
+          acc.push({[key0]: value0})
+          isFinded = true;
+        }
+      }
+      isFirst = false;
+      return value0;
+    })
+    return acc;
+  }
 }

@@ -2770,6 +2770,38 @@ var RsuvTuTree = /*#__PURE__*/function () {
       value: ret,
       successCode: exports.RsuvAsau92.SUCCESS_CODE_1
     });
+  }
+  /**
+   * Проходит по всем(*A*) сущностям (1), рекурсивно, и возвращает те их них (в виде массива объектов), для которых (2) даёт TRUE.
+   *
+   * (*A*) если (3) is FALSY по прекращает поиск после первой же находки.
+   *
+   * @param entry (1) -- массив или объект, например {aa: 1, bb: { cc: 3 }}
+   * @param predicate (2) -- 1-параметр это ключ сущности, 2-й это значение сущности; например (key) => key === 'cc'
+   * @param isEvery (3) -- например true
+   * @return например [{ cc: 3 }]
+   */
+  ;
+
+  RsuvTuTree.findDeepBy = function findDeepBy(entry, predicate, isEvery) {
+    if (!entry) return [];
+    var acc = [];
+    var isFinded = false;
+    var isFirst = true;
+    JSON.stringify(entry, function (key0, value0) {
+      if (!isFirst && (isEvery || !isEvery && !isFinded)) {
+        if (predicate(key0, value0)) {
+          var _acc$push;
+
+          acc.push((_acc$push = {}, _acc$push[key0] = value0, _acc$push));
+          isFinded = true;
+        }
+      }
+
+      isFirst = false;
+      return value0;
+    });
+    return acc;
   };
 
   return RsuvTuTree;

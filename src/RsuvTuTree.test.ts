@@ -269,4 +269,84 @@ describe('RsuvTuTree', () => {
 
   })
 
+  describe('findDeepBy', () => {
+    const obj = {
+      aa: 1,
+      bb: [
+        {cc: 2},
+        4,
+        [
+          {ee: 6}
+        ]
+      ],
+      dd: {
+        ff: {
+          gg: "text",
+          bb: [
+            {ee: 7},
+            {'220604101456': "hey"}
+          ]
+        }
+      }
+    }
+
+    const arr = [1, "ok", {bb: {ff: 4}}];
+
+    it('10', () => {
+      const res = RsuvTuTree.findDeepBy(obj, (key) => {
+        return key === 'bb'
+      }, true)
+      const expected = [
+        {"bb": [{"cc": 2}, 4, [{"ee": 6}]]},
+        {"bb": [{"ee": 7}, {"220604101456": "hey"}]}
+      ]
+      expect(res).toStrictEqual(expected)
+    });
+
+    it('10-2 тоже что 10 только isEvery === false', () => {
+      const res = RsuvTuTree.findDeepBy(obj, (key) => {
+        return key === 'bb'
+      }, false)
+      const expected = [
+        {"bb": [{"cc": 2}, 4, [{"ee": 6}]]},
+      ]
+      expect(res).toStrictEqual(expected)
+    });
+
+    it('20', () => {
+      const res = RsuvTuTree.findDeepBy(obj, (key) => {
+        return key === '220604101456'
+      }, true)
+      const expected = [
+        {"220604101456": "hey"}
+      ]
+      expect(res).toStrictEqual(expected)
+    });
+
+    it('30 когда ничего не найдено', () => {
+      const res = RsuvTuTree.findDeepBy(obj, (key) => {
+        return key === 'lorem'
+      }, true)
+      const expected: any[] = []
+      expect(res).toStrictEqual(expected)
+    });
+
+    it('40', () => {
+      const res = RsuvTuTree.findDeepBy(arr, (key) => {
+        return key == '1'
+      }, true)
+      const expected: any[] = [{1: "ok"}]
+      expect(res).toStrictEqual(expected)
+    });
+
+    it('50', () => {
+      const res = RsuvTuTree.findDeepBy(arr, (key) => {
+        debugger; // del+
+        return key === 'ff'
+      }, true)
+      const expected: any[] = [{ff: 4}]
+      expect(res).toStrictEqual(expected)
+    });
+
+  });
 })

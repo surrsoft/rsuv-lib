@@ -101,4 +101,15 @@ export declare class RsuvTuTree {
      * @param errInit (3) -- если TRUE то, если хоть в одном объекте из (1) не будет поля (2), то будет возвращён неуспех
      */
     static uniqValuesIs(arr: object[], fieldName: RsuvTxFieldNameLodashB, errInit: boolean): RsuvResultTibo<RsuvAsau91[]>;
+    /**
+     * Проходит по всем(*A*) сущностям (1), рекурсивно, и возвращает те их них (в виде массива объектов), для которых (2) даёт TRUE.
+     *
+     * (*A*) если (3) is FALSY по прекращает поиск после первой же находки.
+     *
+     * @param entry (1) -- массив или объект, например {aa: 1, bb: { cc: 3 }}
+     * @param predicate (2) -- 1-параметр это ключ сущности, 2-й это значение сущности; например (key) => key === 'cc'
+     * @param isEvery (3) -- например true
+     * @return например [{ cc: 3 }]
+     */
+    static findDeepBy(entry: object | any[], predicate: (key: string | number, value: any) => boolean, isEvery: boolean): any[];
 }
