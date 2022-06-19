@@ -3211,9 +3211,13 @@ var RsuvTxJsonServer = /*#__PURE__*/function () {
         while (1) {
           switch (_context7.prev = _context7.next) {
             case 0:
-              this.elemsGetByFilterB(fieldName, substring, (pageNumber - 1) * limit, limit);
+              _context7.next = 2;
+              return this.elemsGetByFilterB(fieldName, substring, (pageNumber - 1) * limit, limit);
 
-            case 1:
+            case 2:
+              return _context7.abrupt("return", _context7.sent);
+
+            case 3:
             case "end":
               return _context7.stop();
           }
@@ -3401,6 +3405,70 @@ var RsuvTxJsonServer = /*#__PURE__*/function () {
     return elemsDelete;
   }()
   /**
+   * Отличается от А тем что даёт больше информации об итогах удаления элементов
+   * @param ids
+   */
+  ;
+
+  _proto.elemsDeleteB =
+  /*#__PURE__*/
+  function () {
+    var _elemsDeleteB = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee12(ids) {
+      var idsSuccess0, idsNotSuccess0, _iterator2, _step2, id, res;
+
+      return runtime_1.wrap(function _callee12$(_context12) {
+        while (1) {
+          switch (_context12.prev = _context12.next) {
+            case 0:
+              idsSuccess0 = [];
+              idsNotSuccess0 = [];
+              _iterator2 = _createForOfIteratorHelperLoose(ids);
+
+            case 3:
+              if ((_step2 = _iterator2()).done) {
+                _context12.next = 11;
+                break;
+              }
+
+              id = _step2.value;
+              _context12.next = 7;
+              return this.elemDelete(id);
+
+            case 7:
+              res = _context12.sent;
+
+              if (res.success) {
+                idsSuccess0.push(id);
+              } else {
+                idsNotSuccess0.push(id);
+              }
+
+            case 9:
+              _context12.next = 3;
+              break;
+
+            case 11:
+              return _context12.abrupt("return", {
+                isAllSuccess: idsSuccess0.length === ids.length,
+                idsSuccess: idsSuccess0,
+                idsNotSuccess: idsNotSuccess0
+              });
+
+            case 12:
+            case "end":
+              return _context12.stop();
+          }
+        }
+      }, _callee12, this);
+    }));
+
+    function elemsDeleteB(_x24) {
+      return _elemsDeleteB.apply(this, arguments);
+    }
+
+    return elemsDeleteB;
+  }()
+  /**
    *
    * @param filter (1) -- см. [ntxe]
    */
@@ -3409,68 +3477,24 @@ var RsuvTxJsonServer = /*#__PURE__*/function () {
   _proto.elemsDeleteByFilter =
   /*#__PURE__*/
   function () {
-    var _elemsDeleteByFilter = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee12(filter) {
+    var _elemsDeleteByFilter = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee13(filter) {
       var elems;
-      return runtime_1.wrap(function _callee12$(_context12) {
-        while (1) {
-          switch (_context12.prev = _context12.next) {
-            case 0:
-              _context12.next = 2;
-              return this.elemsGetByFilter(filter);
-
-            case 2:
-              elems = _context12.sent;
-              _context12.next = 5;
-              return this.elemsDelete(elems.map(function (el) {
-                return el.id;
-              }));
-
-            case 5:
-              return _context12.abrupt("return", _context12.sent);
-
-            case 6:
-            case "end":
-              return _context12.stop();
-          }
-        }
-      }, _callee12, this);
-    }));
-
-    function elemsDeleteByFilter(_x24) {
-      return _elemsDeleteByFilter.apply(this, arguments);
-    }
-
-    return elemsDeleteByFilter;
-  }();
-
-  _proto.elemCreate = /*#__PURE__*/function () {
-    var _elemCreate = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee13(data) {
-      var res;
       return runtime_1.wrap(function _callee13$(_context13) {
         while (1) {
           switch (_context13.prev = _context13.next) {
             case 0:
               _context13.next = 2;
-              return fetch("" + this.path, {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-              });
+              return this.elemsGetByFilter(filter);
 
             case 2:
-              res = _context13.sent;
-
-              if (!(res.status === 201)) {
-                _context13.next = 5;
-                break;
-              }
-
-              return _context13.abrupt("return", new RsuvResultBoolPknz());
+              elems = _context13.sent;
+              _context13.next = 5;
+              return this.elemsDelete(elems.map(function (el) {
+                return el.id;
+              }));
 
             case 5:
-              return _context13.abrupt("return", new RsuvResultBoolPknz(false, '210316120200', "err*: not created; status [" + res.status + "] url [" + res.url + "]"));
+              return _context13.abrupt("return", _context13.sent);
 
             case 6:
             case "end":
@@ -3480,24 +3504,16 @@ var RsuvTxJsonServer = /*#__PURE__*/function () {
       }, _callee13, this);
     }));
 
-    function elemCreate(_x25) {
-      return _elemCreate.apply(this, arguments);
+    function elemsDeleteByFilter(_x25) {
+      return _elemsDeleteByFilter.apply(this, arguments);
     }
 
-    return elemCreate;
-  }()
-  /**
-   * Отличается от А тем что возвращает также информацию об ID созданного элемента (в поле 'value' в виде строки)
-   * @param data (1) -- объект без поля 'id'
-   * @return
-   */
-  ;
+    return elemsDeleteByFilter;
+  }();
 
-  _proto.elemCreateB =
-  /*#__PURE__*/
-  function () {
-    var _elemCreateB = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee14(data) {
-      var res, createdElem;
+  _proto.elemCreate = /*#__PURE__*/function () {
+    var _elemCreate = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee14(data) {
+      var res;
       return runtime_1.wrap(function _callee14$(_context14) {
         while (1) {
           switch (_context14.prev = _context14.next) {
@@ -3515,28 +3531,16 @@ var RsuvTxJsonServer = /*#__PURE__*/function () {
               res = _context14.sent;
 
               if (!(res.status === 201)) {
-                _context14.next = 8;
+                _context14.next = 5;
                 break;
               }
 
-              _context14.next = 6;
-              return res.json();
+              return _context14.abrupt("return", new RsuvResultBoolPknz());
+
+            case 5:
+              return _context14.abrupt("return", new RsuvResultBoolPknz(false, '210316120200', "err*: not created; status [" + res.status + "] url [" + res.url + "]"));
 
             case 6:
-              createdElem = _context14.sent;
-              return _context14.abrupt("return", new RsuvResultTibo({
-                success: true,
-                value: createdElem.id + ''
-              }));
-
-            case 8:
-              return _context14.abrupt("return", new RsuvResultTibo({
-                success: false,
-                errCode: res.status + '',
-                errMessage: res.url
-              }));
-
-            case 9:
             case "end":
               return _context14.stop();
           }
@@ -3544,23 +3548,31 @@ var RsuvTxJsonServer = /*#__PURE__*/function () {
       }, _callee14, this);
     }));
 
-    function elemCreateB(_x26) {
-      return _elemCreateB.apply(this, arguments);
+    function elemCreate(_x26) {
+      return _elemCreate.apply(this, arguments);
     }
 
-    return elemCreateB;
-  }();
+    return elemCreate;
+  }()
+  /**
+   * Отличается от А тем что возвращает также информацию об ID созданного элемента (в поле 'value' в виде строки)
+   * @param data (1) -- объект без поля 'id'
+   * @return
+   */
+  ;
 
-  _proto.elemUpdate = /*#__PURE__*/function () {
-    var _elemUpdate = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee15(data) {
-      var res;
+  _proto.elemCreateB =
+  /*#__PURE__*/
+  function () {
+    var _elemCreateB = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee15(data) {
+      var res, createdElem;
       return runtime_1.wrap(function _callee15$(_context15) {
         while (1) {
           switch (_context15.prev = _context15.next) {
             case 0:
               _context15.next = 2;
-              return fetch(this.path + "/" + data.id, {
-                method: 'PUT',
+              return fetch("" + this.path, {
+                method: 'POST',
                 headers: {
                   'Content-Type': 'application/json'
                 },
@@ -3570,17 +3582,29 @@ var RsuvTxJsonServer = /*#__PURE__*/function () {
             case 2:
               res = _context15.sent;
 
-              if (!(res.status === 200)) {
-                _context15.next = 5;
+              if (!(res.status === 201)) {
+                _context15.next = 8;
                 break;
               }
 
-              return _context15.abrupt("return", new RsuvResultBoolPknz());
-
-            case 5:
-              return _context15.abrupt("return", new RsuvResultBoolPknz(false, '210318111500', "err*: not updated; status [" + res.status + "] url [" + res.url + "]"));
+              _context15.next = 6;
+              return res.json();
 
             case 6:
+              createdElem = _context15.sent;
+              return _context15.abrupt("return", new RsuvResultTibo({
+                success: true,
+                value: createdElem.id + ''
+              }));
+
+            case 8:
+              return _context15.abrupt("return", new RsuvResultTibo({
+                success: false,
+                errCode: res.status + '',
+                errMessage: res.url
+              }));
+
+            case 9:
             case "end":
               return _context15.stop();
           }
@@ -3588,7 +3612,51 @@ var RsuvTxJsonServer = /*#__PURE__*/function () {
       }, _callee15, this);
     }));
 
-    function elemUpdate(_x27) {
+    function elemCreateB(_x27) {
+      return _elemCreateB.apply(this, arguments);
+    }
+
+    return elemCreateB;
+  }();
+
+  _proto.elemUpdate = /*#__PURE__*/function () {
+    var _elemUpdate = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee16(data) {
+      var res;
+      return runtime_1.wrap(function _callee16$(_context16) {
+        while (1) {
+          switch (_context16.prev = _context16.next) {
+            case 0:
+              _context16.next = 2;
+              return fetch(this.path + "/" + data.id, {
+                method: 'PUT',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+              });
+
+            case 2:
+              res = _context16.sent;
+
+              if (!(res.status === 200)) {
+                _context16.next = 5;
+                break;
+              }
+
+              return _context16.abrupt("return", new RsuvResultBoolPknz());
+
+            case 5:
+              return _context16.abrupt("return", new RsuvResultBoolPknz(false, '210318111500', "err*: not updated; status [" + res.status + "] url [" + res.url + "]"));
+
+            case 6:
+            case "end":
+              return _context16.stop();
+          }
+        }
+      }, _callee16, this);
+    }));
+
+    function elemUpdate(_x28) {
       return _elemUpdate.apply(this, arguments);
     }
 

@@ -26,7 +26,7 @@ export { RsuvTuTree, RsuvAsau89, RsuvAsau90, RSUV_SPC_ID_PLUG_PREFIX, RsuvAsau91
 export { RsuvTuPromiseAllSettled, EnStatusAsau56, Asau57 } from './RsuvTuPromiseAllSettled';
 export { RsuvResultAsau11 } from './RsuvResultAsau11';
 
-export { RsuvTxJsonServer } from './RsuvTxJsonServer';
+export { RsuvTxJsonServer, RsuvRemoveResultAsau100 } from './RsuvTxJsonServer';
 export { RsuvTxNumInt } from './RsuvTxNumInt';
 export { RsuvTxNumIntAB } from './RsuvTxNumIntAB';
 export { RsuvTxNumIntABB } from './RsuvTxNumIntABB';

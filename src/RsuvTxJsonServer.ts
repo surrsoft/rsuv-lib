@@ -97,7 +97,7 @@ export class RsuvTxJsonServer {
    * @param limit (4) --
    */
   async elemsGetByFilterBB(fieldName: string, substring: string, pageNumber: number, limit: number) {
-    this.elemsGetByFilterB(fieldName, substring, (pageNumber - 1) * limit, limit)
+    return await this.elemsGetByFilterB(fieldName, substring, (pageNumber - 1) * limit, limit)
   }
 
   /**
@@ -154,6 +154,28 @@ export class RsuvTxJsonServer {
       ret.push(res);
     }
     return ret;
+  }
+
+  /**
+   * Отличается от А тем что даёт больше информации об итогах удаления элементов
+   * @param ids
+   */
+  async elemsDeleteB(ids: Array<string | number>): Promise<RsuvRemoveResultAsau100> {
+    const idsSuccess0: Array<string | number> = []
+    const idsNotSuccess0: Array<string | number> = []
+    for (const id of ids) {
+      const res: RsuvResultBoolPknz = await this.elemDelete(id);
+      if (res.success) {
+        idsSuccess0.push(id)
+      } else {
+        idsNotSuccess0.push(id)
+      }
+    }
+    return {
+      isAllSuccess: idsSuccess0.length === ids.length,
+      idsSuccess: idsSuccess0,
+      idsNotSuccess: idsNotSuccess0
+    } as RsuvRemoveResultAsau100
   }
 
   /**
@@ -214,4 +236,16 @@ export class RsuvTxJsonServer {
     }
     return new RsuvResultBoolPknz(false, '210318111500', `err*: not updated; status [${res.status}] url [${res.url}]`)
   }
+}
+
+/**
+ * Представляет результат удаления элементов
+ */
+export type RsuvRemoveResultAsau100 = {
+  /** TRUE если все элементы были успешно удалены */
+  isAllSuccess: boolean,
+  /** id элементов которые были успешно удалены */
+  idsSuccess: Array<string | number>,
+  /** id элементов которые НЕ были успешно удалены */
+  idsNotSuccess: Array<string | number>
 }

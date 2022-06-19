@@ -56,7 +56,7 @@ export declare class RsuvTxJsonServer {
      * @param pageNumber (3) -- 1+
      * @param limit (4) --
      */
-    elemsGetByFilterBB(fieldName: string, substring: string, pageNumber: number, limit: number): Promise<void>;
+    elemsGetByFilterBB(fieldName: string, substring: string, pageNumber: number, limit: number): Promise<any>;
     /**
      * Отличается от B тем что возвращает более развёрнутый ответ
      *
@@ -82,6 +82,11 @@ export declare class RsuvTxJsonServer {
     elemDelete(id: string | number): Promise<RsuvResultBoolPknz>;
     elemsDelete(ids: string[] | number[]): Promise<RsuvResultBoolPknz[]>;
     /**
+     * Отличается от А тем что даёт больше информации об итогах удаления элементов
+     * @param ids
+     */
+    elemsDeleteB(ids: Array<string | number>): Promise<RsuvRemoveResultAsau100>;
+    /**
      *
      * @param filter (1) -- см. [ntxe]
      */
@@ -95,3 +100,14 @@ export declare class RsuvTxJsonServer {
     elemCreateB(data: object): Promise<RsuvResultTibo<string>>;
     elemUpdate(data: any): Promise<RsuvResultBoolPknz>;
 }
+/**
+ * Представляет результат удаления элементов
+ */
+export declare type RsuvRemoveResultAsau100 = {
+    /** TRUE если все элементы были успешно удалены */
+    isAllSuccess: boolean;
+    /** id элементов которые были успешно удалены */
+    idsSuccess: Array<string | number>;
+    /** id элементов которые НЕ были успешно удалены */
+    idsNotSuccess: Array<string | number>;
+};
