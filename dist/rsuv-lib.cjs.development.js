@@ -3310,9 +3310,15 @@ var RsuvTxJsonServer = /*#__PURE__*/function () {
     }
 
     return elemsGetByFilterCB;
-  }();
+  }()
+  /**
+   * Удаляет элемент с id {@param id}. Возвращает информацию о том было ли удаление успешным
+   */
+  ;
 
-  _proto.elemDelete = /*#__PURE__*/function () {
+  _proto.elemDelete =
+  /*#__PURE__*/
+  function () {
     var _elemDelete = /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/runtime_1.mark(function _callee10(id) {
       var ret;
       return runtime_1.wrap(function _callee10$(_context10) {
@@ -3443,8 +3449,13 @@ var RsuvTxJsonServer = /*#__PURE__*/function () {
 
             case 11:
               return _context12.abrupt("return", {
+                /** TRUE если все элементы были удалены успешно */
                 isAllSuccess: idsSuccess0.length === ids.length,
+
+                /** ids успешно удалённых элементов */
                 idsSuccess: idsSuccess0,
+
+                /** ids неудалённых элементов */
                 idsNotSuccess: idsNotSuccess0
               });
 

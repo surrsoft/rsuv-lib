@@ -79,6 +79,9 @@ export declare class RsuvTxJsonServer {
      * @param limit (4) --
      */
     elemsGetByFilterCB<T>(fieldName: string, substring: string, pageNumber: number, limit: number): Promise<RsuvResultCountAndData<T>>;
+    /**
+     * Удаляет элемент с id {@param id}. Возвращает информацию о том было ли удаление успешным
+     */
     elemDelete(id: string | number): Promise<RsuvResultBoolPknz>;
     elemsDelete(ids: string[] | number[]): Promise<RsuvResultBoolPknz[]>;
     /**

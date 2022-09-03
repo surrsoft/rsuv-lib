@@ -137,6 +137,9 @@ export class RsuvTxJsonServer {
     return this.elemsGetByFilterC(fieldName, substring, (pageNumber - 1) * limit, limit);
   }
 
+  /**
+   * Удаляет элемент с id {@param id}. Возвращает информацию о том было ли удаление успешным
+   */
   async elemDelete(id: string | number): Promise<RsuvResultBoolPknz> {
     const ret = await fetch(`${this.path}/${id}`, {
       method: 'DELETE'
@@ -172,8 +175,11 @@ export class RsuvTxJsonServer {
       }
     }
     return {
+      /** TRUE если все элементы были удалены успешно */
       isAllSuccess: idsSuccess0.length === ids.length,
+      /** ids успешно удалённых элементов */
       idsSuccess: idsSuccess0,
+      /** ids неудалённых элементов */
       idsNotSuccess: idsNotSuccess0
     } as RsuvRemoveResultAsau100
   }
