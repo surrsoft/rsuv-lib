@@ -13,7 +13,7 @@ export enum EnStatusAsau56 {
   FULFILLED = 'fulfilled'
 }
 
-export class Asau57 {
+export class RsuvAsau57 {
   ix: number = -1
   reason: any
 }
@@ -22,7 +22,7 @@ export class RsuvAsau67 {
   value: any
 }
 
-export class PElemAsau66 {
+export class RsuvPElemAsau66 {
   status: EnStatusAsau56 = EnStatusAsau56.REJECTED
   reason?: string
   value?: any
@@ -37,8 +37,8 @@ export class RsuvTuPromiseAllSettled {
    * Извлекает reason-ы "реджектнутых" промисов
    * @param pResults
    */
-  static rejected(pResults: Array<PElemAsau66>): Array<Asau57> {
-    const ret: Asau57[] = []
+  static rejected(pResults: Array<RsuvPElemAsau66>): Array<RsuvAsau57> {
+    const ret: RsuvAsau57[] = []
     pResults.forEach((el, ix) => {
       if (el.status === EnStatusAsau56.REJECTED) {
         ret.push({ix, reason: el.reason})
@@ -51,7 +51,7 @@ export class RsuvTuPromiseAllSettled {
    * Извлекает value-ы успешных промисов
    * @param pResults
    */
-  static fulfilled(pResults: Array<PElemAsau66>): Array<RsuvAsau67> {
+  static fulfilled(pResults: Array<RsuvPElemAsau66>): Array<RsuvAsau67> {
     const ret: RsuvAsau67[] = []
     pResults.forEach((el, ix) => {
       if (el.status === EnStatusAsau56.FULFILLED) {
@@ -65,7 +65,7 @@ export class RsuvTuPromiseAllSettled {
    * Возвращает TRUE если все результаты в (1) являются успешными
    * @param pResults
    */
-  static isAllSuccess(pResults: Array<PElemAsau66>): boolean {
+  static isAllSuccess(pResults: Array<RsuvPElemAsau66>): boolean {
     return pResults.every(el => el.status === EnStatusAsau56.FULFILLED)
   }
 
@@ -74,7 +74,7 @@ export class RsuvTuPromiseAllSettled {
    * @param pElem
    * @param status
    */
-  static pElemIs(pElem: PElemAsau66, status: EnStatusAsau56): boolean {
+  static pElemIs(pElem: RsuvPElemAsau66, status: EnStatusAsau56): boolean {
     return pElem.status === status
   }
 
@@ -86,7 +86,7 @@ export class RsuvTuPromiseAllSettled {
    * @param cbRejected (3) --
    */
   static handle<T, S>(
-    pResults: Array<PElemAsau66>, cbFulfilled: (value: any) => T, cbRejected: (reason?: string) => S
+    pResults: Array<RsuvPElemAsau66>, cbFulfilled: (value: any) => T, cbRejected: (reason?: string) => S
   ): Array<T | S> {
     return pResults.map(elPElem => {
       if (this.pElemIs(elPElem, EnStatusAsau56.FULFILLED)) {

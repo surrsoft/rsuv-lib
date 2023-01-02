@@ -2863,13 +2863,13 @@ var EnStatusAsau56;
   EnStatusAsau56["FULFILLED"] = "fulfilled";
 })(EnStatusAsau56 || (EnStatusAsau56 = {}));
 
-var Asau57 = function Asau57() {
+var RsuvAsau57 = function RsuvAsau57() {
   this.ix = -1;
 };
 var RsuvAsau67 = function RsuvAsau67() {
   this.ix = -1;
 };
-var PElemAsau66 = function PElemAsau66() {
+var RsuvPElemAsau66 = function RsuvPElemAsau66() {
   this.status = EnStatusAsau56.REJECTED;
 };
 /**
@@ -4276,5 +4276,5 @@ var RsuvSearchElem = /*#__PURE__*/function () {
   return RsuvSearchElem;
 }();
 
-export { Asau57, EnStatusAsau56, PElemAsau66, RSUV_AL_ALREADY_EXIST, RSUV_SPC_ID_PLUG_PREFIX, RsuvAdapterZrnx, RsuvAsau67, RsuvAsau90, RsuvAsau92, RsuvCheckModelGnpw, RsuvEcxm, RsuvEnCaseSensitive, RsuvEnDataTypes, RsuvEnResultCrudSet, RsuvEnSort, RsuvErr, RsuvPaginationGyth, RsuvResultAsau11, RsuvResultBoolPknz, RsuvResultTibo, RsuvSearchElem, RsuvSearchElems, RsuvSearchHow, RsuvSearchMode, RsuvTu, RsuvTuArray, RsuvTuDateTime, RsuvTuInfo, RsuvTuPromiseAllSettled, RsuvTuString, RsuvTuTree, RsuvTxChecked, RsuvTxEmail, RsuvTxFieldName, RsuvTxFieldNameLodash, RsuvTxJsonServer, RsuvTxNumInt, RsuvTxNumIntAB, RsuvTxNumIntABB, RsuvTxNumIntAC, RsuvTxNumIntDiap, RsuvTxSort, RsuvTxString, RsuvTxStringAB, RsuvTxStringAC, RsuvTxStringACB, RsuvTxStringACC, RsuvTxStringAD, RsuvTxStringADB, RsuvValueAnd, RsuvZrnxSubData };
+export { EnStatusAsau56, RSUV_AL_ALREADY_EXIST, RSUV_SPC_ID_PLUG_PREFIX, RsuvAdapterZrnx, RsuvAsau57, RsuvAsau67, RsuvAsau90, RsuvAsau92, RsuvCheckModelGnpw, RsuvEcxm, RsuvEnCaseSensitive, RsuvEnDataTypes, RsuvEnResultCrudSet, RsuvEnSort, RsuvErr, RsuvPElemAsau66, RsuvPaginationGyth, RsuvResultAsau11, RsuvResultBoolPknz, RsuvResultTibo, RsuvSearchElem, RsuvSearchElems, RsuvSearchHow, RsuvSearchMode, RsuvTu, RsuvTuArray, RsuvTuDateTime, RsuvTuInfo, RsuvTuPromiseAllSettled, RsuvTuString, RsuvTuTree, RsuvTxChecked, RsuvTxEmail, RsuvTxFieldName, RsuvTxFieldNameLodash, RsuvTxJsonServer, RsuvTxNumInt, RsuvTxNumIntAB, RsuvTxNumIntABB, RsuvTxNumIntAC, RsuvTxNumIntDiap, RsuvTxSort, RsuvTxString, RsuvTxStringAB, RsuvTxStringAC, RsuvTxStringACB, RsuvTxStringACC, RsuvTxStringAD, RsuvTxStringADB, RsuvValueAnd, RsuvZrnxSubData };
 //# sourceMappingURL=rsuv-lib.esm.js.map

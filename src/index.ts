@@ -23,7 +23,7 @@ export { RsuvAdapterZrnx, RsuvZrnxSubData } from './RsuvAdapterZrnx';
 export { RsuvCheckModelGnpw, RsuvEcxm, RsuvT1 } from './RsuvCheckModels';
 export { RsuvTuArray } from './RsuvTuArray';
 export { RsuvTuTree, RsuvAsau89, RsuvAsau90, RSUV_SPC_ID_PLUG_PREFIX, RsuvAsau91, RsuvAsau92, RsuvAdau97 } from './RsuvTuTree';
-export { RsuvTuPromiseAllSettled, EnStatusAsau56, Asau57, PElemAsau66, RsuvAsau67 } from './RsuvTuPromiseAllSettled';
+export { RsuvTuPromiseAllSettled, EnStatusAsau56, RsuvAsau57, RsuvPElemAsau66, RsuvAsau67 } from './RsuvTuPromiseAllSettled';
 export { RsuvResultAsau11 } from './RsuvResultAsau11';
 
 export { RsuvTxJsonServer, RsuvRemoveResultAsau100 } from './RsuvTxJsonServer';
