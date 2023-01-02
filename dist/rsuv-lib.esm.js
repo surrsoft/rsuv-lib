@@ -2866,6 +2866,12 @@ var EnStatusAsau56;
 var Asau57 = function Asau57() {
   this.ix = -1;
 };
+var RsuvAsau67 = function RsuvAsau67() {
+  this.ix = -1;
+};
+var PElemAsau66 = function PElemAsau66() {
+  this.status = EnStatusAsau56.REJECTED;
+};
 /**
  * Утилиты для работы с Promise.allSettled()
  */
@@ -3942,7 +3948,7 @@ var RsuvSearchMode;
 (function (RsuvSearchMode) {
   /** строгое равенство */
   RsuvSearchMode["EQUAL_STRICT"] = "equal_strict_asau22";
-  /**содержит */
+  /** содержит */
 
   RsuvSearchMode["CONTAINS"] = "contains_asau22";
   /** начинается с */
@@ -4052,39 +4058,6 @@ var RsuvEnResultCrudSet;
 
   RsuvEnResultCrudSet["ERROR"] = "error";
 })(RsuvEnResultCrudSet || (RsuvEnResultCrudSet = {}));
-
-/**
- * ID [[1636803407]]
- *
- * Представление единичного элемента поиска "ключ/значение"
- *
- * @param fieldName (1) -- имя поля (ключ) в котором нужно искать значение (3)
- * @param searchHow (2) -- указания как искать совпадение
- * @param value: (3) -- значение. Вне зависимости какой это тип значения (4), тут должна быть строка
- * @param valueType (4) -- тип значения (3)
- */
-
-var RsuvSearchElem = /*#__PURE__*/function () {
-  function RsuvSearchElem(fieldName, searchHow, value, valueType) {
-    if (valueType === void 0) {
-      valueType = RsuvEnDataTypes.TEXT;
-    }
-
-    this.fieldName = fieldName;
-    this.searchHow = searchHow;
-    this.value = value;
-    this.valueType = valueType;
-  }
-
-  var _proto = RsuvSearchElem.prototype;
-
-  _proto.bnuwIsValid = function bnuwIsValid() {
-    // TODO
-    return new RsuvResultBoolPknz();
-  };
-
-  return RsuvSearchElem;
-}();
 
 /**
  * Представление нескольких RsuvSearchElem-ID[1636803407] (пар ключ/значение).
@@ -4270,5 +4243,38 @@ var RsuvTu = {
   RSUV_NO_TAGS_SPC_VALUE: RSUV_NO_TAGS_SPC_VALUE
 };
 
-export { Asau57, EnStatusAsau56, RSUV_AL_ALREADY_EXIST, RSUV_SPC_ID_PLUG_PREFIX, RsuvAdapterZrnx, RsuvAsau90, RsuvAsau92, RsuvCheckModelGnpw, RsuvEcxm, RsuvEnCaseSensitive, RsuvEnDataTypes, RsuvEnResultCrudSet, RsuvEnSort, RsuvErr, RsuvPaginationGyth, RsuvResultAsau11, RsuvResultBoolPknz, RsuvResultTibo, RsuvSearchElem, RsuvSearchElems, RsuvSearchHow, RsuvSearchMode, RsuvTu, RsuvTuArray, RsuvTuDateTime, RsuvTuInfo, RsuvTuPromiseAllSettled, RsuvTuString, RsuvTuTree, RsuvTxChecked, RsuvTxEmail, RsuvTxFieldName, RsuvTxFieldNameLodash, RsuvTxJsonServer, RsuvTxNumInt, RsuvTxNumIntAB, RsuvTxNumIntABB, RsuvTxNumIntAC, RsuvTxNumIntDiap, RsuvTxSort, RsuvTxString, RsuvTxStringAB, RsuvTxStringAC, RsuvTxStringACB, RsuvTxStringACC, RsuvTxStringAD, RsuvTxStringADB, RsuvValueAnd, RsuvZrnxSubData };
+/**
+ * ID [[1636803407]]
+ *
+ * Представление единичного элемента поиска "ключ/значение"
+ *
+ * @param fieldName (1) -- имя поля (ключ) в котором нужно искать значение (3)
+ * @param searchHow (2) -- указания как искать совпадение
+ * @param value: (3) -- значение. Вне зависимости какой это тип значения (4), тут должна быть строка
+ * @param valueType (4) -- тип значения (3)
+ */
+
+var RsuvSearchElem = /*#__PURE__*/function () {
+  function RsuvSearchElem(fieldName, searchHow, value, valueType) {
+    if (valueType === void 0) {
+      valueType = RsuvEnDataTypes.TEXT;
+    }
+
+    this.fieldName = fieldName;
+    this.searchHow = searchHow;
+    this.value = value;
+    this.valueType = valueType;
+  }
+
+  var _proto = RsuvSearchElem.prototype;
+
+  _proto.bnuwIsValid = function bnuwIsValid() {
+    // TODO
+    return new RsuvResultBoolPknz();
+  };
+
+  return RsuvSearchElem;
+}();
+
+export { Asau57, EnStatusAsau56, PElemAsau66, RSUV_AL_ALREADY_EXIST, RSUV_SPC_ID_PLUG_PREFIX, RsuvAdapterZrnx, RsuvAsau67, RsuvAsau90, RsuvAsau92, RsuvCheckModelGnpw, RsuvEcxm, RsuvEnCaseSensitive, RsuvEnDataTypes, RsuvEnResultCrudSet, RsuvEnSort, RsuvErr, RsuvPaginationGyth, RsuvResultAsau11, RsuvResultBoolPknz, RsuvResultTibo, RsuvSearchElem, RsuvSearchElems, RsuvSearchHow, RsuvSearchMode, RsuvTu, RsuvTuArray, RsuvTuDateTime, RsuvTuInfo, RsuvTuPromiseAllSettled, RsuvTuString, RsuvTuTree, RsuvTxChecked, RsuvTxEmail, RsuvTxFieldName, RsuvTxFieldNameLodash, RsuvTxJsonServer, RsuvTxNumInt, RsuvTxNumIntAB, RsuvTxNumIntABB, RsuvTxNumIntAC, RsuvTxNumIntDiap, RsuvTxSort, RsuvTxString, RsuvTxStringAB, RsuvTxStringAC, RsuvTxStringACB, RsuvTxStringACC, RsuvTxStringAD, RsuvTxStringADB, RsuvValueAnd, RsuvZrnxSubData };
 //# sourceMappingURL=rsuv-lib.esm.js.map

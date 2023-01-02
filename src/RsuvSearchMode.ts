@@ -6,7 +6,7 @@
 export enum RsuvSearchMode {
   /** строгое равенство */
   EQUAL_STRICT = 'equal_strict_asau22',
-  /**содержит */
+  /** содержит */
   CONTAINS = 'contains_asau22',
   /** начинается с */
   START_WITH = 'start_with_asau22',

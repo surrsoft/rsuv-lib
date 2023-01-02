@@ -2860,6 +2860,12 @@ var RsuvTuTree = /*#__PURE__*/function () {
 var Asau57 = function Asau57() {
   this.ix = -1;
 };
+var RsuvAsau67 = function RsuvAsau67() {
+  this.ix = -1;
+};
+var PElemAsau66 = function PElemAsau66() {
+  this.status = exports.EnStatusAsau56.REJECTED;
+};
 /**
  * Утилиты для работы с Promise.allSettled()
  */
@@ -3935,7 +3941,7 @@ var RsuvTxFieldNameLodash = /*#__PURE__*/function () {
 (function (RsuvSearchMode) {
   /** строгое равенство */
   RsuvSearchMode["EQUAL_STRICT"] = "equal_strict_asau22";
-  /**содержит */
+  /** содержит */
 
   RsuvSearchMode["CONTAINS"] = "contains_asau22";
   /** начинается с */
@@ -4041,39 +4047,6 @@ var RsuvSearchHow = /*#__PURE__*/function () {
 
   RsuvEnResultCrudSet["ERROR"] = "error";
 })(exports.RsuvEnResultCrudSet || (exports.RsuvEnResultCrudSet = {}));
-
-/**
- * ID [[1636803407]]
- *
- * Представление единичного элемента поиска "ключ/значение"
- *
- * @param fieldName (1) -- имя поля (ключ) в котором нужно искать значение (3)
- * @param searchHow (2) -- указания как искать совпадение
- * @param value: (3) -- значение. Вне зависимости какой это тип значения (4), тут должна быть строка
- * @param valueType (4) -- тип значения (3)
- */
-
-var RsuvSearchElem = /*#__PURE__*/function () {
-  function RsuvSearchElem(fieldName, searchHow, value, valueType) {
-    if (valueType === void 0) {
-      valueType = exports.RsuvEnDataTypes.TEXT;
-    }
-
-    this.fieldName = fieldName;
-    this.searchHow = searchHow;
-    this.value = value;
-    this.valueType = valueType;
-  }
-
-  var _proto = RsuvSearchElem.prototype;
-
-  _proto.bnuwIsValid = function bnuwIsValid() {
-    // TODO
-    return new RsuvResultBoolPknz();
-  };
-
-  return RsuvSearchElem;
-}();
 
 /**
  * Представление нескольких RsuvSearchElem-ID[1636803407] (пар ключ/значение).
@@ -4259,10 +4232,45 @@ var RsuvTu = {
   RSUV_NO_TAGS_SPC_VALUE: RSUV_NO_TAGS_SPC_VALUE
 };
 
+/**
+ * ID [[1636803407]]
+ *
+ * Представление единичного элемента поиска "ключ/значение"
+ *
+ * @param fieldName (1) -- имя поля (ключ) в котором нужно искать значение (3)
+ * @param searchHow (2) -- указания как искать совпадение
+ * @param value: (3) -- значение. Вне зависимости какой это тип значения (4), тут должна быть строка
+ * @param valueType (4) -- тип значения (3)
+ */
+
+var RsuvSearchElem = /*#__PURE__*/function () {
+  function RsuvSearchElem(fieldName, searchHow, value, valueType) {
+    if (valueType === void 0) {
+      valueType = exports.RsuvEnDataTypes.TEXT;
+    }
+
+    this.fieldName = fieldName;
+    this.searchHow = searchHow;
+    this.value = value;
+    this.valueType = valueType;
+  }
+
+  var _proto = RsuvSearchElem.prototype;
+
+  _proto.bnuwIsValid = function bnuwIsValid() {
+    // TODO
+    return new RsuvResultBoolPknz();
+  };
+
+  return RsuvSearchElem;
+}();
+
 exports.Asau57 = Asau57;
+exports.PElemAsau66 = PElemAsau66;
 exports.RSUV_AL_ALREADY_EXIST = RSUV_AL_ALREADY_EXIST;
 exports.RSUV_SPC_ID_PLUG_PREFIX = RSUV_SPC_ID_PLUG_PREFIX;
 exports.RsuvAdapterZrnx = RsuvAdapterZrnx;
+exports.RsuvAsau67 = RsuvAsau67;
 exports.RsuvCheckModelGnpw = RsuvCheckModelGnpw;
 exports.RsuvEcxm = RsuvEcxm;
 exports.RsuvErr = RsuvErr;
